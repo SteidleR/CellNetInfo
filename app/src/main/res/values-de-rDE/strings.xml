@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cell Info</string>
+    <string name="no_cell_networks_warning">Keine Mobilfunkzellen gefunden!</string>
+    <string name="status_searching">Sammle Informationen über Zellen...</string>
+    <string name="status_wrong">Etwas lief schief...</string>
+</resources>
