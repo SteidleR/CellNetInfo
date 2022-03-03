@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Cell Info</string>
     <string name="no_cell_networks_warning">Keine Mobilfunkzellen gefunden!</string>
-    <string name="status_searching">Sammle Informationen über Zellen...</string>
-    <string name="status_wrong">Etwas lief schief...</string>
+    <string name="status_searching">Sammle Informationen über Zellen…</string>
+    <string name="status_wrong">Etwas lief schief…</string>
+    <string name="button_settings">Einstellungen</string>
+    <string name="status_hint">Status</string>
 </resources>
