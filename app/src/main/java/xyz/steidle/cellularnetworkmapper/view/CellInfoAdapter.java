@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import androidx.annotation.RequiresApi;
-
 import java.util.List;
 import xyz.steidle.cellularnetworkmapper.R;
 
@@ -82,19 +80,15 @@ public class CellInfoAdapter extends BaseAdapter {
     if (cellInfo instanceof CellInfoLte) {
       CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
 
-      if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
-        operator = "Unknown";
-      else
-        operator = cellIdentity.getOperatorAlphaShort();
+      if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort())) operator = "Unknown";
+      else operator = cellIdentity.getOperatorAlphaShort();
 
       generation = "LTE";
     } else {
       CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
 
-      if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
-        operator = "Unknown";
-      else
-        operator = cellIdentity.getOperatorAlphaShort();
+      if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort())) operator = "Unknown";
+      else operator = cellIdentity.getOperatorAlphaShort();
 
       generation = "GSM";
     }

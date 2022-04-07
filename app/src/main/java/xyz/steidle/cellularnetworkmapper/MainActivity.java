@@ -1,12 +1,10 @@
 package xyz.steidle.cellularnetworkmapper;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.telephony.CellInfo;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.List;
 import xyz.steidle.cellularnetworkmapper.view.CellInfoAdapter;
