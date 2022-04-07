@@ -22,7 +22,7 @@ import xyz.steidle.cellularnetworkmapper.R;
 public class CellInfoAdapter extends BaseAdapter {
   Context context;
   List<CellInfo> cellInfoList;
-  private static LayoutInflater mLayoutInflater;
+  private LayoutInflater mLayoutInflater;
 
   public CellInfoAdapter(Context context, List<CellInfo> cellInfoList) {
     this.context = context;
