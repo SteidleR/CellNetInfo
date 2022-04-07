@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
   private TextView noCellsTextView;
   private TextView statusTextView;
 
-  @RequiresApi(api = Build.VERSION_CODES.R)
+  // @RequiresApi(api = Build.VERSION_CODES.R)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     cellInfoHandler = new CellInfoHandler(this);
 
+    reloadCells();
+  }
+
+  protected void reloadCells() {
     setStatus(R.string.status_searching);
 
     List<CellInfo> cellInfoList = cellInfoHandler.getCells();
