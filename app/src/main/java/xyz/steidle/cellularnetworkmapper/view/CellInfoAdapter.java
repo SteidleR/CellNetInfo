@@ -1,7 +1,6 @@
 package xyz.steidle.cellularnetworkmapper.view;
 
 import android.content.Context;
-import android.os.Build;
 import android.telephony.CellIdentityGsm;
 import android.telephony.CellIdentityLte;
 import android.telephony.CellInfo;
@@ -12,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
 
 import java.util.List;
 import xyz.steidle.cellularnetworkmapper.R;

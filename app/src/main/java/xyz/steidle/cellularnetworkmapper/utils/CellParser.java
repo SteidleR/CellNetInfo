@@ -5,14 +5,11 @@ import android.os.Build;
 import android.telephony.CellIdentity;
 import android.telephony.CellIdentityGsm;
 import android.telephony.CellIdentityLte;
-import android.telephony.CellIdentityNr;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
 import android.telephony.CellInfoNr;
 import android.text.TextUtils;
-
-import androidx.annotation.RequiresApi;
 
 import xyz.steidle.cellularnetworkmapper.R;
 
@@ -105,12 +102,10 @@ public class CellParser {
             // Build version < 28
             if (cellInfo instanceof CellInfoLte) {
                 CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
-                int t_mcc = cellIdentity.getMcc();
-                mcc = Integer.toString(t_mcc);
+                mcc = Integer.toString(cellIdentity.getMcc());
             } else {
                 CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
-                int t_mcc = cellIdentity.getMcc();
-                mcc = Integer.toString(t_mcc);
+                mcc = Integer.toString(cellIdentity.getMcc());
             }
         }
 
@@ -138,12 +133,10 @@ public class CellParser {
             // Build version < 28
             if (cellInfo instanceof CellInfoLte) {
                 CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
-                int t_mnc = cellIdentity.getMnc();
-                mnc = Integer.toString(t_mnc);
+                mnc = Integer.toString(cellIdentity.getMnc());
             } else {
                 CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
-                int t_mnc = cellIdentity.getMnc();
-                mnc = Integer.toString(t_mnc);
+                mnc = Integer.toString(cellIdentity.getMnc());
             }
         }
 
