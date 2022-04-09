@@ -29,8 +29,8 @@ public class CellParser {
      */
     // @RequiresApi(api = Build.VERSION_CODES.P)
     public CharSequence getCellHeader(CellInfo cellInfo) {
-        CharSequence operator;
-        CharSequence generation;
+        CharSequence operator = "Unknown";
+        CharSequence generation = "Unknown";
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             // Build version >= 28
@@ -40,37 +40,26 @@ public class CellParser {
 
                 CellIdentity cellIdentity = ((CellInfoNr) cellInfo).getCellIdentity();
 
-                if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
-                    operator = "Unknown";
-                else
+                if (!TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
                     operator = cellIdentity.getOperatorAlphaShort();
 
                 generation = "5G";
             } else if (cellInfo instanceof CellInfoLte) {
                 CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
 
-                if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
-                    operator = "Unknown";
-                else
+                if (!TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
                     operator = cellIdentity.getOperatorAlphaShort();
 
                 generation = "LTE";
             } else if (cellInfo instanceof CellInfoGsm) {
                 CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
 
-                if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
-                    operator = "Unknown";
-                else
+                if (!TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
                     operator = cellIdentity.getOperatorAlphaShort();
 
                 generation = "GSM";
-            } else {
-                operator = "Unknown";
-                generation = "Unknown";
             }
         } else {
-            operator = "Unknown";
-
             if (cellInfo instanceof CellInfoLte) {
                 generation = "LTE";
             } else {
