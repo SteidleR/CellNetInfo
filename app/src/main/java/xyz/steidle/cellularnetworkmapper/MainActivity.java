@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
   private TextView noCellsTextView;
   private TextView statusTextView;
 
-  // @RequiresApi(api = Build.VERSION_CODES.R)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

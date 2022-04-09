@@ -7,7 +7,6 @@ import android.telephony.CellIdentityLte;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +17,20 @@ import androidx.annotation.RequiresApi;
 
 import java.util.List;
 import xyz.steidle.cellularnetworkmapper.R;
+import xyz.steidle.cellularnetworkmapper.utils.CellParser;
 
 public class CellInfoAdapter extends BaseAdapter {
   Context context;
+  CellParser cellParser;
   List<CellInfo> cellInfoList;
-  private LayoutInflater mLayoutInflater;
+  private final LayoutInflater mLayoutInflater;
 
   public CellInfoAdapter(Context context, List<CellInfo> cellInfoList) {
     this.context = context;
     this.cellInfoList = cellInfoList;
     mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+    cellParser = new CellParser(context);
   }
 
   @Override
@@ -45,13 +48,14 @@ public class CellInfoAdapter extends BaseAdapter {
     return i;
   }
 
-  @RequiresApi(api = Build.VERSION_CODES.P)
+  // @RequiresApi(api = Build.VERSION_CODES.P)
   @Override
   public View getView(int i, View view, ViewGroup viewGroup) {
     View vi = view;
     if (vi == null) vi = mLayoutInflater.inflate(R.layout.row, null);
 
     TextView header = (TextView) vi.findViewById(R.id.cell_header);
+    TextView country = (TextView) vi.findViewById(R.id.cell_country);
     TextView body = (TextView) vi.findViewById(R.id.cell_text);
 
     System.out.println(cellInfoList.get(i));
@@ -68,37 +72,10 @@ public class CellInfoAdapter extends BaseAdapter {
       bodyText = cellIdentity.toString();
     }
 
-    header.setText(getCellHeader(cellInfoList.get(i)));
+    header.setText(cellParser.getCellHeader(cellInfoList.get(i)));
+    country.setText(cellParser.getMcc(cellInfoList.get(i)));
     body.setText(bodyText);
 
     return vi;
-  }
-
-  @RequiresApi(api = Build.VERSION_CODES.P)
-  public CharSequence getCellHeader(CellInfo cellInfo) {
-    CharSequence operator;
-    CharSequence generation;
-
-    if (cellInfo instanceof CellInfoLte) {
-      CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
-
-      if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
-        operator = "Unknown";
-      else
-        operator = cellIdentity.getOperatorAlphaShort();
-
-      generation = "LTE";
-    } else {
-      CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
-
-      if (TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
-        operator = "Unknown";
-      else
-        operator = cellIdentity.getOperatorAlphaShort();
-
-      generation = "GSM";
-    }
-
-    return context.getString(R.string.cell_header, operator, generation);
   }
 }
