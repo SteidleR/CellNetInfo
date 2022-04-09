@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import java.util.List;
 import xyz.steidle.cellularnetworkmapper.R;
 import xyz.steidle.cellularnetworkmapper.utils.CellParser;
