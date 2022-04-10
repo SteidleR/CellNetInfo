@@ -3,6 +3,9 @@ package xyz.steidle.cellularnetworkmapper;
 import android.content.Context;
 import android.telephony.CellInfo;
 import android.telephony.TelephonyManager;
+import android.util.Log;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class CellInfoHandler {
@@ -17,8 +20,7 @@ public class CellInfoHandler {
     try {
       cells = telephonyManager.getAllCellInfo();
     } catch (SecurityException e) {
-      System.out.println("SecurityException!!!");
-      e.printStackTrace();
+      Log.e("CellInfoHandler", Arrays.toString(e.getStackTrace()));
     }
     return cells;
   }

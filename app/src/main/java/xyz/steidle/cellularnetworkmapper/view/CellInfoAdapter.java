@@ -6,6 +6,7 @@ import android.telephony.CellIdentityLte;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +52,11 @@ public class CellInfoAdapter extends BaseAdapter {
     View vi = view;
     if (vi == null) vi = mLayoutInflater.inflate(R.layout.row, null);
 
-    TextView header = (TextView) vi.findViewById(R.id.cell_header);
-    TextView country = (TextView) vi.findViewById(R.id.cell_mcc);
-    TextView body = (TextView) vi.findViewById(R.id.cell_text);
+    TextView header = vi.findViewById(R.id.cell_header);
+    TextView country = vi.findViewById(R.id.cell_mcc);
+    TextView body = vi.findViewById(R.id.cell_text);
 
-    System.out.println(cellInfoList.get(i));
+    Log.d("CellInfoAdapter", cellInfoList.get(i).toString());
 
     CharSequence bodyText;
 
