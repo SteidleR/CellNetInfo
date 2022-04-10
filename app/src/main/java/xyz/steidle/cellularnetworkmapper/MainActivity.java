@@ -1,5 +1,6 @@
 package xyz.steidle.cellularnetworkmapper;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.CellInfo;
 import android.view.View;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     cellInfoListView = findViewById(R.id.listScrollView);
     noCellsTextView = findViewById(R.id.noCellsWarning);
     statusTextView = findViewById(R.id.statusTextView);
+
+    findViewById(R.id.buttonHelp).setOnClickListener(view -> openHelpActivity());
 
     cellInfoHandler = new CellInfoHandler(this);
 
@@ -50,5 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
   private void resetStatus() {
     statusTextView.setText("");
+  }
+
+  private void openHelpActivity() {
+    Intent intent = new Intent(this, HelpActivity.class);
+    startActivity(intent);
   }
 }

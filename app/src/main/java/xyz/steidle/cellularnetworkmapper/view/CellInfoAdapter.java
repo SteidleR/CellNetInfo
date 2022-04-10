@@ -52,7 +52,7 @@ public class CellInfoAdapter extends BaseAdapter {
     if (vi == null) vi = mLayoutInflater.inflate(R.layout.row, null);
 
     TextView header = (TextView) vi.findViewById(R.id.cell_header);
-    TextView country = (TextView) vi.findViewById(R.id.cell_country);
+    TextView country = (TextView) vi.findViewById(R.id.cell_mcc);
     TextView body = (TextView) vi.findViewById(R.id.cell_text);
 
     System.out.println(cellInfoList.get(i));

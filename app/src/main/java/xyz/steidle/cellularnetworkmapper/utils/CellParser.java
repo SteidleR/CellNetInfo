@@ -38,7 +38,7 @@ public class CellParser {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
                 // Build version >= 30 and 5G network
 
-                CellIdentity cellIdentity = ((CellInfoNr) cellInfo).getCellIdentity();
+                CellIdentity cellIdentity = cellInfo.getCellIdentity();
 
                 if (!TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
                     operator = cellIdentity.getOperatorAlphaShort();
