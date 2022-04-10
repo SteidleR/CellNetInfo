@@ -177,13 +177,13 @@ public class CellParser {
         } else {
             if (cellInfo instanceof CellInfoLte) {
                 CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
-                mnc = Integer.toString(cellIdentity.getMcc());
+                mnc = Integer.toString(cellIdentity.getMnc());
             } else if (cellInfo instanceof CellInfoGsm) {
                 CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
-                mnc = Integer.toString(cellIdentity.getMcc());
+                mnc = Integer.toString(cellIdentity.getMnc());
             } else if (cellInfo instanceof CellInfoWcdma) {
                 CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();
-                mnc = Integer.toString(cellIdentity.getMcc());
+                mnc = Integer.toString(cellIdentity.getMnc());
             }
         }
 
