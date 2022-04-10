@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     reloadCells();
   }
 
+  /** Restart cell scan and displays all cells in list. */
   protected void reloadCells() {
     setStatus(R.string.status_searching);
 
@@ -47,14 +48,19 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+  /** Sets status in status bar from given resource id.
+   * @param strId Status String ID
+   */
   private void setStatus(int strId) {
     statusTextView.setText(getResources().getString(strId));
   }
 
+  /** Sets status text to empty */
   private void resetStatus() {
     statusTextView.setText("");
   }
 
+  /** creates and starts the help activity */
   private void openHelpActivity() {
     Intent intent = new Intent(this, HelpActivity.class);
     startActivity(intent);

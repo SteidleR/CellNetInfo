@@ -7,4 +7,5 @@
     <string name="button_settings">Einstellungen</string>
     <string name="btn_back">Zurück</string>
     <string name="help_network">Netzwerk Generation</string>
+    <string name="unknown">Unbekannt</string>
 </resources>
