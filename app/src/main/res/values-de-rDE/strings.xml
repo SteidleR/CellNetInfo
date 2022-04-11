@@ -6,6 +6,6 @@
     <string name="status_wrong">Etwas lief schief…</string>
     <string name="button_settings">Einstellungen</string>
     <string name="btn_back">Zurück</string>
-    <string name="help_network">Netzwerk Generation</string>
     <string name="unknown">Unbekannt</string>
+    <string name="cell_strength_description">Cell Connection Strength</string>
 </resources>

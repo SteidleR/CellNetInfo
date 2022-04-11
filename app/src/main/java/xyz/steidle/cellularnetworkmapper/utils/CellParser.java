@@ -18,6 +18,7 @@ import android.telephony.CellInfoWcdma;
 import android.text.TextUtils;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.util.Pair;
 
 import xyz.steidle.cellularnetworkmapper.R;
 
@@ -159,20 +160,20 @@ public class CellParser {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
                 // Build version >= 30 and 5G network
                 CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
-                mnc = cellIdentity.getMccString();
+                mnc = cellIdentity.getMncString();
             } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
                 // Build version >= 29 and TDSCDMA network
                 CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();
-                mnc = cellIdentity.getMccString();
+                mnc = cellIdentity.getMncString();
             } else if (cellInfo instanceof CellInfoLte) {
                 CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
-                mnc = cellIdentity.getMccString();
+                mnc = cellIdentity.getMncString();
             } else if (cellInfo instanceof CellInfoGsm) {
                 CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
-                mnc = cellIdentity.getMccString();
+                mnc = cellIdentity.getMncString();
             } else if (cellInfo instanceof CellInfoWcdma) {
                 CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();
-                mnc = cellIdentity.getMccString();
+                mnc = cellIdentity.getMncString();
             }
         } else {
             if (cellInfo instanceof CellInfoLte) {
@@ -188,5 +189,85 @@ public class CellParser {
         }
 
         return mnc;
+    }
+
+    /** Extract LAC or TAC from given CellInfo
+     * @param cellInfo CellInfo object
+     * @return Pair containing resource id for row name and Lac/ Tac of cell
+     */
+    public Pair<Integer, Integer> getLacTac(CellInfo cellInfo) {
+        int code = 0;
+        int displayName = R.string.cell_lac;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+            // Build version >= 30 and 5G network
+            CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
+            code = cellIdentity.getTac();
+            displayName = R.string.cell_tac;
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+            // Build version >= 29 and TDSCDMA network
+            CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();
+            code = cellIdentity.getLac();
+        } else if (cellInfo instanceof CellInfoLte) {
+            CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
+            code = cellIdentity.getTac();
+            displayName = R.string.cell_tac;
+        } else if (cellInfo instanceof CellInfoGsm) {
+            CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
+            code = cellIdentity.getLac();
+        } else if (cellInfo instanceof CellInfoWcdma) {
+            CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();
+            code = cellIdentity.getLac();
+        }
+
+        return new Pair<>(displayName, code);
+    }
+
+    /** Extract CI or CID from given CellInfo
+     * @param cellInfo CellInfo object
+     * @return Long representing cell id
+     */
+    public long getCellId(CellInfo cellInfo) {
+        long cid = 0;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+            // Build version >= 30 and 5G network
+            CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
+            cid = cellIdentity.getNci();
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+            // Build version >= 29 and TDSCDMA network
+            CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();
+            cid = cellIdentity.getCid();
+        } else if (cellInfo instanceof CellInfoLte) {
+            CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
+            cid = cellIdentity.getCi();
+        } else if (cellInfo instanceof CellInfoGsm) {
+            CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
+            cid = cellIdentity.getCid();
+        } else if (cellInfo instanceof CellInfoWcdma) {
+            CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();
+            cid = cellIdentity.getCid();
+        }
+
+        return cid;
+    }
+
+    /** Extract Physical Cell ID from LTE or 5G (Nr) CellInfo
+     * @param cellInfo CellInfo object
+     * @return integer, -1 if not supported | range 0-503 for LTE | range 0-1007 for 5G
+     */
+    public int getPci(CellInfo cellInfo) {
+        int pci = -1;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+            // Build version >= 30 and 5G network
+            CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
+            pci = (int) cellIdentity.getPci();
+        } else if (cellInfo instanceof CellInfoLte) {
+            CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
+            pci = cellIdentity.getPci();
+        }
+
+        return pci;
     }
 }

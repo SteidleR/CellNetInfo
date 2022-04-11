@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.core.util.Pair;
+
 import java.util.List;
 import xyz.steidle.cellularnetworkmapper.R;
 import xyz.steidle.cellularnetworkmapper.utils.CellParser;
@@ -52,27 +54,38 @@ public class CellInfoAdapter extends BaseAdapter {
     View vi = view;
     if (vi == null) vi = mLayoutInflater.inflate(R.layout.row, null);
 
-    TextView header = vi.findViewById(R.id.cell_header);
-    TextView country = vi.findViewById(R.id.cell_mcc);
-    TextView body = vi.findViewById(R.id.cell_text);
+    TextView headerText = vi.findViewById(R.id.cell_header);
+
+    TextView mccText = vi.findViewById(R.id.cell_mcc);
+    TextView mncText = vi.findViewById(R.id.cell_mnc);
+    TextView lacDescrText = vi.findViewById(R.id.cell_lac_descr);
+    TextView lacText = vi.findViewById(R.id.cell_lactac);
+    TextView cidText = vi.findViewById(R.id.cell_cid);
+    TextView pciText = vi.findViewById(R.id.cell_pci);
 
     Log.d("CellInfoAdapter", cellInfoList.get(i).toString());
 
-    CharSequence bodyText;
+    CellInfo cellInfo = cellInfoList.get(i);
 
-    if (cellInfoList.get(i) instanceof CellInfoLte) {
-      CellIdentityLte cellIdentity = ((CellInfoLte) cellInfoList.get(i)).getCellIdentity();
+    headerText.setText(cellParser.getCellHeader(cellInfo));
+    mccText.setText(cellParser.getMcc(cellInfo));
+    mncText.setText(cellParser.getMnc(cellInfo));
 
-      bodyText = cellIdentity.toString();
+    Pair<Integer, Integer> lacPair = cellParser.getLacTac(cellInfo);
+    lacDescrText.setText(lacPair.first);
+    lacText.setText(String.valueOf(lacPair.second));
+
+    cidText.setText(String.valueOf(cellParser.getCellId(cellInfo)));
+
+    int pci = cellParser.getPci(cellInfo);
+    if (pci == -1) {
+      vi.findViewById(R.id.cell_pci_descr).setVisibility(View.GONE);
+      pciText.setVisibility(View.GONE);
     } else {
-      CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfoList.get(i)).getCellIdentity();
-
-      bodyText = cellIdentity.toString();
+      vi.findViewById(R.id.cell_pci_descr).setVisibility(View.VISIBLE);
+      pciText.setVisibility(View.VISIBLE);
+      pciText.setText(String.valueOf(pci));
     }
-
-    header.setText(cellParser.getCellHeader(cellInfoList.get(i)));
-    country.setText(cellParser.getMcc(cellInfoList.get(i)));
-    body.setText(bodyText);
 
     return vi;
   }

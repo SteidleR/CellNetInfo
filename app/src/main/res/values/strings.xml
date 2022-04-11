@@ -7,6 +7,13 @@
     <string name="status_hint" translatable="false">Status</string>
     <string name="cell_header" translatable="false">%1$s : %2$s</string>
     <string name="btn_back">Back</string>
-    <string name="info_label" translatable="false">Info</string>
     <string name="unknown">Unknown</string>
+    <string name="row_mnc" translatable="false">MNC</string>
+    <string name="row_mcc" translatable="false">MCC</string>
+    <string name="cell_lac" translatable="false">LAC</string>
+    <string name="cell_tac" translatable="false">TAC</string>
+    <string name="cell_cid" translatable="false">CID</string>
+    <string name="cell_pci" translatable="false">PCI</string>
+    <string name="button_help" translatable="false">Info</string>
+    <string name="cell_strength_description">Cell Connection Strength</string>
 </resources>

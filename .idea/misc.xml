@@ -3,14 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable-anydpi/ic_action_help.xml" value="0.3635" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable-anydpi/ic_signal_3.xml" value="0.3465" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable/ic_baseline_signal_cellular_alt_24.xml" value="0.362" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable/ic_signal_0.xml" value="0.3465" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable/ic_signal_1.xml" value="0.3465" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable/ic_signal_2.xml" value="0.3465" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable/ic_signal_3.xml" value="0.3465" />
         <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable/layout_row_bg.xml" value="0.24" />
         <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/drawable/layout_status_bar_bg.xml" value="0.24" />
-        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/activity_help.xml" value="0.3625" />
-        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/activity_help.xml" value="0.5" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/help_window.xml" value="0.3220108695652174" />
         <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/history.xml" value="0.3220108695652174" />
         <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/listitem_cellinfo.xml" value="0.33" />
-        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/row.xml" value="0.25" />
+        <entry key="..\:/Robin/Dev/CellularNetworkMapper/app/src/main/res/layout/row.xml" value="0.33" />
       </map>
     </option>
   </component>

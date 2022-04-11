@@ -2,6 +2,7 @@
 <resources>
     <string name="help_operator">Betreiber</string>
     <string name="help_operator_info">Mobilfunknetzbetreiber</string>
+    <string name="help_network">Standard</string>
     <string name="help_network_info">Die Generation des Mobilfunknetzes</string>
     <string name="help_mcc">MCC</string>
     <string name="help_mcc_info">Mobile Country Code, Identifikationsnummer des Landes</string>

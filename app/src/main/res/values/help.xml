@@ -2,7 +2,7 @@
 <resources>
     <string name="help_operator">operator</string>
     <string name="help_operator_info">mobile network operator</string>
-    <string name="help_network">generation</string>
+    <string name="help_network">standard</string>
     <string name="help_network_info">Mobile cell network generation</string>
     <string name="help_mcc">MCC</string>
     <string name="help_mcc_info">Mobile Country Code, ID of cell country</string>
