@@ -15,6 +15,7 @@ import android.telephony.CellInfoLte;
 import android.telephony.CellInfoNr;
 import android.telephony.CellInfoTdscdma;
 import android.telephony.CellInfoWcdma;
+import android.telephony.CellSignalStrength;
 import android.text.TextUtils;
 
 import androidx.annotation.RequiresApi;
@@ -269,5 +270,59 @@ public class CellParser {
         }
 
         return pci;
+    }
+
+    /** Retrieves signal strength of cell from 0-4
+     * @param cellInfo CellInfo object
+     * @return integer, 0-4 representing singal strength, no signal: 0 | best signal: 4
+     */
+    public int getSignalStrength(CellInfo cellInfo) {
+        int signalStrength = 0;
+
+        CellSignalStrength cellSignalStrength = getCellSignalStrength(cellInfo);
+
+        if (cellSignalStrength != null)
+            signalStrength = cellSignalStrength.getLevel();
+
+        return signalStrength;
+    }
+
+    /** Returns the signal strength of cell in dBm
+     * @param cellInfo CellInfo object
+     * @return integer, dBm signal strength of cell
+     */
+    public int getSignalDbm(CellInfo cellInfo) {
+        int signalDbm = 0;
+
+        CellSignalStrength cellSignalStrength = getCellSignalStrength(cellInfo);
+
+        if (cellSignalStrength != null)
+            signalDbm = cellSignalStrength.getDbm();
+
+        return signalDbm;
+    }
+
+    /** Gets the CellSignalStrength object of the cell object
+     * @param cellInfo CellInfo object
+     * @return CellSignalStrength object
+     */
+    private CellSignalStrength getCellSignalStrength(CellInfo cellInfo) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Build version >= 30 and 5G network
+            return cellInfo.getCellSignalStrength();
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+            // Build version >= 29 and TDSCDMA network
+            return ((CellInfoTdscdma) cellInfo).getCellSignalStrength();
+        } else if (cellInfo instanceof CellInfoLte) {
+            return ((CellInfoLte) cellInfo).getCellSignalStrength();
+        } else if (cellInfo instanceof CellInfoGsm) {
+            return ((CellInfoGsm) cellInfo).getCellSignalStrength();
+        } else if (cellInfo instanceof CellInfoWcdma) {
+            return ((CellInfoWcdma) cellInfo).getCellSignalStrength();
+        } else if (cellInfo instanceof CellInfoCdma) {
+            return ((CellInfoCdma) cellInfo).getCellSignalStrength();
+        } else {
+            return null;
+        }
     }
 }

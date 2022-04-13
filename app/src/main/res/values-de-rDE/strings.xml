@@ -8,4 +8,9 @@
     <string name="btn_back">Zurück</string>
     <string name="unknown">Unbekannt</string>
     <string name="cell_strength_description">Cell Connection Strength</string>
+    <string name="icon_signal_strength_none">Kein Signal Icon</string>
+    <string name="icon_signal_strength_0">Sehr schlechtes Signal Icon</string>
+    <string name="icon_signal_strength_1">Schlechtes Signal Icon</string>
+    <string name="icon_signal_strength_2">Mittleres Signal Icon</string>
+    <string name="icon_signal_strength_3">Perfektes Signal Icon</string>
 </resources>

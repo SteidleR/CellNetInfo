@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="signalForeground" format="reference" />
+    <attr name="signalBackground" format="reference" />
+    <attr name="signalCross" format="reference" />
+</resources>

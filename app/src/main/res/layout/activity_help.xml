@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,14 +27,13 @@
                 android:id="@+id/help_operator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
                 android:text="@string/help_operator" />
 
             <TextView
                 android:id="@+id/help_operator_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/help_operator_info" />
         </TableRow>
 
@@ -45,14 +45,12 @@
                 android:id="@+id/help_network"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/help_network" />
 
             <TextView
                 android:id="@+id/help_network_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/help_network_info" />
         </TableRow>
 
@@ -64,15 +62,137 @@
                 android:id="@+id/help_mcc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/help_mcc" />
 
             <TextView
                 android:id="@+id/help_mcc_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/help_mcc_info" />
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/help_mnc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/help_mnc" />
+
+            <TextView
+                android:id="@+id/help_mnc_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/help_mnc_info" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_span="2"
+                android:layout_weight="1">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="40dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/icon_signal_strength_none"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_signal_none" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/icon_signal_strength_0"
+                        app:srcCompat="@drawable/ic_signal_0" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/icon_signal_strength_1"
+                        app:srcCompat="@drawable/ic_signal_1" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/icon_signal_strength_2"
+                        app:srcCompat="@drawable/ic_signal_2" />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/icon_signal_strength_3"
+                        app:srcCompat="@drawable/ic_signal_3" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/help_strength_none"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/help_strength_none"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/help_strength_0"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/help_strength_0"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/help_strength_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/help_strength_1"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/help_strength_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/help_strength_2"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        android:id="@+id/help_strength_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/help_strength_3"
+                        android:textAlignment="center" />
+                </TableRow>
+
+            </TableLayout>
+        </TableRow>
     </TableLayout>
+
 </LinearLayout>

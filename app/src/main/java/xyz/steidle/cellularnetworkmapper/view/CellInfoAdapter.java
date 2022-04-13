@@ -1,16 +1,13 @@
 package xyz.steidle.cellularnetworkmapper.view;
 
 import android.content.Context;
-import android.telephony.CellIdentityGsm;
-import android.telephony.CellIdentityLte;
 import android.telephony.CellInfo;
-import android.telephony.CellInfoGsm;
-import android.telephony.CellInfoLte;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.core.util.Pair;
@@ -55,13 +52,15 @@ public class CellInfoAdapter extends BaseAdapter {
     if (vi == null) vi = mLayoutInflater.inflate(R.layout.row, null);
 
     TextView headerText = vi.findViewById(R.id.cell_header);
-
     TextView mccText = vi.findViewById(R.id.cell_mcc);
     TextView mncText = vi.findViewById(R.id.cell_mnc);
     TextView lacDescrText = vi.findViewById(R.id.cell_lac_descr);
     TextView lacText = vi.findViewById(R.id.cell_lactac);
     TextView cidText = vi.findViewById(R.id.cell_cid);
     TextView pciText = vi.findViewById(R.id.cell_pci);
+    TextView dbmText = vi.findViewById(R.id.cell_strength_text);
+
+    ImageView signalImage = vi.findViewById(R.id.img_signal);
 
     Log.d("CellInfoAdapter", cellInfoList.get(i).toString());
 
@@ -87,6 +86,37 @@ public class CellInfoAdapter extends BaseAdapter {
       pciText.setText(String.valueOf(pci));
     }
 
+    signalImage.setImageResource(getIconForSignal(cellParser.getSignalStrength(cellInfo)));
+
+    dbmText.setText(context.getString(R.string.cell_signal, cellParser.getSignalDbm(cellInfo)));
+
     return vi;
+  }
+
+  /** Returns id of icon for signal strength
+   * @param strength cell signal strength range 0-4
+   * @return resource id of icon
+   */
+  private int getIconForSignal(int strength) {
+    int resId;
+
+    switch (strength) {
+      case 1:
+        resId = R.drawable.ic_signal_0;
+        break;
+      case 2:
+        resId = R.drawable.ic_signal_1;
+        break;
+      case 3:
+        resId = R.drawable.ic_signal_2;
+        break;
+      case 4:
+        resId = R.drawable.ic_signal_3;
+        break;
+      default:
+        resId = R.drawable.ic_signal_none;
+    }
+
+    return resId;
   }
 }
