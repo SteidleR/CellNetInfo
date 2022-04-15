@@ -1,33 +1,60 @@
 package xyz.steidle.cellularnetworkmapper;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.telephony.CellInfo;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import xyz.steidle.cellularnetworkmapper.utils.DataHolder;
+import xyz.steidle.cellularnetworkmapper.utils.DatabaseHandler;
 import xyz.steidle.cellularnetworkmapper.view.CellInfoAdapter;
 
 public class MainActivity extends AppCompatActivity {
-  private CellInfoHandler cellInfoHandler;
   private ListView cellInfoListView;
   private TextView noCellsTextView;
   private TextView statusTextView;
+  private BroadcastReceiver receiver;
+  private CellInfoHandler cellInfoHandler;
+  private DatabaseHandler databaseHandler;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    databaseHandler = new DatabaseHandler(this);
+
     cellInfoListView = findViewById(R.id.listScrollView);
     noCellsTextView = findViewById(R.id.noCellsWarning);
     statusTextView = findViewById(R.id.statusTextView);
 
     findViewById(R.id.buttonHelp).setOnClickListener(view -> openHelpActivity());
+    findViewById(R.id.buttonHistory).setOnClickListener(view -> openHistoryActivity());
 
     cellInfoHandler = new CellInfoHandler(this);
+
+    IntentFilter intentFilter = new IntentFilter();
+    intentFilter.addAction("android.intent.action.TIME_TICK");
+
+    receiver = new BroadcastReceiver() {
+      @Override
+      public void onReceive(Context context, Intent intent) {
+        reloadCells();
+      }
+    };
+    registerReceiver(receiver, intentFilter);
 
     reloadCells();
   }
@@ -38,7 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
     List<CellInfo> cellInfoList = cellInfoHandler.getCells();
 
-    if (cellInfoList != null) {
+    for (CellInfo cellInfo : cellInfoList)
+      databaseHandler.addCell(cellInfo);
+
+    if (!cellInfoList.isEmpty()) {
       noCellsTextView.setVisibility(View.INVISIBLE);
       cellInfoListView.setAdapter(new CellInfoAdapter(this, cellInfoList));
       resetStatus();
@@ -52,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
    * @param strId Status String ID
    */
   private void setStatus(int strId) {
+    Log.d("MainActivity", getResources().getString(strId));
     statusTextView.setText(getResources().getString(strId));
   }
 
@@ -64,5 +95,17 @@ public class MainActivity extends AppCompatActivity {
   private void openHelpActivity() {
     Intent intent = new Intent(this, HelpActivity.class);
     startActivity(intent);
+  }
+
+  /** creates and starts the history activity */
+  private void openHistoryActivity() {
+    Intent intent = new Intent(this, HistoryActivity.class);
+    startActivity(intent);
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    unregisterReceiver(receiver);
   }
 }

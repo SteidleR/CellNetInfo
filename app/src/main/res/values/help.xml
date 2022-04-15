@@ -13,4 +13,10 @@
     <string name="help_strength_3">Good</string>
     <string name="help_strength_2">Middle</string>
     <string name="help_strength_1">Poor</string>
+    <string name="help_tac">TAC</string>
+    <string name="help_tac_info">TAC Info</string>
+    <string name="help_lac">LAC</string>
+    <string name="help_lac_info">Location Area Code</string>
+    <string name="help_cid_info">Cell ID</string>
+    <string name="help_cid">CID</string>
 </resources>

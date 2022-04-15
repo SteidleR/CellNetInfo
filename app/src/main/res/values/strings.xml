@@ -22,4 +22,5 @@
     <string name="icon_signal_strength_1">Poor signal icon</string>
     <string name="icon_signal_strength_2">Middle signal icon</string>
     <string name="icon_signal_strength_3">Good signal icon</string>
+    <string name="button_history">History</string>
 </resources>

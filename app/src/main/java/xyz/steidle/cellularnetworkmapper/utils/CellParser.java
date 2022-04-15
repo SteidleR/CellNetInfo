@@ -37,7 +37,6 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return Header for row element, format: '{Operator} : {Generation}'
      */
-    // @RequiresApi(api = Build.VERSION_CODES.P)
     public CharSequence getCellHeader(CellInfo cellInfo) {
         CharSequence header;
 
@@ -100,6 +99,50 @@ public class CellParser {
         }
 
         return context.getString(R.string.cell_header, context.getString(R.string.unknown), generation);
+    }
+
+    public String getGeneration(CellInfo cellInfo) {
+        String generation = "Unknown";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+            generation = "NR";
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+            generation = "TDSCDMA";
+        } else if (cellInfo instanceof CellInfoLte) {
+            generation = "LTE";
+        } else if (cellInfo instanceof CellInfoGsm) {
+            generation = "GSM";
+        } else if (cellInfo instanceof CellInfoWcdma) {
+            generation = "WCDMA";
+        } else if (cellInfo instanceof CellInfoCdma) {
+            generation = "CDMA";
+        }
+
+        return generation;
+    }
+
+    public String getProvider(CellInfo cellInfo) {
+        CellIdentity cellIdentity = null;
+        String provider = "Unknown";
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+                // Build version >= 30 and 5G network
+                cellIdentity = cellInfo.getCellIdentity();
+            } else if (cellInfo instanceof CellInfoLte) {
+                cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
+            } else if (cellInfo instanceof CellInfoGsm) {
+                cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();
+            } else if (cellInfo instanceof CellInfoCdma) {
+                cellIdentity = ((CellInfoCdma) cellInfo).getCellIdentity();
+            } else if (cellInfo instanceof CellInfoWcdma) {
+                cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();
+            }
+
+            if (cellIdentity != null && !TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))
+                provider = (String) cellIdentity.getOperatorAlphaShort();
+        }
+
+        return provider;
     }
 
     /** Extract MCC from given CellInfo

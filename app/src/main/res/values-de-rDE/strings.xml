@@ -13,4 +13,5 @@
     <string name="icon_signal_strength_1">Schlechtes Signal Icon</string>
     <string name="icon_signal_strength_2">Mittleres Signal Icon</string>
     <string name="icon_signal_strength_3">Perfektes Signal Icon</string>
+    <string name="button_history">History</string>
 </resources>

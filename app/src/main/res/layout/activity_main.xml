@@ -21,10 +21,19 @@
                 android:id="@+id/button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginEnd="1dp"
                 android:layout_weight="1"
                 android:background="@color/design_default_color_primary_variant"
                 android:text="@string/button_settings" />
+
+            <Button
+                android:id="@+id/buttonHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@color/design_default_color_primary_variant"
+                android:text="@string/button_history" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -39,7 +48,7 @@
                 android:background="#00FFFFFF"
                 android:contentDescription="@string/button_help"
                 android:minHeight="48dp"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_action_help" />
 
         </LinearLayout>
