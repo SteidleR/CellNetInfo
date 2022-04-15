@@ -30,6 +30,9 @@ public class HistoryActivity extends AppCompatActivity {
         loadCellHistory();
     }
 
+    /**
+     * Loads cell information to user interface
+     */
     private void loadCellHistory() {
         ListView listView = (ListView) findViewById(R.id.list);
 

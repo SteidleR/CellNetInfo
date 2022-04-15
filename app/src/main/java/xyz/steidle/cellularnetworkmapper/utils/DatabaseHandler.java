@@ -68,6 +68,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
+    /** Creates a new SQLite Table row from CellInfo
+     * @param cellInfo CellInfo object
+     */
     public void addCell(CellInfo cellInfo) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -93,6 +96,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /** Returns all cells stored in database table as string
+     * @return List of Strings containing representation of data rows
+     */
     public List<String> getAllCells() {
         List<String> contactList = new ArrayList<>();
         // Select All Query
