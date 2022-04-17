@@ -23,4 +23,13 @@
     <string name="icon_signal_strength_2">Middle signal icon</string>
     <string name="icon_signal_strength_3">Good signal icon</string>
     <string name="button_history">History</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="update_header" translatable="false">Update</string>
+    <string name="update_header_summary">Minimum values to trigger location updates.</string>
+
+    <!-- Update Preferences -->
+    <string name="min_update_time_title">Time between updates</string>
+    <string name="min_update_loc_title">Distance between updates</string>
 </resources>

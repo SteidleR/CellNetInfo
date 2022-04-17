@@ -1,0 +1,24 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/update_header"
+        app:summary="@string/update_header_summary">
+
+        <ListPreference
+            app:defaultValue="30000"
+            app:entries="@array/min_update_time_entries"
+            app:entryValues="@array/min_update_time_values"
+            app:key="min_update_time"
+            app:title="@string/min_update_time_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="500"
+            app:entries="@array/min_update_loc_entries"
+            app:entryValues="@array/min_update_loc_values"
+            app:key="min_update_loc"
+            app:title="@string/min_update_loc_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

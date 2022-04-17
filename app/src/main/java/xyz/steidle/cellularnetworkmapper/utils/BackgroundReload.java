@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper;
+package xyz.steidle.cellularnetworkmapper.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +7,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
-
-import xyz.steidle.cellularnetworkmapper.utils.DataHolder;
 
 public class BackgroundReload extends Worker {
 

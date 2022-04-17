@@ -14,4 +14,8 @@
     <string name="icon_signal_strength_2">Mittleres Signal Icon</string>
     <string name="icon_signal_strength_3">Perfektes Signal Icon</string>
     <string name="button_history">History</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="min_update_time_title">Zeit zwischen Update</string>
+    <string name="min_update_loc_title">Entfernung zwischen Update</string>
+    <string name="update_header_summary">Minimale Werte um Standort zu aktualisieren</string>
 </resources>

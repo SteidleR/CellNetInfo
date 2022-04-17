@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper;
+package xyz.steidle.cellularnetworkmapper.utils;
 
 import android.content.Context;
 import android.telephony.CellInfo;

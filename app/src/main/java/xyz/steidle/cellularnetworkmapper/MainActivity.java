@@ -1,22 +1,29 @@
 package xyz.steidle.cellularnetworkmapper;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.telephony.CellInfo;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+import xyz.steidle.cellularnetworkmapper.utils.CellInfoHandler;
 import xyz.steidle.cellularnetworkmapper.utils.DataHolder;
 import xyz.steidle.cellularnetworkmapper.utils.DatabaseHandler;
 import xyz.steidle.cellularnetworkmapper.view.CellInfoAdapter;
@@ -28,11 +35,27 @@ public class MainActivity extends AppCompatActivity {
   private BroadcastReceiver receiver;
   private CellInfoHandler cellInfoHandler;
   private DatabaseHandler databaseHandler;
+  private SharedPreferences sharedPreferences;
+
+  private int LOCATION_REFRESH_TIME = 15000; // 15 seconds to update
+  private int LOCATION_REFRESH_DISTANCE = 500; // 500 meters to update
+
+  private final LocationListener mLocationListener = location -> DataHolder.getInstance().setLocation(location);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
+    Log.d("Prefs", String.valueOf(sharedPreferences.getAll()));
+    LOCATION_REFRESH_TIME = Integer.parseInt(sharedPreferences.getString("min_update_loc", String.valueOf(LOCATION_REFRESH_TIME)));
+
+    sharedPreferences.registerOnSharedPreferenceChangeListener((sharedPreferences, s) -> {
+      LOCATION_REFRESH_TIME = Integer.parseInt(sharedPreferences.getString("min_update_loc", String.valueOf(LOCATION_REFRESH_TIME)));
+      Log.d("Preferences:Update", s);
+      Log.d("Preferences:Update", String.valueOf(LOCATION_REFRESH_TIME));
+    });
 
     databaseHandler = new DatabaseHandler(this);
 
@@ -42,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     findViewById(R.id.buttonHelp).setOnClickListener(view -> openHelpActivity());
     findViewById(R.id.buttonHistory).setOnClickListener(view -> openHistoryActivity());
+    findViewById(R.id.buttonSettings).setOnClickListener(view -> openSettingsActivity());
 
     cellInfoHandler = new CellInfoHandler(this);
 
@@ -56,7 +80,14 @@ public class MainActivity extends AppCompatActivity {
     };
     registerReceiver(receiver, intentFilter);
 
-    reloadCells();
+    LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
+      return;
+    }
+    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
+            LOCATION_REFRESH_DISTANCE, mLocationListener);
   }
 
   /** Restart cell scan and displays all cells in list. */
@@ -100,6 +131,12 @@ public class MainActivity extends AppCompatActivity {
   /** creates and starts the history activity */
   private void openHistoryActivity() {
     Intent intent = new Intent(this, HistoryActivity.class);
+    startActivity(intent);
+  }
+
+  /** creates and starts the settings activity */
+  private void openSettingsActivity() {
+    Intent intent = new Intent(this, SettingsActivity.class);
     startActivity(intent);
   }
 

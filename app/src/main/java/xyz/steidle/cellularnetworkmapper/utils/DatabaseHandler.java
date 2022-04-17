@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Location;
 import android.telephony.CellInfo;
+import android.util.Log;
 
 import androidx.core.util.Pair;
 
@@ -15,7 +17,7 @@ import java.util.List;
 import xyz.steidle.cellularnetworkmapper.R;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "cellsHistory";
     private static final String TABLE_CELLS = "cells";
 
@@ -30,31 +32,41 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_PCI = "pci";
     private static final String KEY_SIGNAL = "signal";
     private static final String KEY_TIMESTAMP = "timestamp";
+    private static final String KEY_LATITUDE = "latitude";
+    private static final String KEY_LONGITUDE = "longitude";
 
     CellParser cellParser;
+    DataHolder dataHolder;
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
         cellParser = new CellParser(context);
+        dataHolder = DataHolder.getInstance();
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String stringValue = " INTEGER,";
+        String integerValue = " INTEGER";
+        String textValue = " TEXT";
+        String realValue = " REAL";
 
         String createCellsTableSql = "CREATE TABLE " + TABLE_CELLS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY,"
-                + KEY_STANDARD + " TEXT,"
-                + KEY_PROVIDER + " TEXT,"
-                + KEY_MCC + stringValue
-                + KEY_MNC + stringValue
-                + KEY_TAC + stringValue
-                + KEY_LAC + stringValue
-                + KEY_CID + stringValue
-                + KEY_PCI + stringValue
-                + KEY_SIGNAL + stringValue
-                + KEY_TIMESTAMP + " TEXT" + ")";
+                + KEY_ID + integerValue + " PRIMARY KEY,"
+                + KEY_STANDARD + textValue + ","
+                + KEY_PROVIDER + textValue + ","
+                + KEY_MCC + integerValue + ","
+                + KEY_MNC + integerValue + ","
+                + KEY_TAC + integerValue + ","
+                + KEY_LAC + integerValue + ","
+                + KEY_CID + integerValue + ","
+                + KEY_PCI + integerValue + ","
+                + KEY_SIGNAL + integerValue + ","
+                + KEY_TIMESTAMP + textValue + ","
+                + KEY_LATITUDE + realValue + ","
+                + KEY_LONGITUDE + realValue + ")";
+
+        Log.d("DatabaseHandler", createCellsTableSql);
 
         sqLiteDatabase.execSQL(createCellsTableSql);
     }
@@ -92,6 +104,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_SIGNAL, cellParser.getSignalStrength(cellInfo));
         values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
 
+        Location location = dataHolder.getLocation();
+
+        values.put(KEY_LATITUDE, location.getLatitude());
+        values.put(KEY_LONGITUDE, location.getLongitude());
+
         db.insert(TABLE_CELLS, null, values);
         db.close();
     }
@@ -119,7 +136,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         + cursor.getString(6) + " "
                         + cursor.getString(7) + " "
                         + cursor.getString(8) + " "
-                        + cursor.getString(9) + " ";
+                        + cursor.getString(9) + " "
+                        + cursor.getString(11) + " "
+                        + cursor.getString(12) + " ";
                 contactList.add(cell);
             } while (cursor.moveToNext());
         }
