@@ -35,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
   private BroadcastReceiver receiver;
   private CellInfoHandler cellInfoHandler;
   private DatabaseHandler databaseHandler;
-  private SharedPreferences sharedPreferences;
 
-  private int LOCATION_REFRESH_TIME = 15000; // 15 seconds to update
-  private int LOCATION_REFRESH_DISTANCE = 500; // 500 meters to update
+  private int locationRefreshTime = 15000; // 15 seconds to update
+  private int locationRefreshDistance = 500; // 500 meters to update
 
   private final LocationListener mLocationListener = location -> DataHolder.getInstance().setLocation(location);
 
@@ -47,14 +46,17 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
-    Log.d("Prefs", String.valueOf(sharedPreferences.getAll()));
-    LOCATION_REFRESH_TIME = Integer.parseInt(sharedPreferences.getString("min_update_loc", String.valueOf(LOCATION_REFRESH_TIME)));
+    SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
+    Log.d("Prefs", String.valueOf(sharedPreferences1.getAll()));
+    locationRefreshTime = Integer.parseInt(sharedPreferences1.getString("min_update_time", String.valueOf(locationRefreshTime)));
+    locationRefreshDistance = Integer.parseInt(sharedPreferences1.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
 
-    sharedPreferences.registerOnSharedPreferenceChangeListener((sharedPreferences, s) -> {
-      LOCATION_REFRESH_TIME = Integer.parseInt(sharedPreferences.getString("min_update_loc", String.valueOf(LOCATION_REFRESH_TIME)));
-      Log.d("Preferences:Update", s);
-      Log.d("Preferences:Update", String.valueOf(LOCATION_REFRESH_TIME));
+    sharedPreferences1.registerOnSharedPreferenceChangeListener((sharedPreferences, s) -> {
+      locationRefreshDistance = Integer.parseInt(sharedPreferences.getString("min_update_time", String.valueOf(locationRefreshTime)));
+      locationRefreshDistance = Integer.parseInt(sharedPreferences.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
+      Log.d("Preferences:UpdateString", s);
+      Log.d("Preferences:Update", String.valueOf(locationRefreshTime));
+      Log.d("Preferences:Update", String.valueOf(locationRefreshDistance));
     });
 
     databaseHandler = new DatabaseHandler(this);
@@ -86,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
       ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
       return;
     }
-    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
-            LOCATION_REFRESH_DISTANCE, mLocationListener);
+    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime,
+            locationRefreshDistance, mLocationListener);
   }
 
   /** Restart cell scan and displays all cells in list. */

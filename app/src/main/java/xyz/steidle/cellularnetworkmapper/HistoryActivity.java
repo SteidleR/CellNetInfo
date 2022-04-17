@@ -1,21 +1,11 @@
 package xyz.steidle.cellularnetworkmapper;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.telephony.CellInfo;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-import java.util.List;
-
-import xyz.steidle.cellularnetworkmapper.utils.CellParser;
 import xyz.steidle.cellularnetworkmapper.utils.DatabaseHandler;
 
 public class HistoryActivity extends AppCompatActivity {

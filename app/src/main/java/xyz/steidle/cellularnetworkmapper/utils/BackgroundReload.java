@@ -24,9 +24,6 @@ public class BackgroundReload extends Worker {
     @Override
     public Result doWork() {
         Log.d("BackgroundReload", "DoWork");
-        DataHolder.getInstance().setCellInfoList(cellInfoHandler.getCells());
-
-        getApplicationContext().sendBroadcast(new Intent("xyz.steidle.intent.action.RELOAD_CELLS"));
 
         return Result.success();
     }
