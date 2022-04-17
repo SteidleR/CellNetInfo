@@ -46,6 +46,30 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    handlePreferences();
+
+    cellInfoHandler = new CellInfoHandler(this);
+    databaseHandler = new DatabaseHandler(this);
+
+    cellInfoListView = findViewById(R.id.listScrollView);
+    noCellsTextView = findViewById(R.id.noCellsWarning);
+    statusTextView = findViewById(R.id.statusTextView);
+
+    // change activity based on button press
+    findViewById(R.id.buttonHelp).setOnClickListener(view -> openNewActivity(HelpActivity.class));
+    findViewById(R.id.buttonHistory).setOnClickListener(view -> openNewActivity(HistoryActivity.class));
+    findViewById(R.id.buttonSettings).setOnClickListener(view -> openNewActivity(SettingsActivity.class));
+
+    // check if location is available, if not request the permission
+    LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
+      return;
+    }
+    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
+  }
+
+  private void handlePreferences() {
     SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
     Log.d("Prefs", String.valueOf(sharedPreferences1.getAll()));
     locationRefreshTime = Integer.parseInt(sharedPreferences1.getString("min_update_time", String.valueOf(locationRefreshTime)));
@@ -58,22 +82,11 @@ public class MainActivity extends AppCompatActivity {
       Log.d("Preferences:Update", String.valueOf(locationRefreshTime));
       Log.d("Preferences:Update", String.valueOf(locationRefreshDistance));
     });
+  }
 
-    databaseHandler = new DatabaseHandler(this);
-
-    cellInfoListView = findViewById(R.id.listScrollView);
-    noCellsTextView = findViewById(R.id.noCellsWarning);
-    statusTextView = findViewById(R.id.statusTextView);
-
-    findViewById(R.id.buttonHelp).setOnClickListener(view -> openHelpActivity());
-    findViewById(R.id.buttonHistory).setOnClickListener(view -> openHistoryActivity());
-    findViewById(R.id.buttonSettings).setOnClickListener(view -> openSettingsActivity());
-
-    cellInfoHandler = new CellInfoHandler(this);
-
+  private void createBackgroundReload() {
     IntentFilter intentFilter = new IntentFilter();
     intentFilter.addAction("android.intent.action.TIME_TICK");
-
     receiver = new BroadcastReceiver() {
       @Override
       public void onReceive(Context context, Intent intent) {
@@ -81,15 +94,6 @@ public class MainActivity extends AppCompatActivity {
       }
     };
     registerReceiver(receiver, intentFilter);
-
-    LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
-      return;
-    }
-    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime,
-            locationRefreshDistance, mLocationListener);
   }
 
   /** Restart cell scan and displays all cells in list. */
@@ -124,21 +128,9 @@ public class MainActivity extends AppCompatActivity {
     statusTextView.setText("");
   }
 
-  /** creates and starts the help activity */
-  private void openHelpActivity() {
-    Intent intent = new Intent(this, HelpActivity.class);
-    startActivity(intent);
-  }
-
-  /** creates and starts the history activity */
-  private void openHistoryActivity() {
-    Intent intent = new Intent(this, HistoryActivity.class);
-    startActivity(intent);
-  }
-
-  /** creates and starts the settings activity */
-  private void openSettingsActivity() {
-    Intent intent = new Intent(this, SettingsActivity.class);
+  /** starts new activity based on given class parameter */
+  private void openNewActivity(Class<?> cls)  {
+    Intent intent = new Intent(this, cls);
     startActivity(intent);
   }
 

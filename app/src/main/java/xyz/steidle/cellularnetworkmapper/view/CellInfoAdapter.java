@@ -18,7 +18,6 @@ import xyz.steidle.cellularnetworkmapper.utils.CellParser;
 
 public class CellInfoAdapter extends BaseAdapter {
   Context context;
-  CellParser cellParser;
   List<CellInfo> cellInfoList;
   private final LayoutInflater mLayoutInflater;
 
@@ -26,8 +25,6 @@ public class CellInfoAdapter extends BaseAdapter {
     this.context = context;
     this.cellInfoList = cellInfoList;
     mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-    cellParser = new CellParser(context);
   }
 
   @Override
@@ -51,6 +48,7 @@ public class CellInfoAdapter extends BaseAdapter {
     View vi = view;
     if (vi == null) vi = mLayoutInflater.inflate(R.layout.row, null);
 
+    // store row elements to fill with data
     TextView headerText = vi.findViewById(R.id.cell_header);
     TextView mccText = vi.findViewById(R.id.cell_mcc);
     TextView mncText = vi.findViewById(R.id.cell_mnc);
@@ -59,24 +57,33 @@ public class CellInfoAdapter extends BaseAdapter {
     TextView cidText = vi.findViewById(R.id.cell_cid);
     TextView pciText = vi.findViewById(R.id.cell_pci);
     TextView dbmText = vi.findViewById(R.id.cell_strength_text);
-
     ImageView signalImage = vi.findViewById(R.id.img_signal);
 
-    Log.d("CellInfoAdapter", cellInfoList.get(i).toString());
-
     CellInfo cellInfo = cellInfoList.get(i);
+    Log.d("CellInfoAdapter", cellInfo.toString());
 
-    headerText.setText(cellParser.getCellHeader(cellInfo));
-    mccText.setText(cellParser.getMcc(cellInfo));
-    mncText.setText(cellParser.getMnc(cellInfo));
+    CharSequence operator = CellParser.getProvider(cellInfo);
+    CharSequence generation = CellParser.getGeneration(cellInfo);
 
-    Pair<Integer, Integer> lacPair = cellParser.getLacTac(cellInfo);
+    headerText.setText(context.getString(R.string.cell_header, operator, generation));
+
+    String mcc = CellParser.getMcc(cellInfo);
+    if (mcc.equals(""))
+      mcc = context.getString(R.string.unknown);
+    mccText.setText(mcc);
+
+    String mnc = CellParser.getMnc(cellInfo);
+    if (mcc.equals(""))
+      mnc = context.getString(R.string.unknown);
+    mncText.setText(mnc);
+
+    Pair<Integer, Integer> lacPair = CellParser.getLacTac(cellInfo);
     lacDescrText.setText(lacPair.first);
     lacText.setText(String.valueOf(lacPair.second));
 
-    cidText.setText(String.valueOf(cellParser.getCellId(cellInfo)));
+    cidText.setText(String.valueOf(CellParser.getCellId(cellInfo)));
 
-    int pci = cellParser.getPci(cellInfo);
+    int pci = CellParser.getPci(cellInfo);
     if (pci == -1) {
       vi.findViewById(R.id.cell_pci_descr).setVisibility(View.GONE);
       pciText.setVisibility(View.GONE);
@@ -86,9 +93,9 @@ public class CellInfoAdapter extends BaseAdapter {
       pciText.setText(String.valueOf(pci));
     }
 
-    signalImage.setImageResource(getIconForSignal(cellParser.getSignalStrength(cellInfo)));
+    signalImage.setImageResource(getIconForSignal(CellParser.getSignalStrength(cellInfo)));
 
-    dbmText.setText(context.getString(R.string.cell_signal, cellParser.getSignalDbm(cellInfo)));
+    dbmText.setText(context.getString(R.string.cell_signal, CellParser.getSignalDbm(cellInfo)));
 
     return vi;
   }

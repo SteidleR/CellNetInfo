@@ -41,7 +41,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
-        cellParser = new CellParser(context);
         dataHolder = DataHolder.getInstance();
     }
 
@@ -88,20 +87,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        values.put(KEY_STANDARD, cellParser.getGeneration(cellInfo));
-        values.put(KEY_PROVIDER, cellParser.getProvider(cellInfo));
-        values.put(KEY_MCC, cellParser.getMcc(cellInfo));
-        values.put(KEY_MNC, cellParser.getMnc(cellInfo));
+        values.put(KEY_STANDARD, CellParser.getGeneration(cellInfo));
+        values.put(KEY_PROVIDER, CellParser.getProvider(cellInfo));
+        values.put(KEY_MCC, CellParser.getMcc(cellInfo));
+        values.put(KEY_MNC, CellParser.getMnc(cellInfo));
 
-        Pair<Integer, Integer> lacTac = cellParser.getLacTac(cellInfo);
+        Pair<Integer, Integer> lacTac = CellParser.getLacTac(cellInfo);
         if (lacTac.first.equals(R.string.cell_tac))
             values.put(KEY_LAC, lacTac.second);
         else
             values.put(KEY_TAC, lacTac.second);
 
-        values.put(KEY_CID, cellParser.getCellId(cellInfo));
-        values.put(KEY_PCI, cellParser.getPci(cellInfo));
-        values.put(KEY_SIGNAL, cellParser.getSignalStrength(cellInfo));
+        values.put(KEY_CID, CellParser.getCellId(cellInfo));
+        values.put(KEY_PCI, CellParser.getPci(cellInfo));
+        values.put(KEY_SIGNAL, CellParser.getSignalStrength(cellInfo));
         values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
 
         Location location = dataHolder.getLocation();

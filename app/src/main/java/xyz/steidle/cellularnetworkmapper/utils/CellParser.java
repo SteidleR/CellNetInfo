@@ -29,26 +29,11 @@ import xyz.steidle.cellularnetworkmapper.R;
 public class CellParser {
     Context context;
 
-    public CellParser(Context context) {
-        this.context = context;
-    }
-
-    /** Create Header string from CellInfo
-     * @param cellInfo CellInfo object
-     * @return Header for row element, format: '{Operator} : {Generation}'
-     */
-    public CharSequence getCellHeader(CellInfo cellInfo) {
-        CharSequence operator = getProvider(cellInfo);
-        CharSequence generation = getGeneration(cellInfo);
-
-        return context.getString(R.string.cell_header, operator, generation);
-    }
-
     /** Return generation of cell as string
      * @param cellInfo CellInfo object
      * @return String, generation of cell net
      */
-    public String getGeneration(CellInfo cellInfo) {
+    public static String getGeneration(CellInfo cellInfo) {
         String generation = "Unknown";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
             generation = "NR";
@@ -71,7 +56,7 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return String, provider of cell net
      */
-    public String getProvider(CellInfo cellInfo) {
+    public static String getProvider(CellInfo cellInfo) {
         CellIdentity cellIdentity = null;
         String provider = "Unknown";
 
@@ -100,8 +85,8 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return String representation of MCC
      */
-    public String getMcc(CellInfo cellInfo) {
-        String mcc = context.getString(R.string.unknown);
+    public static String getMcc(CellInfo cellInfo) {
+        String mcc = "";
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             // Build version >= 28
@@ -147,8 +132,8 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return String representation of MNC
      */
-    public String getMnc(CellInfo cellInfo) {
-        String mnc = context.getString(R.string.unknown);
+    public static String getMnc(CellInfo cellInfo) {
+        String mnc = "";
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             // Build version >= 28
@@ -190,7 +175,7 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return Pair containing resource id for row name and Lac/ Tac of cell
      */
-    public Pair<Integer, Integer> getLacTac(CellInfo cellInfo) {
+    public static Pair<Integer, Integer> getLacTac(CellInfo cellInfo) {
         int code = 0;
         int displayName = R.string.cell_lac;
 
@@ -222,7 +207,7 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return Long representing cell id
      */
-    public long getCellId(CellInfo cellInfo) {
+    public static long getCellId(CellInfo cellInfo) {
         long cid = 0;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
@@ -251,7 +236,7 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return integer, -1 if not supported | range 0-503 for LTE | range 0-1007 for 5G
      */
-    public int getPci(CellInfo cellInfo) {
+    public static int getPci(CellInfo cellInfo) {
         int pci = -1;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
@@ -270,7 +255,7 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return integer, 0-4 representing singal strength, no signal: 0 | best signal: 4
      */
-    public int getSignalStrength(CellInfo cellInfo) {
+    public static int getSignalStrength(CellInfo cellInfo) {
         int signalStrength = 0;
 
         CellSignalStrength cellSignalStrength = getCellSignalStrength(cellInfo);
@@ -285,7 +270,7 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return integer, dBm signal strength of cell
      */
-    public int getSignalDbm(CellInfo cellInfo) {
+    public static int getSignalDbm(CellInfo cellInfo) {
         int signalDbm = 0;
 
         CellSignalStrength cellSignalStrength = getCellSignalStrength(cellInfo);
@@ -300,7 +285,7 @@ public class CellParser {
      * @param cellInfo CellInfo object
      * @return CellSignalStrength object
      */
-    private CellSignalStrength getCellSignalStrength(CellInfo cellInfo) {
+    private static CellSignalStrength getCellSignalStrength(CellInfo cellInfo) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // Build version >= 30 and 5G network
             return cellInfo.getCellSignalStrength();
