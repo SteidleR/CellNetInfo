@@ -1,6 +1,5 @@
 package xyz.steidle.cellularnetworkmapper.utils;
 
-import android.content.Context;
 import android.os.Build;
 import android.telephony.CellIdentity;
 import android.telephony.CellIdentityGsm;
@@ -18,7 +17,6 @@ import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrength;
 import android.text.TextUtils;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.util.Pair;
 
 import xyz.steidle.cellularnetworkmapper.R;
@@ -27,7 +25,11 @@ import xyz.steidle.cellularnetworkmapper.R;
  * Utility functions to parse CellInfo objects
  */
 public class CellParser {
-    Context context;
+
+    /** CellParser constructor, throws IllegalStateException because class is not intended to use as non-static class  */
+    private CellParser() {
+        throw new IllegalStateException("Utility class");
+    }
 
     /** Return generation of cell as string
      * @param cellInfo CellInfo object
@@ -122,7 +124,8 @@ public class CellParser {
                 intMcc = cellIdentity.getMcc();
             }
 
-            mcc = Integer.toString(intMcc);
+            if (intMcc != -1)
+                mcc = Integer.toString(intMcc);
         }
 
         return mcc;

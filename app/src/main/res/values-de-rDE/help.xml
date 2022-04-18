@@ -2,11 +2,8 @@
 <resources>
     <string name="help_operator">Betreiber</string>
     <string name="help_operator_info">Mobilfunknetzbetreiber</string>
-    <string name="help_network">Standard</string>
     <string name="help_network_info">Die Generation des Mobilfunknetzes</string>
-    <string name="help_mcc">MCC</string>
     <string name="help_mcc_info">Mobile Country Code, Identifikationsnummer des Landes</string>
-    <string name="help_mnc">MNC</string>
     <string name="help_mnc_info">Mobile Network Code</string>
     <string name="help_strength_none">"Kein Signal "</string>
     <string name="help_strength_0">Sehr schlecht</string>
@@ -15,8 +12,5 @@
     <string name="help_strength_1">Schlecht</string>
     <string name="help_tac">TAC</string>
     <string name="help_tac_info">TAC Info</string>
-    <string name="help_lac">LAC</string>
-    <string name="help_lac_info">Location Area Code</string>
-    <string name="help_cid_info">Cell ID</string>
-    <string name="help_cid">CID</string>
+    <string name="help_dbm">dBm</string>
 </resources>

@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
     handlePreferences();
+    createBackgroundReload();
 
     cellInfoHandler = new CellInfoHandler(this);
     databaseHandler = new DatabaseHandler(this);
@@ -69,21 +70,23 @@ public class MainActivity extends AppCompatActivity {
     mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
   }
 
+  /** Gets preference values and registers new preference change listener */
   private void handlePreferences() {
-    SharedPreferences sharedPreferences1 = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
-    Log.d("Prefs", String.valueOf(sharedPreferences1.getAll()));
-    locationRefreshTime = Integer.parseInt(sharedPreferences1.getString("min_update_time", String.valueOf(locationRefreshTime)));
-    locationRefreshDistance = Integer.parseInt(sharedPreferences1.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
+    Log.d("Prefs", String.valueOf(sharedPreferences.getAll()));
+    locationRefreshTime = Integer.parseInt(sharedPreferences.getString("min_update_time", String.valueOf(locationRefreshTime)));
+    locationRefreshDistance = Integer.parseInt(sharedPreferences.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
 
-    sharedPreferences1.registerOnSharedPreferenceChangeListener((sharedPreferences, s) -> {
-      locationRefreshDistance = Integer.parseInt(sharedPreferences.getString("min_update_time", String.valueOf(locationRefreshTime)));
-      locationRefreshDistance = Integer.parseInt(sharedPreferences.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
+    sharedPreferences.registerOnSharedPreferenceChangeListener((sharedPreferences1, s) -> {
+      locationRefreshTime = Integer.parseInt(sharedPreferences1.getString("min_update_time", String.valueOf(locationRefreshTime)));
+      locationRefreshDistance = Integer.parseInt(sharedPreferences1.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
       Log.d("Preferences:UpdateString", s);
       Log.d("Preferences:Update", String.valueOf(locationRefreshTime));
       Log.d("Preferences:Update", String.valueOf(locationRefreshDistance));
     });
   }
 
+  /** Handles creation of background task to reload cells */
   private void createBackgroundReload() {
     IntentFilter intentFilter = new IntentFilter();
     intentFilter.addAction("android.intent.action.TIME_TICK");

@@ -1,7 +1,6 @@
 package xyz.steidle.cellularnetworkmapper.utils;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;

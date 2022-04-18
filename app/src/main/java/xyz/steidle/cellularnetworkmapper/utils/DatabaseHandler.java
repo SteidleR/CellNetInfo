@@ -16,9 +16,13 @@ import java.util.List;
 
 import xyz.steidle.cellularnetworkmapper.R;
 
+/**
+ * Class to handle database creation, insert, update
+ */
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 7;
     private static final String DATABASE_NAME = "cellsHistory";
+
     private static final String TABLE_CELLS = "cells";
 
     private static final String KEY_ID = "id";
@@ -35,7 +39,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_LATITUDE = "latitude";
     private static final String KEY_LONGITUDE = "longitude";
 
-    CellParser cellParser;
     DataHolder dataHolder;
 
     public DatabaseHandler(Context context) {
@@ -141,6 +144,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 contactList.add(cell);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
 
         return contactList;
     }

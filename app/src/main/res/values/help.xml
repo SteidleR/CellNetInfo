@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="help_operator">operator</string>
+    <string name="help_operator">Operator</string>
     <string name="help_operator_info">mobile network operator</string>
-    <string name="help_network">standard</string>
+    <string name="help_network" translatable="false">Standard</string>
     <string name="help_network_info">Mobile cell network generation</string>
-    <string name="help_mcc">MCC</string>
+    <string name="help_mcc" translatable="false">MCC</string>
     <string name="help_mcc_info">Mobile Country Code, ID of cell country</string>
-    <string name="help_mnc">MNC</string>
+    <string name="help_mnc" translatable="false">MNC</string>
     <string name="help_mnc_info">Mobile Network Code</string>
     <string name="help_strength_none">No signal</string>
     <string name="help_strength_0">Very poor</string>
@@ -15,8 +15,10 @@
     <string name="help_strength_1">Poor</string>
     <string name="help_tac">TAC</string>
     <string name="help_tac_info">TAC Info</string>
-    <string name="help_lac">LAC</string>
+    <string name="help_lac" translatable="false">LAC</string>
     <string name="help_lac_info">Location Area Code</string>
     <string name="help_cid_info">Cell ID</string>
-    <string name="help_cid">CID</string>
+    <string name="help_cid" translatable="false">CID</string>
+    <string name="help_dbm">dBm</string>
+    <string name="help_dbm_info">decibel-milliwatts, power level</string>
 </resources>
