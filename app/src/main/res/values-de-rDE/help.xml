@@ -13,4 +13,7 @@
     <string name="help_tac">TAC</string>
     <string name="help_tac_info">TAC Info</string>
     <string name="help_dbm">dBm</string>
+    <string name="help_lac_info">Location Area Code</string>
+    <string name="help_cid_info">Funkzellenidentifikationsnummer</string>
+    <string name="help_dbm_info">Dezibel-Milliwatt, logarithmische Wertangabe für die Signalstärke</string>
 </resources>

@@ -1,8 +1,10 @@
 package xyz.steidle.cellularnetworkmapper;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -15,7 +17,10 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-        findViewById(R.id.buttonBack).setOnClickListener(view -> finish());
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         loadCellHistory();
     }
@@ -37,5 +42,15 @@ public class HistoryActivity extends AppCompatActivity {
         dbHandler.close();
 
         listView.setAdapter(arr);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            // return to Main when back button is pressed.
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

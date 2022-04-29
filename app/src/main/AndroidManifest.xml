@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="false"
@@ -19,10 +21,12 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".HistoryActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_history"/>
         <activity
             android:name=".HelpActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_help"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -35,6 +39,8 @@
                 <action android:name="xyz.steidle.intent.action.RELOAD_CELLS" />
             </intent-filter>
         </activity>
+
+        <service android:name=".utils.Reload" />
     </application>
 
 </manifest>

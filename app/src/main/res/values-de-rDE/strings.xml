@@ -18,7 +18,7 @@
     <string name="min_update_time_title">Zeit zwischen Update</string>
     <string name="min_update_loc_title">Entfernung zwischen Update</string>
     <string name="update_header_summary">Minimale Werte um Standort zu aktualisieren</string>
-    <string name="help_lac_info">Location Area Code</string>
-    <string name="help_cid_info">Funkzellenidentifikationsnummer</string>
-    <string name="help_dbm_info">Dezibel-Milliwatt, logarithmische Wertangabe für die Signalstärke</string>
+    <string name="title_activity_help">Hilfe</string>
+    <string name="title_activity_history">Historie</string>
+    <string name="status_location_permission">Bitte erlaube die Standortabfrage</string>
 </resources>

@@ -16,6 +16,7 @@ import android.telephony.CellInfoTdscdma;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrength;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.core.util.Pair;
 
@@ -111,7 +112,7 @@ public class CellParser {
                 mcc = cellIdentity.getMccString();
             }
         } else {
-            int intMcc = -1;
+            int intMcc = 0;
 
             if (cellInfo instanceof CellInfoLte) {
                 CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
@@ -124,9 +125,11 @@ public class CellParser {
                 intMcc = cellIdentity.getMcc();
             }
 
-            if (intMcc != -1)
-                mcc = Integer.toString(intMcc);
+            mcc = Integer.toString(intMcc);
         }
+
+        if (mcc == null)
+            mcc = "";
 
         return mcc;
     }

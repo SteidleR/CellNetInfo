@@ -1,6 +1,7 @@
 package xyz.steidle.cellularnetworkmapper;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.CellInfo;
 import android.util.Log;
@@ -16,16 +18,19 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
+import java.util.Arrays;
 import java.util.List;
 
 import xyz.steidle.cellularnetworkmapper.utils.CellInfoHandler;
 import xyz.steidle.cellularnetworkmapper.utils.DataHolder;
 import xyz.steidle.cellularnetworkmapper.utils.DatabaseHandler;
+import xyz.steidle.cellularnetworkmapper.utils.Reload;
 import xyz.steidle.cellularnetworkmapper.view.CellInfoAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,9 +51,6 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    handlePreferences();
-    createBackgroundReload();
-
     cellInfoHandler = new CellInfoHandler(this);
     databaseHandler = new DatabaseHandler(this);
 
@@ -62,11 +64,45 @@ public class MainActivity extends AppCompatActivity {
     findViewById(R.id.buttonSettings).setOnClickListener(view -> openNewActivity(SettingsActivity.class));
 
     // check if location is available, if not request the permission
-    LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
+    if (!checkPermissions()) {
+      setStatus(R.string.status_location_permission);
       return;
     }
+
+    initializeApplicationLogic();
+  }
+
+  private void initializeApplicationLogic() {
+    handleLocationManager();
+    handlePreferences();
+    createBackgroundReload();
+
+    if (!foregroundServiceRunning() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      Intent reloadServiceIntent = new Intent(this, Reload.class);
+      startForegroundService(reloadServiceIntent);
+    }
+  }
+
+  public boolean foregroundServiceRunning(){
+    ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+    for(ActivityManager.RunningServiceInfo service: activityManager.getRunningServices(Integer.MAX_VALUE)) {
+      if(Reload.class.getName().equals(service.service.getClassName())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean checkPermissions() {
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
+      return false;
+    }
+    return true;
+  }
+
+  private void handleLocationManager() {
+    LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
   }
 
@@ -97,6 +133,8 @@ public class MainActivity extends AppCompatActivity {
       }
     };
     registerReceiver(receiver, intentFilter);
+
+    reloadCells();
   }
 
   /** Restart cell scan and displays all cells in list. */
@@ -131,7 +169,9 @@ public class MainActivity extends AppCompatActivity {
     statusTextView.setText("");
   }
 
-  /** starts new activity based on given class parameter */
+  /** starts new activity based on given class parameter
+   * @param cls class of the activity to open
+   */
   private void openNewActivity(Class<?> cls)  {
     Intent intent = new Intent(this, cls);
     startActivity(intent);
@@ -141,5 +181,23 @@ public class MainActivity extends AppCompatActivity {
   protected void onDestroy() {
     super.onDestroy();
     unregisterReceiver(receiver);
+
+    Intent intent = new Intent(this, Reload.class);
+    stopService(intent);
+  }
+
+  /**
+   * @deprecated
+   */
+  @Deprecated
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    int indexLocationPermission = Arrays.binarySearch(permissions, Manifest.permission.ACCESS_FINE_LOCATION);
+
+    if (requestCode == 12 && grantResults[indexLocationPermission] == 0) {
+      initializeApplicationLogic();
+    }
   }
 }

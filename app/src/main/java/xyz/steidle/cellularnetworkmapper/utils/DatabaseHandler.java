@@ -20,7 +20,7 @@ import xyz.steidle.cellularnetworkmapper.R;
  * Class to handle database creation, insert, update
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static final String DATABASE_NAME = "cellsHistory";
 
     private static final String TABLE_CELLS = "cells";
@@ -54,19 +54,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String realValue = " REAL";
 
         String createCellsTableSql = "CREATE TABLE " + TABLE_CELLS + "("
-                + KEY_ID + integerValue + " PRIMARY KEY,"
-                + KEY_STANDARD + textValue + ","
-                + KEY_PROVIDER + textValue + ","
-                + KEY_MCC + integerValue + ","
-                + KEY_MNC + integerValue + ","
-                + KEY_TAC + integerValue + ","
-                + KEY_LAC + integerValue + ","
-                + KEY_CID + integerValue + ","
-                + KEY_PCI + integerValue + ","
-                + KEY_SIGNAL + integerValue + ","
-                + KEY_TIMESTAMP + textValue + ","
-                + KEY_LATITUDE + realValue + ","
-                + KEY_LONGITUDE + realValue + ")";
+                + KEY_ID        + integerValue  + " PRIMARY KEY,"
+                + KEY_STANDARD  + textValue     + ","
+                + KEY_PROVIDER  + textValue     + ","
+                + KEY_MCC       + integerValue  + ","
+                + KEY_MNC       + integerValue  + ","
+                + KEY_TAC       + integerValue  + ","
+                + KEY_LAC       + integerValue  + ","
+                + KEY_CID       + integerValue  + ","
+                + KEY_PCI       + integerValue  + ","
+                + KEY_SIGNAL    + integerValue  + ","
+                + KEY_TIMESTAMP + textValue     + ","
+                + KEY_LATITUDE  + realValue     + ","
+                + KEY_LONGITUDE + realValue     + ")";
 
         Log.d("DatabaseHandler", createCellsTableSql);
 
@@ -86,6 +86,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param cellInfo CellInfo object
      */
     public void addCell(CellInfo cellInfo) {
+        Location location = dataHolder.getLocation();
+
+        if (cellInfo == null || location == null || !isValidCell(cellInfo))
+            return;
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -105,8 +110,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PCI, CellParser.getPci(cellInfo));
         values.put(KEY_SIGNAL, CellParser.getSignalStrength(cellInfo));
         values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
-
-        Location location = dataHolder.getLocation();
 
         values.put(KEY_LATITUDE, location.getLatitude());
         values.put(KEY_LONGITUDE, location.getLongitude());
@@ -148,6 +151,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.close();
 
         return contactList;
+    }
+
+    private boolean isValidCell(CellInfo cellInfo) {
+        return !CellParser.getProvider(cellInfo).isEmpty() &&
+                !CellParser.getMcc(cellInfo).isEmpty() &&
+                !CellParser.getMnc(cellInfo).isEmpty();
     }
 
 }
