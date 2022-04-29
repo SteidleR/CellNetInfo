@@ -16,7 +16,6 @@ import android.telephony.CellInfoTdscdma;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrength;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.core.util.Pair;
 

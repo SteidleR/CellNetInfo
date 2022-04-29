@@ -64,17 +64,10 @@ public class MainActivity extends AppCompatActivity {
     findViewById(R.id.buttonSettings).setOnClickListener(view -> openNewActivity(SettingsActivity.class));
 
     initializeApplicationLogic();
-
-    // check if location is available, if not request the permission
-    if (!checkPermissions()) {
-      setStatus(R.string.status_location_permission);
-      return;
-    } else {
-      handleLocationManager();
-    }
   }
 
   private void initializeApplicationLogic() {
+    handleLocationManager();
     handlePreferences();
     createBackgroundReload();
 
@@ -94,19 +87,13 @@ public class MainActivity extends AppCompatActivity {
     return false;
   }
 
-  private boolean checkPermissions() {
-    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
-      return false;
-    }
-    return true;
-  }
-
   private void handleLocationManager() {
     LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-      mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
+    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
+      return;
     }
+    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
   }
 
   /** Gets preference values and registers new preference change listener */
