@@ -63,17 +63,18 @@ public class MainActivity extends AppCompatActivity {
     findViewById(R.id.buttonHistory).setOnClickListener(view -> openNewActivity(HistoryActivity.class));
     findViewById(R.id.buttonSettings).setOnClickListener(view -> openNewActivity(SettingsActivity.class));
 
+    initializeApplicationLogic();
+
     // check if location is available, if not request the permission
     if (!checkPermissions()) {
       setStatus(R.string.status_location_permission);
       return;
+    } else {
+      handleLocationManager();
     }
-
-    initializeApplicationLogic();
   }
 
   private void initializeApplicationLogic() {
-    handleLocationManager();
     handlePreferences();
     createBackgroundReload();
 
@@ -83,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  public boolean foregroundServiceRunning(){
+  public boolean foregroundServiceRunning() {
     ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-    for(ActivityManager.RunningServiceInfo service: activityManager.getRunningServices(Integer.MAX_VALUE)) {
-      if(Reload.class.getName().equals(service.service.getClassName())) {
+    for (ActivityManager.RunningServiceInfo service : activityManager.getRunningServices(Integer.MAX_VALUE)) {
+      if (Reload.class.getName().equals(service.service.getClassName())) {
         return true;
       }
     }
@@ -103,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
 
   private void handleLocationManager() {
     LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
+    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+      mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
+    }
   }
 
   /** Gets preference values and registers new preference change listener */
