@@ -66,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
     initializeApplicationLogic();
   }
 
+  /** function to initialize all logics.
+   * calls location and preferences function and creates the foreground service
+   */
   private void initializeApplicationLogic() {
     handleLocationManager();
     handlePreferences();
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
+  /** checks if foreground service Reload.java is running */
   public boolean foregroundServiceRunning() {
     ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
     for (ActivityManager.RunningServiceInfo service : activityManager.getRunningServices(Integer.MAX_VALUE)) {
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     return false;
   }
 
+  /** Creates new location manager and requests location updates based on settings */
   private void handleLocationManager() {
     LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

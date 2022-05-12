@@ -21,4 +21,14 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/history_pref_header"
+        app:summary="@string/history_pref_header_summary">
+
+        <Preference
+            app:key="clear_hist"
+            app:title="Clear History"
+            app:summary="Click here to clear the history" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -21,4 +21,7 @@
     <string name="title_activity_help">Hilfe</string>
     <string name="title_activity_history">Historie</string>
     <string name="status_location_permission">Bitte erlaube die Standortabfrage</string>
+    <string name="btnExport">Export</string>
+    <string name="history_pref_header">History</string>
+    <string name="history_pref_header_summary">Preferences for the  history screen</string>
 </resources>

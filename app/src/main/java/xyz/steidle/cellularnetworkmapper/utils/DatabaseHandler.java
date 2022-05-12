@@ -124,7 +124,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String> getAllCells() {
         List<String> contactList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_CELLS;
+        String selectQuery = "SELECT  * FROM " + TABLE_CELLS +
+                " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_LAC + "," + KEY_TAC + ";";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -153,10 +154,55 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return contactList;
     }
 
+    /** Returns all cells stored in database table as a list of string arrays
+     * @return List of String arrays representing database rows
+     */
+    public List<String[]> getAllCellsCsv() {
+        List<String[]> cellList = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_CELLS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                cellList.add(new String[]{
+                        cursor.getString(10),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getString(7),
+                        cursor.getString(8),
+                        cursor.getString(9),
+                        cursor.getString(11),
+                        cursor.getString(12)
+                });
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return cellList;
+    }
+
+    /** Check if cell is valid or if it contains empty values for mcc, mnc and provider
+     * @param cellInfo CellInfo object
+     * @return true if cell is valid else false
+     */
     private boolean isValidCell(CellInfo cellInfo) {
         return !CellParser.getProvider(cellInfo).isEmpty() &&
                 !CellParser.getMcc(cellInfo).isEmpty() &&
                 !CellParser.getMnc(cellInfo).isEmpty();
     }
 
+    /** Clear the history stored in database */
+    public void clearCellTable() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_CELLS;
+        db.execSQL(query);
+        db.close();
+    }
 }
