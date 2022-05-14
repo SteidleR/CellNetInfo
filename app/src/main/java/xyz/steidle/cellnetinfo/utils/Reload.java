@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper.utils;
+package xyz.steidle.cellnetinfo.utils;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -18,8 +18,8 @@ import androidx.annotation.RequiresApi;
 
 import java.util.List;
 
-import xyz.steidle.cellularnetworkmapper.MainActivity;
-import xyz.steidle.cellularnetworkmapper.R;
+import xyz.steidle.cellnetinfo.MainActivity;
+import xyz.steidle.cellnetinfo.R;
 
 public class Reload extends Service {
 

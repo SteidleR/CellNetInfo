@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper.utils;
+package xyz.steidle.cellnetinfo.utils;
 
 import android.os.Build;
 import android.telephony.CellIdentity;
@@ -19,7 +19,7 @@ import android.text.TextUtils;
 
 import androidx.core.util.Pair;
 
-import xyz.steidle.cellularnetworkmapper.R;
+import xyz.steidle.cellnetinfo.R;
 
 /**
  * Utility functions to parse CellInfo objects

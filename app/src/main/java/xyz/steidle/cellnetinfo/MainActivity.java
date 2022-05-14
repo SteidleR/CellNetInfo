@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper;
+package xyz.steidle.cellnetinfo;
 
 import android.Manifest;
 import android.app.ActivityManager;
@@ -27,11 +27,11 @@ import androidx.preference.PreferenceManager;
 import java.util.Arrays;
 import java.util.List;
 
-import xyz.steidle.cellularnetworkmapper.utils.CellInfoHandler;
-import xyz.steidle.cellularnetworkmapper.utils.DataHolder;
-import xyz.steidle.cellularnetworkmapper.utils.DatabaseHandler;
-import xyz.steidle.cellularnetworkmapper.utils.Reload;
-import xyz.steidle.cellularnetworkmapper.view.CellInfoAdapter;
+import xyz.steidle.cellnetinfo.utils.CellInfoHandler;
+import xyz.steidle.cellnetinfo.utils.DataHolder;
+import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
+import xyz.steidle.cellnetinfo.utils.Reload;
+import xyz.steidle.cellnetinfo.view.CellInfoAdapter;
 
 public class MainActivity extends AppCompatActivity {
   private ListView cellInfoListView;

@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper;
+package xyz.steidle.cellnetinfo;
 
 import org.junit.Test;
 

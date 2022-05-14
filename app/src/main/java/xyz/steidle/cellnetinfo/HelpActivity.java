@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper;
+package xyz.steidle.cellnetinfo;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;

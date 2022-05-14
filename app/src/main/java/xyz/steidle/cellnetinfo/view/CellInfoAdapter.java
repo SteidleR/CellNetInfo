@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper.view;
+package xyz.steidle.cellnetinfo.view;
 
 import android.content.Context;
 import android.telephony.CellInfo;
@@ -13,8 +13,8 @@ import android.widget.TextView;
 import androidx.core.util.Pair;
 
 import java.util.List;
-import xyz.steidle.cellularnetworkmapper.R;
-import xyz.steidle.cellularnetworkmapper.utils.CellParser;
+import xyz.steidle.cellnetinfo.R;
+import xyz.steidle.cellnetinfo.utils.CellParser;
 
 public class CellInfoAdapter extends BaseAdapter {
   Context context;

@@ -38,4 +38,7 @@
     <string name="btnExport">Export</string>
     <string name="history_pref_header">History</string>
     <string name="history_pref_header_summary">Preferences for the  history screen</string>
+    <string name="history_cleared">History cleared!</string>
+    <string name="history_exported">History exported!</string>
+    <string name="folder_paths_title">Folder where history wil be exported to</string>
 </resources>

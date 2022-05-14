@@ -1,4 +1,4 @@
-package xyz.steidle.cellularnetworkmapper.utils;
+package xyz.steidle.cellnetinfo.utils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,7 +14,7 @@ import androidx.core.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
-import xyz.steidle.cellularnetworkmapper.R;
+import xyz.steidle.cellnetinfo.R;
 
 /**
  * Class to handle database creation, insert, update
@@ -154,6 +154,37 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return contactList;
     }
 
+    /** Returns all unique cells stored in database table as a list of string arrays
+     * @return List of String arrays representing database rows
+     */
+    public List<String[]> getAllCellsGrouped() {
+        List<String[]> cellList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_CELLS + " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_LAC + "," + KEY_TAC + ";";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                cellList.add(new String[]{
+                        cursor.getString(10),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getString(7),
+                        cursor.getString(8)
+                });
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return cellList;
+    }
+
     /** Returns all cells stored in database table as a list of string arrays
      * @return List of String arrays representing database rows
      */
@@ -178,6 +209,39 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(7),
                         cursor.getString(8),
                         cursor.getString(9),
+                        cursor.getString(11),
+                        cursor.getString(12)
+                });
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return cellList;
+    }
+
+    public List<String[]> getCellsFiltered(String standard, String provider, int mcc, int mnc, int tac, int lac) {
+        List<String[]> cellList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_CELLS + " WHERE " +
+                KEY_STANDARD + " LIKE '" + standard + "' AND " +
+                KEY_PROVIDER + " LIKE '" + provider + "' AND " +
+                KEY_MCC + " = " + mcc + " AND " +
+                KEY_MNC + " = " + mnc;
+
+        selectQuery = selectQuery + (lac != -1 ? " AND " + KEY_LAC + " = " + lac : "");
+        selectQuery = selectQuery + (tac != -1 ? " AND " + KEY_TAC + " = " + tac : "");
+
+        selectQuery = selectQuery + ";";
+
+        Log.d("DatabaseHandler", selectQuery);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                cellList.add(new String[]{
+                        cursor.getString(10),
                         cursor.getString(11),
                         cursor.getString(12)
                 });

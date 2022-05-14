@@ -32,4 +32,9 @@
         <item>700</item>
         <item>1000</item>
     </string-array>
+
+    <string-array name="folder_paths">
+        <item>Downloads</item>
+        <item>Documents</item>
+    </string-array>
 </resources>
