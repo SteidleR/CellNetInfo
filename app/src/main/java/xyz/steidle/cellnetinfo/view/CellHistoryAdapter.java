@@ -83,18 +83,14 @@ public class CellHistoryAdapter extends BaseAdapter {
         return vi;
     }
 
-    //joinElements() user defined method to join string elements
+    // method to join string elements
     static String joinElements(String[] strArray, String delimiter) {
-        StringBuilder stringBuilder;
+        if (strArray.length == 0)
+            return "";
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            stringBuilder = new StringBuilder(String.join(delimiter, strArray));
-        } else {
-            stringBuilder = new StringBuilder();
-            for (String s : strArray)
-                stringBuilder.append(s).append(delimiter);
-        }
-
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : strArray)
+            stringBuilder.append(s).append(delimiter);
         String joinedString = stringBuilder.toString();
         return joinedString.substring(0, joinedString.length() - 1);
     }

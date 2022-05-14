@@ -10,5 +10,9 @@ public class CellHistoryAdapterTest {
         String[] stringList = {"1", "2", "3"};
         String joinedString = CellHistoryAdapter.joinElements(stringList, ":");
         Assert.assertEquals("1:2:3", joinedString);
+
+        stringList = new String[]{};
+        joinedString = CellHistoryAdapter.joinElements(stringList, ":");
+        Assert.assertEquals("", joinedString);
     }
 }

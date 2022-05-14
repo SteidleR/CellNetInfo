@@ -3,9 +3,13 @@ plugins {
     id 'org.sonarqube' version '3.3'
 }
 
+apply plugin: 'jacoco'
+
 sonarqube {
     properties {
         property "sonar.projectKey", "CellNetInfo"
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.jacoco.reportPath", "**/jacoco/*.exec"
     }
 }
 
@@ -27,10 +31,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
