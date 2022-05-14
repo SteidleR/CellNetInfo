@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HistoryActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">xyz.steidle.cellnetinfo</a> &gt; <span class="el_source">HistoryActivity.java</span></div><h1>HistoryActivity.java</h1><pre class="source lang-java linenums">package xyz.steidle.cellnetinfo;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.storage.StorageManager;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.ListView;
+
+import com.opencsv.CSVWriter;
+
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+
+import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
+import xyz.steidle.cellnetinfo.view.CellHistoryAdapter;
+
+<span class="nc" id="L24">public class HistoryActivity extends AppCompatActivity {</span>
+
+    DatabaseHandler dbHandler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L30">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L31">        setContentView(R.layout.activity_history);</span>
+
+<span class="nc" id="L33">        dbHandler = new DatabaseHandler(getApplicationContext());</span>
+
+<span class="nc" id="L35">        ActionBar actionBar = getSupportActionBar();</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (actionBar != null) {</span>
+<span class="nc" id="L37">            actionBar.setDisplayHomeAsUpEnabled(true);</span>
+        }
+
+<span class="nc" id="L40">        loadCellHistory();</span>
+<span class="nc" id="L41">    }</span>
+
+    /**
+     * Loads cell information to user interface
+     */
+    private void loadCellHistory() {
+<span class="nc" id="L47">        ListView listView = (ListView) findViewById(R.id.list);</span>
+
+<span class="nc" id="L49">        listView.setAdapter(new CellHistoryAdapter(this, dbHandler.getAllCellsGrouped(), dbHandler));</span>
+<span class="nc" id="L50">        dbHandler.close();</span>
+<span class="nc" id="L51">    }</span>
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (item.getItemId() == android.R.id.home) {</span>
+            // return to Main when back button is pressed.
+<span class="nc" id="L57">            finish();</span>
+<span class="nc" id="L58">            return true;</span>
+        }
+<span class="nc" id="L60">        return super.onOptionsItemSelected(item);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

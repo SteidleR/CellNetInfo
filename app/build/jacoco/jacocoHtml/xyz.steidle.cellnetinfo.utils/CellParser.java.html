@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CellParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">xyz.steidle.cellnetinfo.utils</a> &gt; <span class="el_source">CellParser.java</span></div><h1>CellParser.java</h1><pre class="source lang-java linenums">package xyz.steidle.cellnetinfo.utils;
+
+import android.os.Build;
+import android.telephony.CellIdentity;
+import android.telephony.CellIdentityGsm;
+import android.telephony.CellIdentityLte;
+import android.telephony.CellIdentityNr;
+import android.telephony.CellIdentityTdscdma;
+import android.telephony.CellIdentityWcdma;
+import android.telephony.CellInfo;
+import android.telephony.CellInfoCdma;
+import android.telephony.CellInfoGsm;
+import android.telephony.CellInfoLte;
+import android.telephony.CellInfoNr;
+import android.telephony.CellInfoTdscdma;
+import android.telephony.CellInfoWcdma;
+import android.telephony.CellSignalStrength;
+import android.text.TextUtils;
+
+import androidx.core.util.Pair;
+
+import xyz.steidle.cellnetinfo.R;
+
+/**
+ * Utility functions to parse CellInfo objects
+ */
+public class CellParser {
+
+    /** CellParser constructor, throws IllegalStateException because class is not intended to use as non-static class  */
+<span class="nc" id="L30">    private CellParser() {</span>
+<span class="nc" id="L31">        throw new IllegalStateException(&quot;Utility class&quot;);</span>
+    }
+
+    /** Return generation of cell as string
+     * @param cellInfo CellInfo object
+     * @return String, generation of cell net
+     */
+    public static String getGeneration(CellInfo cellInfo) {
+<span class="nc" id="L39">        String generation = &quot;Unknown&quot;;</span>
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.R &amp;&amp; cellInfo instanceof CellInfoNr) {</span>
+<span class="nc" id="L41">            generation = &quot;NR&quot;;</span>
+<span class="nc bnc" id="L42" title="All 4 branches missed.">        } else if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.Q &amp;&amp; cellInfo instanceof CellInfoTdscdma) {</span>
+<span class="nc" id="L43">            generation = &quot;TDSCDMA&quot;;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L45">            generation = &quot;LTE&quot;;</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L47">            generation = &quot;GSM&quot;;</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L49">            generation = &quot;WCDMA&quot;;</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoCdma) {</span>
+<span class="nc" id="L51">            generation = &quot;CDMA&quot;;</span>
+        }
+
+<span class="nc" id="L54">        return generation;</span>
+    }
+
+    /** Return provider of cell network as string
+     * @param cellInfo CellInfo object
+     * @return String, provider of cell net
+     */
+    public static String getProvider(CellInfo cellInfo) {
+<span class="nc" id="L62">        CellIdentity cellIdentity = null;</span>
+<span class="nc" id="L63">        String provider = &quot;Unknown&quot;;</span>
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.P) {</span>
+<span class="nc bnc" id="L66" title="All 4 branches missed.">            if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.R &amp;&amp; cellInfo instanceof CellInfoNr) {</span>
+                // Build version &gt;= 30 and 5G network
+<span class="nc" id="L68">                cellIdentity = cellInfo.getCellIdentity();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L70">                cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L72">                cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoCdma) {</span>
+<span class="nc" id="L74">                cellIdentity = ((CellInfoCdma) cellInfo).getCellIdentity();</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L76">                cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();</span>
+            }
+
+<span class="nc bnc" id="L79" title="All 4 branches missed.">            if (cellIdentity != null &amp;&amp; !TextUtils.isEmpty(cellIdentity.getOperatorAlphaShort()))</span>
+<span class="nc" id="L80">                provider = (String) cellIdentity.getOperatorAlphaShort();</span>
+        }
+
+<span class="nc" id="L83">        return provider;</span>
+    }
+
+    /** Extract MCC from given CellInfo
+     * @param cellInfo CellInfo object
+     * @return String representation of MCC
+     */
+    public static String getMcc(CellInfo cellInfo) {
+<span class="nc" id="L91">        String mcc = &quot;&quot;;</span>
+
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.P) {</span>
+            // Build version &gt;= 28
+<span class="nc bnc" id="L95" title="All 4 branches missed.">            if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.R &amp;&amp; cellInfo instanceof CellInfoNr) {</span>
+                // Build version &gt;= 30 and 5G network
+<span class="nc" id="L97">                CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();</span>
+<span class="nc" id="L98">                mcc = cellIdentity.getMccString();</span>
+<span class="nc bnc" id="L99" title="All 4 branches missed.">            } else if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.Q &amp;&amp; cellInfo instanceof CellInfoTdscdma) {</span>
+                // Build version &gt;= 29 and TDSCDMA network
+<span class="nc" id="L101">                CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L102">                mcc = cellIdentity.getMccString();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L104">                CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L105">                mcc = cellIdentity.getMccString();</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L107">                CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L108">                mcc = cellIdentity.getMccString();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L110">                CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L111">                mcc = cellIdentity.getMccString();</span>
+<span class="nc" id="L112">            }</span>
+        } else {
+<span class="nc" id="L114">            int intMcc = 0;</span>
+
+<span class="nc bnc" id="L116" title="All 2 branches missed.">            if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L117">                CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L118">                intMcc = cellIdentity.getMcc();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L120">                CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L121">                intMcc = cellIdentity.getMcc();</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L123">                CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L124">                intMcc = cellIdentity.getMcc();</span>
+            }
+
+<span class="nc" id="L127">            mcc = Integer.toString(intMcc);</span>
+        }
+
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if (mcc == null)</span>
+<span class="nc" id="L131">            mcc = &quot;&quot;;</span>
+
+<span class="nc" id="L133">        return mcc;</span>
+    }
+
+    /** Extract MNC from given CellInfo
+     * @param cellInfo CellInfo object
+     * @return String representation of MNC
+     */
+    public static String getMnc(CellInfo cellInfo) {
+<span class="nc" id="L141">        String mnc = &quot;&quot;;</span>
+
+<span class="nc bnc" id="L143" title="All 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.P) {</span>
+            // Build version &gt;= 28
+<span class="nc bnc" id="L145" title="All 4 branches missed.">            if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.R &amp;&amp; cellInfo instanceof CellInfoNr) {</span>
+                // Build version &gt;= 30 and 5G network
+<span class="nc" id="L147">                CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();</span>
+<span class="nc" id="L148">                mnc = cellIdentity.getMncString();</span>
+<span class="nc bnc" id="L149" title="All 4 branches missed.">            } else if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.Q &amp;&amp; cellInfo instanceof CellInfoTdscdma) {</span>
+                // Build version &gt;= 29 and TDSCDMA network
+<span class="nc" id="L151">                CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L152">                mnc = cellIdentity.getMncString();</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L154">                CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L155">                mnc = cellIdentity.getMncString();</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L157">                CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L158">                mnc = cellIdentity.getMncString();</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L160">                CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L161">                mnc = cellIdentity.getMncString();</span>
+<span class="nc" id="L162">            }</span>
+        } else {
+<span class="nc bnc" id="L164" title="All 2 branches missed.">            if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L165">                CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L166">                mnc = Integer.toString(cellIdentity.getMnc());</span>
+<span class="nc bnc" id="L167" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L168">                CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L169">                mnc = Integer.toString(cellIdentity.getMnc());</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">            } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L171">                CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L172">                mnc = Integer.toString(cellIdentity.getMnc());</span>
+            }
+        }
+
+<span class="nc" id="L176">        return mnc;</span>
+    }
+
+    /** Extract LAC or TAC from given CellInfo
+     * @param cellInfo CellInfo object
+     * @return Pair containing resource id for row name and Lac/ Tac of cell
+     */
+    public static Pair&lt;Integer, Integer&gt; getLacTac(CellInfo cellInfo) {
+<span class="nc" id="L184">        int code = 0;</span>
+<span class="nc" id="L185">        int displayName = R.string.cell_lac;</span>
+
+<span class="nc bnc" id="L187" title="All 4 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.R &amp;&amp; cellInfo instanceof CellInfoNr) {</span>
+            // Build version &gt;= 30 and 5G network
+<span class="nc" id="L189">            CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();</span>
+<span class="nc" id="L190">            code = cellIdentity.getTac();</span>
+<span class="nc" id="L191">            displayName = R.string.cell_tac;</span>
+<span class="nc bnc" id="L192" title="All 4 branches missed.">        } else if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.Q &amp;&amp; cellInfo instanceof CellInfoTdscdma) {</span>
+            // Build version &gt;= 29 and TDSCDMA network
+<span class="nc" id="L194">            CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L195">            code = cellIdentity.getLac();</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L197">            CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L198">            code = cellIdentity.getTac();</span>
+<span class="nc" id="L199">            displayName = R.string.cell_tac;</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L201">            CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L202">            code = cellIdentity.getLac();</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L204">            CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L205">            code = cellIdentity.getLac();</span>
+        }
+
+<span class="nc" id="L208">        return new Pair&lt;&gt;(displayName, code);</span>
+    }
+
+    /** Extract CI or CID from given CellInfo
+     * @param cellInfo CellInfo object
+     * @return Long representing cell id
+     */
+    public static long getCellId(CellInfo cellInfo) {
+<span class="nc" id="L216">        long cid = 0;</span>
+
+<span class="nc bnc" id="L218" title="All 4 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.R &amp;&amp; cellInfo instanceof CellInfoNr) {</span>
+            // Build version &gt;= 30 and 5G network
+<span class="nc" id="L220">            CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();</span>
+<span class="nc" id="L221">            cid = cellIdentity.getNci();</span>
+<span class="nc bnc" id="L222" title="All 4 branches missed.">        } else if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.Q &amp;&amp; cellInfo instanceof CellInfoTdscdma) {</span>
+            // Build version &gt;= 29 and TDSCDMA network
+<span class="nc" id="L224">            CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L225">            cid = cellIdentity.getCid();</span>
+<span class="nc bnc" id="L226" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L227">            CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L228">            cid = cellIdentity.getCi();</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L230">            CellIdentityGsm cellIdentity = ((CellInfoGsm) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L231">            cid = cellIdentity.getCid();</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L233">            CellIdentityWcdma cellIdentity = ((CellInfoWcdma) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L234">            cid = cellIdentity.getCid();</span>
+        }
+
+<span class="nc" id="L237">        return cid;</span>
+    }
+
+    /** Extract Physical Cell ID from LTE or 5G (Nr) CellInfo
+     * @param cellInfo CellInfo object
+     * @return integer, -1 if not supported | range 0-503 for LTE | range 0-1007 for 5G
+     */
+    public static int getPci(CellInfo cellInfo) {
+<span class="nc" id="L245">        int pci = -1;</span>
+
+<span class="nc bnc" id="L247" title="All 4 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.R &amp;&amp; cellInfo instanceof CellInfoNr) {</span>
+            // Build version &gt;= 30 and 5G network
+<span class="nc" id="L249">            CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();</span>
+<span class="nc" id="L250">            pci = (int) cellIdentity.getPci();</span>
+<span class="nc bnc" id="L251" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L252">            CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();</span>
+<span class="nc" id="L253">            pci = cellIdentity.getPci();</span>
+        }
+
+<span class="nc" id="L256">        return pci;</span>
+    }
+
+    /** Retrieves signal strength of cell from 0-4
+     * @param cellInfo CellInfo object
+     * @return integer, 0-4 representing singal strength, no signal: 0 | best signal: 4
+     */
+    public static int getSignalStrength(CellInfo cellInfo) {
+<span class="nc" id="L264">        int signalStrength = 0;</span>
+
+<span class="nc" id="L266">        CellSignalStrength cellSignalStrength = getCellSignalStrength(cellInfo);</span>
+
+<span class="nc bnc" id="L268" title="All 2 branches missed.">        if (cellSignalStrength != null)</span>
+<span class="nc" id="L269">            signalStrength = cellSignalStrength.getLevel();</span>
+
+<span class="nc" id="L271">        return signalStrength;</span>
+    }
+
+    /** Returns the signal strength of cell in dBm
+     * @param cellInfo CellInfo object
+     * @return integer, dBm signal strength of cell
+     */
+    public static int getSignalDbm(CellInfo cellInfo) {
+<span class="nc" id="L279">        int signalDbm = 0;</span>
+
+<span class="nc" id="L281">        CellSignalStrength cellSignalStrength = getCellSignalStrength(cellInfo);</span>
+
+<span class="nc bnc" id="L283" title="All 2 branches missed.">        if (cellSignalStrength != null)</span>
+<span class="nc" id="L284">            signalDbm = cellSignalStrength.getDbm();</span>
+
+<span class="nc" id="L286">        return signalDbm;</span>
+    }
+
+    /** Gets the CellSignalStrength object of the cell object
+     * @param cellInfo CellInfo object
+     * @return CellSignalStrength object
+     */
+    private static CellSignalStrength getCellSignalStrength(CellInfo cellInfo) {
+<span class="nc bnc" id="L294" title="All 2 branches missed.">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.R) {</span>
+            // Build version &gt;= 30 and 5G network
+<span class="nc" id="L296">            return cellInfo.getCellSignalStrength();</span>
+<span class="nc bnc" id="L297" title="All 4 branches missed.">        } else if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.Q &amp;&amp; cellInfo instanceof CellInfoTdscdma) {</span>
+            // Build version &gt;= 29 and TDSCDMA network
+<span class="nc" id="L299">            return ((CellInfoTdscdma) cellInfo).getCellSignalStrength();</span>
+<span class="nc bnc" id="L300" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoLte) {</span>
+<span class="nc" id="L301">            return ((CellInfoLte) cellInfo).getCellSignalStrength();</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoGsm) {</span>
+<span class="nc" id="L303">            return ((CellInfoGsm) cellInfo).getCellSignalStrength();</span>
+<span class="nc bnc" id="L304" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoWcdma) {</span>
+<span class="nc" id="L305">            return ((CellInfoWcdma) cellInfo).getCellSignalStrength();</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">        } else if (cellInfo instanceof CellInfoCdma) {</span>
+<span class="nc" id="L307">            return ((CellInfoCdma) cellInfo).getCellSignalStrength();</span>
+        } else {
+<span class="nc" id="L309">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

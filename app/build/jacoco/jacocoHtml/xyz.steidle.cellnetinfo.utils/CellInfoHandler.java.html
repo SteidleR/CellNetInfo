@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CellInfoHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">xyz.steidle.cellnetinfo.utils</a> &gt; <span class="el_source">CellInfoHandler.java</span></div><h1>CellInfoHandler.java</h1><pre class="source lang-java linenums">package xyz.steidle.cellnetinfo.utils;
+
+import android.content.Context;
+import android.telephony.CellInfo;
+import android.telephony.TelephonyManager;
+import android.util.Log;
+
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * Used to retrieve cell info objects from telephony manager
+ */
+public class CellInfoHandler {
+  private final TelephonyManager telephonyManager;
+
+<span class="nc" id="L17">  public CellInfoHandler(Context context) {</span>
+<span class="nc" id="L18">    telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);</span>
+<span class="nc" id="L19">  }</span>
+
+  /** retrieves cell info objects from telephony manager
+   * @return List of cell info objects
+   */
+  public List&lt;CellInfo&gt; getCells() {
+<span class="nc" id="L25">    List&lt;CellInfo&gt; cells = null;</span>
+    try {
+<span class="nc" id="L27">      cells = telephonyManager.getAllCellInfo();</span>
+<span class="nc" id="L28">    } catch (SecurityException e) {</span>
+<span class="nc" id="L29">      Log.e(&quot;CellInfoHandler&quot;, Arrays.toString(e.getStackTrace()));</span>
+<span class="nc" id="L30">    }</span>
+<span class="nc" id="L31">    return cells;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
