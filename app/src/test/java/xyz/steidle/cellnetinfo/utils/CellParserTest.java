@@ -1,3 +1,9 @@
+/*
+ * Created by Robin Steidle on 15.05.22, 21:07
+ * Copyright (c) 2022 . All rights reserved.
+ * Last modified 15.05.22, 18:22
+ */
+
 package xyz.steidle.cellnetinfo.utils;
 
 import static org.junit.Assert.assertEquals;
@@ -9,6 +15,7 @@ import android.telephony.CellIdentityCdma;
 import android.telephony.CellIdentityGsm;
 import android.telephony.CellIdentityLte;
 import android.telephony.CellIdentityNr;
+import android.telephony.CellIdentityTdscdma;
 import android.telephony.CellIdentityWcdma;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
@@ -135,13 +142,54 @@ public class CellParserTest {
 
     @Test
     public void getLacTac() {
-    }
+    }    */
 
     @Test
     public void getCellId() {
-    }
+        // NR
+        CellIdentityNr cellIdentity = mock(CellIdentityNr.class);
+        when(cellIdentity.getNci()).thenReturn(1234L);
+        CellInfoNr cellInfoNR = mock(CellInfoNr.class);
+        when(cellInfoNR.getCellIdentity()).thenReturn(cellIdentity);
 
-    */
+        CellParser.VERSION_SDK_INT = 30;
+        assertEquals(1234L, CellParser.getCellId(cellInfoNR));
+        CellParser.VERSION_SDK_INT = 28;
+        assertEquals(0, CellParser.getCellId(cellInfoNR));
+
+        // CellInfoTdscdma
+        CellIdentityTdscdma cellIdentityTdscdma = mock(CellIdentityTdscdma.class);
+        when(cellIdentityTdscdma.getCid()).thenReturn(12345);
+        CellInfoTdscdma cellInfoTdscdma = mock(CellInfoTdscdma.class);
+        when(cellInfoTdscdma.getCellIdentity()).thenReturn(cellIdentityTdscdma);
+
+        CellParser.VERSION_SDK_INT = 29;
+        assertEquals(12345L, CellParser.getCellId(cellInfoTdscdma));
+        CellParser.VERSION_SDK_INT = 28;
+        assertEquals(0, CellParser.getCellId(cellInfoTdscdma));
+
+        // Test LTE
+        CellInfoLte cellInfoLte = mock(CellInfoLte.class);
+        CellIdentityLte cellIdentityLte = mock(CellIdentityLte.class);
+        when(cellIdentityLte.getCi()).thenReturn(123456);
+        when(cellInfoLte.getCellIdentity()).thenReturn(cellIdentityLte);
+        assertEquals(123456, CellParser.getCellId(cellInfoLte));
+
+        // Test GSM
+        CellInfoGsm cellInfoGsm = mock(CellInfoGsm.class);
+        CellIdentityGsm cellIdentityGsm= mock(CellIdentityGsm.class);
+        when(cellIdentityGsm.getCid()).thenReturn(1234567);
+        when(cellInfoGsm.getCellIdentity()).thenReturn(cellIdentityGsm);
+        assertEquals(1234567, CellParser.getCellId(cellInfoGsm));
+
+
+        // Test WCDMA
+        CellInfoWcdma cellInfoWcdma = mock(CellInfoWcdma.class);
+        CellIdentityWcdma cellIdentityWcdma = mock(CellIdentityWcdma.class);
+        when(cellIdentityWcdma.getCid()).thenReturn(12345678);
+        when(cellInfoWcdma.getCellIdentity()).thenReturn(cellIdentityWcdma);
+        assertEquals(12345678, CellParser.getCellId(cellInfoWcdma));
+    }
 
     @Test
     public void getPci() {

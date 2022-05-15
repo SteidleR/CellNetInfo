@@ -20,8 +20,8 @@ import xyz.steidle.cellnetinfo.R;
  * Class to handle database creation, insert, update
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 8;
-    private static final String DATABASE_NAME = "cellsHistory";
+    public static final int DATABASE_VERSION = 8;
+    public static final String DATABASE_NAME = "cellsHistory";
 
     private static final String TABLE_CELLS = "cells";
 

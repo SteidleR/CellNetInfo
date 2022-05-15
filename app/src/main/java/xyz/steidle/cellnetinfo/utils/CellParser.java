@@ -236,6 +236,8 @@ public class CellParser {
             cid = cellIdentity.getCid();
         }
 
+        // ToDo: add CDMA?
+
         return cid;
     }
 

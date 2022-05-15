@@ -27,6 +27,7 @@ import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
 public class SettingsActivity extends AppCompatActivity {
 
     protected DatabaseHandler databaseHandler;
+    protected SettingsFragment settingsFragment;
     private static final String LOGTAG = "SettingsActivity";
 
     @Override
@@ -42,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         databaseHandler = new DatabaseHandler(this);
 
-        SettingsFragment settingsFragment = new SettingsFragment(databaseHandler, snackbarClear, snackbarExport, storageManager);
+        settingsFragment = new SettingsFragment(databaseHandler, snackbarClear, snackbarExport, storageManager);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
