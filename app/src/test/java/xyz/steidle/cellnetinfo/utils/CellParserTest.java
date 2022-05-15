@@ -123,6 +123,8 @@ public class CellParserTest {
         assertEquals("Unknown", CellParser.getProvider(cellInfoCdma));
     }
 
+    /*
+
     @Test
     public void getMcc() {
     }
@@ -138,6 +140,8 @@ public class CellParserTest {
     @Test
     public void getCellId() {
     }
+
+    */
 
     @Test
     public void getPci() {
@@ -174,8 +178,11 @@ public class CellParserTest {
         assertEquals(0, CellParser.getSignalDbm(cellInfo));
     }
 
+    /*
     @Test
     public void getCellSignalStrength() {
 
     }
+
+    */
 }
