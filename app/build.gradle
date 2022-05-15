@@ -32,6 +32,10 @@ sonarqube {
 android {
     compileSdk 30
 
+    testOptions{
+        unitTests.returnDefaultValues true
+    }
+
     defaultConfig {
         applicationId "xyz.steidle.cellnetinfo"
         minSdk 23
