@@ -11,13 +11,10 @@ import android.telephony.CellInfoGsm;
 import android.telephony.TelephonyManager;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(MockitoJUnitRunner.class)
 public class CellInfoHandlerTest {
 
     @Test

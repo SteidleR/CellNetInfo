@@ -72,6 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         Snackbar snackbarHistory;
         Snackbar snackbarExport;
         StorageManager storageManager;
+        int SDK_INT = Build.VERSION.SDK_INT;
 
         /** Settings Fragment for creating Preferences screen
          * @param databaseHandler database handler instance
@@ -149,9 +150,9 @@ public class SettingsActivity extends AppCompatActivity {
          * @param fileName the name of the file to store history in, should be "something.csv"
          * @return path to Download/
          */
-        private String createStoragePath(String fileName) {
+        protected String createStoragePath(String fileName) {
             String storageDirectoryPath;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (SDK_INT >= Build.VERSION_CODES.R) {
                 if(storageManager == null) {
                     storageDirectoryPath = Environment.getExternalStorageDirectory().getAbsolutePath();
                 } else {
