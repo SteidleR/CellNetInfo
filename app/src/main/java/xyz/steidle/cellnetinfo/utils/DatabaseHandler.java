@@ -118,42 +118,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    /** Returns all cells stored in database table as string
-     * @return List of Strings containing representation of data rows
-     */
-    public List<String> getAllCells() {
-        List<String> contactList = new ArrayList<>();
-        // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_CELLS +
-                " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_LAC + "," + KEY_TAC + ";";
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                String cell = cursor.getString(10) + " "
-                        + cursor.getString(1) + " "
-                        + cursor.getString(2) + " "
-                        + cursor.getString(3) + " "
-                        + cursor.getString(4) + " "
-                        + cursor.getString(5) + " "
-                        + cursor.getString(6) + " "
-                        + cursor.getString(7) + " "
-                        + cursor.getString(8) + " "
-                        + cursor.getString(9) + " "
-                        + cursor.getString(11) + " "
-                        + cursor.getString(12) + " ";
-                contactList.add(cell);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-
-        return contactList;
-    }
-
     /** Returns all unique cells stored in database table as a list of string arrays
      * @return List of String arrays representing database rows
      */
@@ -256,7 +220,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param cellInfo CellInfo object
      * @return true if cell is valid else false
      */
-    private boolean isValidCell(CellInfo cellInfo) {
+    protected boolean isValidCell(CellInfo cellInfo) {
         return !CellParser.getProvider(cellInfo).isEmpty() &&
                 !CellParser.getMcc(cellInfo).isEmpty() &&
                 !CellParser.getMnc(cellInfo).isEmpty();

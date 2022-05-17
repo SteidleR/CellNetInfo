@@ -214,8 +214,8 @@ public class CellParserTest {
     public void getSignalStrength() {
         // CellSignalStrength -> null
         CellInfo cellInfo = mock(CellInfo.class);
-        CellIdentity cellIdentity = mock(CellIdentity.class);
-        when(cellIdentity.getOperatorAlphaShort()).thenReturn("Mocked Operator");
+        // CellIdentity cellIdentity = mock(CellIdentity.class);
+        // when(cellIdentity.getOperatorAlphaShort()).thenReturn("Mocked Operator");
         assertEquals(0, CellParser.getSignalStrength(cellInfo));
     }
 

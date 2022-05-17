@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     protected DatabaseHandler databaseHandler;
     protected SettingsFragment settingsFragment;
-    private static final String LOGTAG = "SettingsActivity";
+    protected static final String LOGTAG = "SettingsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

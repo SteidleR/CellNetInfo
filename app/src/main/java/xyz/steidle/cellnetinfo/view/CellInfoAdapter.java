@@ -104,7 +104,7 @@ public class CellInfoAdapter extends BaseAdapter {
    * @param strength cell signal strength range 0-4
    * @return resource id of icon
    */
-  private int getIconForSignal(int strength) {
+  protected int getIconForSignal(int strength) {
     int resId;
 
     switch (strength) {

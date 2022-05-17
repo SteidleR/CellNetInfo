@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
   /** function to initialize all logics.
    * calls location and preferences function and creates the foreground service
    */
-  private void initializeApplicationLogic() {
+  protected void initializeApplicationLogic() {
     handleLocationManager();
     handlePreferences();
     createBackgroundReload();
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   /** Restart cell scan and displays all cells in list. */
-  protected void reloadCells() {
+  private void reloadCells() {
     setStatus(R.string.status_searching);
 
     List<CellInfo> cellInfoList = cellInfoHandler.getCells();
