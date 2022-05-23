@@ -2,6 +2,7 @@ package xyz.steidle.cellnetinfo.utils;
 
 import android.os.Build;
 import android.telephony.CellIdentity;
+import android.telephony.CellIdentityCdma;
 import android.telephony.CellIdentityGsm;
 import android.telephony.CellIdentityLte;
 import android.telephony.CellIdentityNr;
