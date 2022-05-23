@@ -30,7 +30,7 @@ public class CellParser {
     static int VERSION_SDK_INT = Build.VERSION.SDK_INT;
 
     /** CellParser constructor, throws IllegalStateException because class is not intended to use as non-static class  */
-    CellParser() {
+    CellParser() throws IllegalStateException {
         throw new IllegalStateException("Utility class");
     }
 
