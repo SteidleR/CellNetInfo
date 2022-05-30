@@ -92,7 +92,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             return;
 
         SQLiteDatabase db = this.getWritableDatabase();
+        insertCell(db, cellInfo, location);
+    }
 
+    /** Inserts new cell into database, assumes all valid
+     * @param db
+     * @param cellInfo
+     * @param location
+     */
+    protected void insertCell(SQLiteDatabase db, CellInfo cellInfo, Location location) {
         ContentValues values = new ContentValues();
 
         values.put(KEY_STANDARD, CellParser.getGeneration(cellInfo));
