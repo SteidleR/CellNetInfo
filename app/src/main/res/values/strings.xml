@@ -7,6 +7,11 @@
     <string name="status_hint" translatable="false">Status</string>
     <string name="cell_header" translatable="false">%1$s : %2$s</string>
     <string name="cell_signal" translatable="false">%1$d dBm</string>
+    <string name="cell_baseid" translatable="true">Basestation ID</string>
+    <string name="cell_sysid" translatable="true">System ID</string>
+    <string name="cell_netid" translatable="true">Network ID</string>
+    <string name="cell_lat" translatable="false">Lat</string>
+    <string name="cell_long" translatable="false">Long</string>
     <string name="btn_back">Back</string>
     <string name="unknown">Unknown</string>
     <string name="row_mnc" translatable="false">MNC</string>

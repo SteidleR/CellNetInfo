@@ -2,6 +2,7 @@ package xyz.steidle.cellnetinfo.view;
 
 import android.content.Context;
 import android.telephony.CellInfo;
+import android.telephony.CellInfoCdma;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +46,11 @@ public class CellInfoAdapter extends BaseAdapter {
   // @RequiresApi(api = Build.VERSION_CODES.P)
   @Override
   public View getView(int i, View view, ViewGroup viewGroup) {
+    CellInfo cellInfo = cellInfoList.get(i);
+
+    if (cellInfo instanceof CellInfoCdma)
+      return getViewCdma(view, cellInfo);
+
     View vi = view;
     if (vi == null) vi = mLayoutInflater.inflate(R.layout.row, null);
 
@@ -59,7 +65,6 @@ public class CellInfoAdapter extends BaseAdapter {
     TextView dbmText = vi.findViewById(R.id.cell_strength_text);
     ImageView signalImage = vi.findViewById(R.id.img_signal);
 
-    CellInfo cellInfo = cellInfoList.get(i);
     Log.d("CellInfoAdapter", cellInfo.toString());
 
     CharSequence operator = CellParser.getProvider(cellInfo);
@@ -96,6 +101,35 @@ public class CellInfoAdapter extends BaseAdapter {
     signalImage.setImageResource(getIconForSignal(CellParser.getSignalStrength(cellInfo)));
 
     dbmText.setText(context.getString(R.string.cell_signal, CellParser.getSignalDbm(cellInfo)));
+
+    return vi;
+  }
+
+  public View getViewCdma(View view, CellInfo cellInfo) {
+    View vi = view;
+    if (vi == null) vi = mLayoutInflater.inflate(R.layout.row_cdma, null);
+
+    TextView headerText = vi.findViewById(R.id.cell_header);
+    TextView sysIdText = vi.findViewById(R.id.cell_sys);
+    TextView netIdText = vi.findViewById(R.id.cell_netid);
+    TextView bsIdText = vi.findViewById(R.id.cell_bsid);
+    TextView latText = vi.findViewById(R.id.cell_lat);
+    TextView longText = vi.findViewById(R.id.cell_long);
+
+    CharSequence operator = CellParser.getProvider(cellInfo);
+    CharSequence generation = CellParser.getGeneration(cellInfo);
+
+    headerText.setText(context.getString(R.string.cell_header, operator, generation));
+
+    CellInfoCdma cellInfoCdma = (CellInfoCdma) cellInfo;
+
+    sysIdText.setText(CellParser.getCdmaSystemId(cellInfoCdma));
+    netIdText.setText(CellParser.getCdmaNetworkId(cellInfoCdma));
+    bsIdText.setText(CellParser.getCdmaBaseStationId(cellInfoCdma));
+
+    Pair<Integer, Integer> latLongPair = CellParser.getCdmaLocation(cellInfoCdma);
+    latText.setText(latLongPair.first);
+    longText.setText(latLongPair.second);
 
     return vi;
   }

@@ -237,8 +237,6 @@ public class CellParser {
             cid = cellIdentity.getCid();
         }
 
-        // ToDo: add CDMA?
-
         return cid;
     }
 
@@ -313,5 +311,41 @@ public class CellParser {
         } else {
             return null;
         }
+    }
+
+    /** Retrieves the latitude and longitude of a CDMA base station
+     * @param cellInfoCdma CellInfo object, where Cell is CDMA
+     * @return Pair (int, int) : Base station latitude and longitude
+     */
+    public static Pair<Integer, Integer> getCdmaLocation(CellInfoCdma cellInfoCdma) {
+        CellIdentityCdma cellIdentity = cellInfoCdma.getCellIdentity();
+        return new Pair<>(cellIdentity.getLatitude(), cellIdentity.getLongitude());
+    }
+
+    /** Retrieves base station id of CDMA cell
+     * @param cellInfoCdma CellInfo object, where Cell is CDMA
+     * @return int : base station id
+     */
+    public static int getCdmaBaseStationId(CellInfoCdma cellInfoCdma) {
+        CellIdentityCdma cellIdentity = cellInfoCdma.getCellIdentity();
+        return cellIdentity.getBasestationId();
+    }
+
+    /** Retrieves network id of CDMA cell
+     * @param cellInfoCdma CellInfo object, where Cell is CDMA
+     * @return int : network id
+     */
+    public static int getCdmaNetworkId(CellInfoCdma cellInfoCdma) {
+        CellIdentityCdma cellIdentity = cellInfoCdma.getCellIdentity();
+        return cellIdentity.getNetworkId();
+    }
+
+    /** Retrieves network id of CDMA cell
+     * @param cellInfoCdma CellInfo object, where Cell is CDMA
+     * @return int : network id
+     */
+    public static int getCdmaSystemId(CellInfoCdma cellInfoCdma) {
+        CellIdentityCdma cellIdentity = cellInfoCdma.getCellIdentity();
+        return cellIdentity.getSystemId();
     }
 }
