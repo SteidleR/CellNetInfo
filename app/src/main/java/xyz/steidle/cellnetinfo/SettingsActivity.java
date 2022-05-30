@@ -72,7 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
         Snackbar snackbarHistory;
         Snackbar snackbarExport;
         StorageManager storageManager;
-        int SDK_INT = Build.VERSION.SDK_INT;
+        int sdkInt = Build.VERSION.SDK_INT;
 
         /** Settings Fragment for creating Preferences screen
          * @param databaseHandler database handler instance
@@ -152,7 +152,7 @@ public class SettingsActivity extends AppCompatActivity {
          */
         protected String createStoragePath(String fileName) {
             String storageDirectoryPath;
-            if (SDK_INT >= Build.VERSION_CODES.R) {
+            if (sdkInt >= Build.VERSION_CODES.R) {
                 if(storageManager == null) {
                     storageDirectoryPath = Environment.getExternalStorageDirectory().getAbsolutePath();
                 } else {

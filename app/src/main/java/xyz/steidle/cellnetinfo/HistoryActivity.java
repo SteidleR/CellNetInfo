@@ -3,20 +3,9 @@ package xyz.steidle.cellnetinfo;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.storage.StorageManager;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ListView;
-
-import com.opencsv.CSVWriter;
-
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
 
 import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
 import xyz.steidle.cellnetinfo.view.CellHistoryAdapter;
