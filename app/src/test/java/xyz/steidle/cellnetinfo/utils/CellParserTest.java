@@ -135,17 +135,139 @@ public class CellParserTest {
         assertEquals("Unknown", CellParser.getProvider(cellInfoCdma));
     }
 
-    /*
+
 
     @Test
     public void getMcc() {
+        // Version_Code > P
+        CellParser.VERSION_SDK_INT = 30;
+
+        String mcc = "262";
+
+        // NR cell
+        CellInfoNr cellInfoNr = mock(CellInfoNr.class);
+        CellIdentityNr cellIdentityNr = mock(CellIdentityNr.class);
+        when(cellInfoNr.getCellIdentity()).thenReturn(cellIdentityNr);
+        when(cellIdentityNr.getMccString()).thenReturn(mcc);
+        assertEquals(mcc, CellParser.getMcc(cellInfoNr));
+
+        CellParser.VERSION_SDK_INT = 29;
+        assertEquals("", CellParser.getMcc(cellInfoNr));
+
+        // TDSCDMA cell
+        CellInfoTdscdma cellInfoTdscdma = mock(CellInfoTdscdma.class);
+        CellIdentityTdscdma cellIdentityTdscdma = mock(CellIdentityTdscdma.class);
+        when(cellInfoTdscdma.getCellIdentity()).thenReturn(cellIdentityTdscdma);
+        when(cellIdentityTdscdma.getMccString()).thenReturn(mcc);
+        assertEquals(mcc, CellParser.getMcc(cellInfoTdscdma));
+
+        CellParser.VERSION_SDK_INT = 28;
+        assertEquals("", CellParser.getMcc(cellInfoTdscdma));
+
+        // LTE cell
+        CellInfoLte cellInfoLte= mock(CellInfoLte.class);
+        CellIdentityLte cellIdentityLte = mock(CellIdentityLte.class);
+        when(cellInfoLte.getCellIdentity()).thenReturn(cellIdentityLte);
+        when(cellIdentityLte.getMccString()).thenReturn(mcc);
+        assertEquals(mcc, CellParser.getMcc(cellInfoLte));
+
+        // GSM cell
+        CellInfoGsm cellInfoGsm= mock(CellInfoGsm.class);
+        CellIdentityGsm cellIdentityGsm = mock(CellIdentityGsm.class);
+        when(cellInfoGsm.getCellIdentity()).thenReturn(cellIdentityGsm);
+        when(cellIdentityGsm.getMccString()).thenReturn(mcc);
+        assertEquals(mcc, CellParser.getMcc(cellInfoGsm));
+
+        // WCDMA cell
+        CellInfoWcdma cellInfoWcdma = mock(CellInfoWcdma.class);
+        CellIdentityWcdma cellIdentityWcdma = mock(CellIdentityWcdma.class);
+        when(cellInfoWcdma.getCellIdentity()).thenReturn(cellIdentityWcdma);
+        when(cellIdentityWcdma.getMccString()).thenReturn(mcc);
+        assertEquals(mcc, CellParser.getMcc(cellInfoWcdma));
+
+        // Version_Code < 28 --------------------------------------
+        CellParser.VERSION_SDK_INT = 27;
+
+        // LTE
+        int intMcc = 262;
+        when(cellIdentityLte.getMcc()).thenReturn(intMcc);
+        assertEquals(mcc, CellParser.getMcc(cellInfoLte));
+
+        // GSM
+        when(cellIdentityGsm.getMcc()).thenReturn(intMcc);
+        assertEquals(mcc, CellParser.getMcc(cellInfoGsm));
+
+        // WCDMA
+        when(cellIdentityWcdma.getMcc()).thenReturn(intMcc);
+        assertEquals(mcc, CellParser.getMcc(cellInfoWcdma));
     }
 
     @Test
     public void getMnc() {
+        // Version_Code > P
+        CellParser.VERSION_SDK_INT = 30;
+
+        String mnc = "4";
+
+        // NR cell
+        CellInfoNr cellInfoNr = mock(CellInfoNr.class);
+        CellIdentityNr cellIdentityNr = mock(CellIdentityNr.class);
+        when(cellInfoNr.getCellIdentity()).thenReturn(cellIdentityNr);
+        when(cellIdentityNr.getMncString()).thenReturn(mnc);
+        assertEquals(mnc, CellParser.getMnc(cellInfoNr));
+
+        CellParser.VERSION_SDK_INT = 29;
+        assertEquals("", CellParser.getMnc(cellInfoNr));
+
+        // TDSCDMA cell
+        CellInfoTdscdma cellInfoTdscdma = mock(CellInfoTdscdma.class);
+        CellIdentityTdscdma cellIdentityTdscdma = mock(CellIdentityTdscdma.class);
+        when(cellInfoTdscdma.getCellIdentity()).thenReturn(cellIdentityTdscdma);
+        when(cellIdentityTdscdma.getMncString()).thenReturn(mnc);
+        assertEquals(mnc, CellParser.getMnc(cellInfoTdscdma));
+
+        CellParser.VERSION_SDK_INT = 28;
+        assertEquals("", CellParser.getMnc(cellInfoTdscdma));
+
+        // LTE cell
+        CellInfoLte cellInfoLte= mock(CellInfoLte.class);
+        CellIdentityLte cellIdentityLte = mock(CellIdentityLte.class);
+        when(cellInfoLte.getCellIdentity()).thenReturn(cellIdentityLte);
+        when(cellIdentityLte.getMncString()).thenReturn(mnc);
+        assertEquals(mnc, CellParser.getMnc(cellInfoLte));
+
+        // GSM cell
+        CellInfoGsm cellInfoGsm= mock(CellInfoGsm.class);
+        CellIdentityGsm cellIdentityGsm = mock(CellIdentityGsm.class);
+        when(cellInfoGsm.getCellIdentity()).thenReturn(cellIdentityGsm);
+        when(cellIdentityGsm.getMncString()).thenReturn(mnc);
+        assertEquals(mnc, CellParser.getMnc(cellInfoGsm));
+
+        // WCDMA cell
+        CellInfoWcdma cellInfoWcdma = mock(CellInfoWcdma.class);
+        CellIdentityWcdma cellIdentityWcdma = mock(CellIdentityWcdma.class);
+        when(cellInfoWcdma.getCellIdentity()).thenReturn(cellIdentityWcdma);
+        when(cellIdentityWcdma.getMncString()).thenReturn(mnc);
+        assertEquals(mnc, CellParser.getMnc(cellInfoWcdma));
+
+        // Version_Code < 28 --------------------------------------
+        CellParser.VERSION_SDK_INT = 27;
+
+        // LTE
+        int intMcc = 4;
+        when(cellIdentityLte.getMnc()).thenReturn(intMcc);
+        assertEquals(mnc, CellParser.getMnc(cellInfoLte));
+
+        // GSM
+        when(cellIdentityGsm.getMnc()).thenReturn(intMcc);
+        assertEquals(mnc, CellParser.getMnc(cellInfoGsm));
+
+        // WCDMA
+        when(cellIdentityWcdma.getMnc()).thenReturn(intMcc);
+        assertEquals(mnc, CellParser.getMnc(cellInfoWcdma));
     }
 
-    */
+
 
     @Test
     public void getLacTac() {
@@ -275,6 +397,52 @@ public class CellParserTest {
         // CellSignalStrength -> null
         CellInfo cellInfo = mock(CellInfo.class);
         assertEquals(0, CellParser.getSignalDbm(cellInfo));
+    }
+
+    @Test
+    public void getCdmaLocation() {
+        Pair<Integer, Integer> testLatLong = new Pair<>(123, 321);
+
+        CellInfoCdma cellInfoCdma = mock(CellInfoCdma.class);
+        CellIdentityCdma cellIdentityCdma = mock(CellIdentityCdma.class);
+        when(cellInfoCdma.getCellIdentity()).thenReturn(cellIdentityCdma);
+        when(cellIdentityCdma.getLatitude()).thenReturn(testLatLong.first);
+        when(cellIdentityCdma.getLongitude()).thenReturn(testLatLong.second);
+
+        assertEquals(testLatLong, CellParser.getCdmaLocation(cellInfoCdma));
+    }
+
+    @Test
+    public void getCdmaBaseStationId() {
+        int bsId = 184;
+        CellInfoCdma cellInfoCdma = mock(CellInfoCdma.class);
+        CellIdentityCdma cellIdentityCdma = mock(CellIdentityCdma.class);
+        when(cellInfoCdma.getCellIdentity()).thenReturn(cellIdentityCdma);
+        when(cellIdentityCdma.getBasestationId()).thenReturn(bsId);
+
+        assertEquals(bsId, CellParser.getCdmaBaseStationId(cellInfoCdma));
+    }
+
+    @Test
+    public void getCdmaNetworkId() {
+        int netId = 2;
+        CellInfoCdma cellInfoCdma = mock(CellInfoCdma.class);
+        CellIdentityCdma cellIdentityCdma = mock(CellIdentityCdma.class);
+        when(cellInfoCdma.getCellIdentity()).thenReturn(cellIdentityCdma);
+        when(cellIdentityCdma.getNetworkId()).thenReturn(netId);
+
+        assertEquals(netId, CellParser.getCdmaNetworkId(cellInfoCdma));
+    }
+
+    @Test
+    public void getCdmaSystemId() {
+        int sysId = 2;
+        CellInfoCdma cellInfoCdma = mock(CellInfoCdma.class);
+        CellIdentityCdma cellIdentityCdma = mock(CellIdentityCdma.class);
+        when(cellInfoCdma.getCellIdentity()).thenReturn(cellIdentityCdma);
+        when(cellIdentityCdma.getSystemId()).thenReturn(sysId);
+
+        assertEquals(sysId, CellParser.getCdmaSystemId(cellInfoCdma));
     }
 
     /*
