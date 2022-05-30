@@ -6,7 +6,7 @@ buildscript {
         mavenCentral { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.3'
+        classpath 'com.android.tools.build:gradle:7.2.1'
         classpath 'com.dicedmelon.gradle:jacoco-android:0.1.5'
         classpath 'org.mockito:mockito-inline:4.5.1'
         // NOTE: Do not place your application dependencies here; they belong

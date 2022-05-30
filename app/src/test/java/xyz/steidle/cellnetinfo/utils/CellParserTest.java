@@ -116,14 +116,12 @@ public class CellParserTest {
         when(cellInfoGsm.getCellIdentity()).thenReturn(cellIdentityGsm);
         assertEquals("Mocked Operator GSM", CellParser.getProvider(cellInfoGsm));
 
-
         // Test WCDMA
         CellInfoWcdma cellInfoWcdma = mock(CellInfoWcdma.class);
         CellIdentityWcdma cellIdentityWcdma = mock(CellIdentityWcdma.class);
         when(cellIdentityWcdma.getOperatorAlphaShort()).thenReturn("Mocked Operator WCDMA");
         when(cellInfoWcdma.getCellIdentity()).thenReturn(cellIdentityWcdma);
         assertEquals("Mocked Operator WCDMA", CellParser.getProvider(cellInfoWcdma));
-
 
         // Test CDMA
         CellInfoCdma cellInfoCdma = mock(CellInfoCdma.class);
@@ -153,7 +151,8 @@ public class CellParserTest {
     public void getLacTac() {
         // null object
         Pair<Integer, Integer> pair = CellParser.getLacTac(null);
-        assert 0 == pair.second;
+        int result = pair.second;
+        assertEquals(0, result);
 
         // CellInfoNr
         CellParser.VERSION_SDK_INT = 30;
@@ -161,39 +160,39 @@ public class CellParserTest {
         when(cellIdentityNr.getTac()).thenReturn(123);
         CellInfoNr cellInfoNR = mock(CellInfoNr.class);
         when(cellInfoNR.getCellIdentity()).thenReturn(cellIdentityNr);
-        assert 123 == CellParser.getLacTac(cellInfoNR).second;
+        assertEquals(123, (int)CellParser.getLacTac(cellInfoNR).second);
         CellParser.VERSION_SDK_INT = 29;
-        assert 0 == CellParser.getLacTac(cellInfoNR).second;
+        assertEquals(0, (int)CellParser.getLacTac(cellInfoNR).second);
 
         // CellInfoTdscdma
         CellIdentityTdscdma cellIdentityTdscdma = mock(CellIdentityTdscdma.class);
         when(cellIdentityTdscdma.getLac()).thenReturn(12345);
         CellInfoTdscdma cellInfoTdscdma = mock(CellInfoTdscdma.class);
         when(cellInfoTdscdma.getCellIdentity()).thenReturn(cellIdentityTdscdma);
-        assert 12345 == CellParser.getLacTac(cellInfoTdscdma).second;
+        assertEquals(12345, (int)CellParser.getLacTac(cellInfoTdscdma).second);
         CellParser.VERSION_SDK_INT = 23;
-        assert 0 == CellParser.getLacTac(cellInfoTdscdma).second;
+        assertEquals(0, (int)CellParser.getLacTac(cellInfoTdscdma).second);
 
         // CellInfoLte
         CellIdentityLte cellIdentityLte = mock(CellIdentityLte.class);
         when(cellIdentityLte.getTac()).thenReturn(123456);
         CellInfoLte cellInfoLte = mock(CellInfoLte.class);
         when(cellInfoLte.getCellIdentity()).thenReturn(cellIdentityLte);
-        assert 123456 == CellParser.getLacTac(cellInfoLte).second;
+        assertEquals(123456, (int)CellParser.getLacTac(cellInfoLte).second);
 
         // CellInfoGsm
         CellIdentityGsm cellIdentityGsm = mock(CellIdentityGsm.class);
         when(cellIdentityGsm.getLac()).thenReturn(1234);
         CellInfoGsm cellInfoGsm = mock(CellInfoGsm.class);
         when(cellInfoGsm.getCellIdentity()).thenReturn(cellIdentityGsm);
-        assert 1234 == CellParser.getLacTac(cellInfoGsm).second;
+        assertEquals(1234, (int)CellParser.getLacTac(cellInfoGsm).second);
 
         // CellInfoWcdma
         CellIdentityWcdma cellIdentityWcdma = mock(CellIdentityWcdma.class);
         when(cellIdentityWcdma.getLac()).thenReturn(12);
         CellInfoWcdma cellInfoWcdma = mock(CellInfoWcdma.class);
         when(cellInfoWcdma.getCellIdentity()).thenReturn(cellIdentityWcdma);
-        assert 12 == CellParser.getLacTac(cellInfoWcdma).second;
+        assertEquals(12, (int)CellParser.getLacTac(cellInfoWcdma).second);
     }
 
     @Test
