@@ -71,11 +71,7 @@ public class Reload extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
-        handlerThread = new HandlerThread("MyLocationThread");
-        handlerThread.setDaemon(true);
-        handlerThread.start();
-        handler = new Handler(handlerThread.getLooper());
-        handler.postDelayed(this::loadCells, 60000);
+        createReloadHandler();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             startMyOwnForeground();
@@ -85,7 +81,15 @@ public class Reload extends Service {
         return START_STICKY;
     }
 
-    private void loadCells() {
+    protected void createReloadHandler() {
+        handlerThread = new HandlerThread("MyLocationThread");
+        handlerThread.setDaemon(true);
+        handlerThread.start();
+        handler = new Handler(handlerThread.getLooper());
+        handler.postDelayed(this::loadCells, 60000);
+    }
+
+    protected void loadCells() {
         Log.d("ForegroundService:Reload", "Loading Cells...");
 
         List<CellInfo> cellInfoList = cellInfoHandler.getCells();

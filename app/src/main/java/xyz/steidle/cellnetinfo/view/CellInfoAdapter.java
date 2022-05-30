@@ -20,7 +20,7 @@ import xyz.steidle.cellnetinfo.utils.CellParser;
 public class CellInfoAdapter extends BaseAdapter {
   Context context;
   List<CellInfo> cellInfoList;
-  private final LayoutInflater mLayoutInflater;
+  protected LayoutInflater mLayoutInflater;
 
   public CellInfoAdapter(Context context, List<CellInfo> cellInfoList) {
     this.context = context;
@@ -106,8 +106,7 @@ public class CellInfoAdapter extends BaseAdapter {
   }
 
   public View getViewCdma(View view, CellInfo cellInfo) {
-    View vi = view;
-    if (vi == null) vi = mLayoutInflater.inflate(R.layout.row_cdma, null);
+    View vi = mLayoutInflater.inflate(R.layout.row_cdma, null);
 
     TextView headerText = vi.findViewById(R.id.cell_header);
     TextView sysIdText = vi.findViewById(R.id.cell_sys);

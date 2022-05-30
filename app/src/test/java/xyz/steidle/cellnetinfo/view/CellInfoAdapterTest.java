@@ -12,10 +12,13 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.telephony.CellInfo;
+import android.telephony.CellInfoCdma;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.matchers.Any;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,4 +72,16 @@ public class CellInfoAdapterTest {
         View view = mock(View.class);
 
     }
+/*
+    @Test
+    public void getViewCdma() {
+        View view = mock(View.class);
+        CellInfoCdma cellInfoCdma = mock(CellInfoCdma.class);
+
+        cellInfoAdapter.mLayoutInflater = mock(LayoutInflater.class);
+        when(cellInfoAdapter.mLayoutInflater.inflate(1300058, null)).thenReturn(view);
+
+        assertEquals(view, cellInfoAdapter.getViewCdma(view, cellInfoCdma));
+    }
+    */
 }
