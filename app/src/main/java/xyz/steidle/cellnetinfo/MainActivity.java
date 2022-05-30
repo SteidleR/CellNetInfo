@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
   private int locationRefreshTime = 15000; // 15 seconds to update
   private int locationRefreshDistance = 500; // 500 meters to update
 
+  private static final int LOCATION_REQUEST_CODE = 12;
+  private boolean arePermissionsSet = false;
+
   private final LocationListener mLocationListener = location -> DataHolder.getInstance().setLocation(location);
 
   @Override
@@ -71,12 +74,14 @@ public class MainActivity extends AppCompatActivity {
    */
   protected void initializeApplicationLogic() {
     handleLocationManager();
-    handlePreferences();
-    createBackgroundReload();
+    if (arePermissionsSet) {
+      handlePreferences();
+      createBackgroundReload();
 
-    if (!foregroundServiceRunning() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      Intent reloadServiceIntent = new Intent(this, Reload.class);
-      startForegroundService(reloadServiceIntent);
+      if (!foregroundServiceRunning() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        Intent reloadServiceIntent = new Intent(this, Reload.class);
+        startForegroundService(reloadServiceIntent);
+      }
     }
   }
 
@@ -95,9 +100,10 @@ public class MainActivity extends AppCompatActivity {
   private void handleLocationManager() {
     LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 12);
+      ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
       return;
     }
+    arePermissionsSet = true;
     mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
   }
 
@@ -181,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
     stopService(intent);
   }
 
-  /**
-   * @deprecated
+  /** Called when one option of permission request popup is clicked
+   * @deprecated Will be changed in future
    */
   @Deprecated
   @Override
@@ -191,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
     int indexLocationPermission = Arrays.binarySearch(permissions, Manifest.permission.ACCESS_FINE_LOCATION);
 
-    if (requestCode == 12 && grantResults[indexLocationPermission] == 0) {
+    if (requestCode == LOCATION_REQUEST_CODE && grantResults[indexLocationPermission] == 0) {
       initializeApplicationLogic();
     }
   }
