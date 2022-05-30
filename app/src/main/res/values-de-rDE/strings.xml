@@ -27,4 +27,6 @@
     <string name="history_cleared">Zell-Historie löschen</string>
     <string name="history_exported">Zell-Historie exportieren</string>
     <string name="folder_paths_title">Folder where history wil be exported to</string>
+
+    <string name="cell_baseid">Basisstation-ID</string>
 </resources>
