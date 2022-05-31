@@ -29,6 +29,8 @@ public class Reload extends Service {
     DatabaseHandler databaseHandler;
     Notification notification;
 
+    static int VERSION_SDK_INT = Build.VERSION.SDK_INT;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -73,7 +75,7 @@ public class Reload extends Service {
 
         createReloadHandler();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        if (VERSION_SDK_INT >= Build.VERSION_CODES.O)
             startMyOwnForeground();
         else
             startForeground(1, new Notification());

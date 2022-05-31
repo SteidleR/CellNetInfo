@@ -76,8 +76,8 @@ public class CellHistoryAdapter extends BaseAdapter {
         vi.setOnClickListener(view1 -> {
             ListView listView = (ListView) view1.findViewById(R.id.cell_history_list);
             Log.d("HistoryCell", "Open History of Cell");
-            listView.setAdapter(new ArrayAdapter<>(this.context, android.R.layout.simple_list_item_1, cellList));
             listView.setVisibility(View.VISIBLE);
+            listView.setAdapter(new ArrayAdapter<>(this.context, android.R.layout.simple_list_item_1, cellList));
         });
 
         return vi;

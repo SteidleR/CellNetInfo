@@ -48,6 +48,8 @@ public class CellInfoAdapter extends BaseAdapter {
   public View getView(int i, View view, ViewGroup viewGroup) {
     CellInfo cellInfo = cellInfoList.get(i);
 
+    Log.d("CellInfoAdapter", cellInfo.toString());
+
     if (cellInfo instanceof CellInfoCdma)
       return getViewCdma(view, cellInfo);
 
@@ -64,8 +66,6 @@ public class CellInfoAdapter extends BaseAdapter {
     TextView pciText = vi.findViewById(R.id.cell_pci);
     TextView dbmText = vi.findViewById(R.id.cell_strength_text);
     ImageView signalImage = vi.findViewById(R.id.img_signal);
-
-    Log.d("CellInfoAdapter", cellInfo.toString());
 
     CharSequence operator = CellParser.getProvider(cellInfo);
     CharSequence generation = CellParser.getGeneration(cellInfo);

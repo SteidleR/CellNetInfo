@@ -13,6 +13,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import android.content.Intent;
 import android.os.HandlerThread;
 import android.telephony.CellInfo;
 
@@ -25,6 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReloadTest {
+
+    @Test
+    public void onCreate() {
+        Reload reload = new Reload();
+        reload.onCreate();
+
+        assertNotNull(reload.cellInfoHandler);
+        assertNotNull(reload.databaseHandler);
+    }
 
     @Test
     public void loadCells() {
@@ -60,5 +70,11 @@ public class ReloadTest {
 
         reload.onDestroy();
         verify(handlerThread, times(1)).quit();
+    }
+
+    @Test
+    public void onBind() {
+        // should return always null
+        assertNull(new Reload().onBind(mock(Intent.class)));
     }
 }

@@ -130,69 +130,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @return List of String arrays representing database rows
      */
     public List<String[]> getAllCellsGrouped() {
-        List<String[]> cellList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_CELLS + " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_LAC + "," + KEY_TAC + ";";
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        int[] indices = {10, 1, 2, 3, 4, 5, 6, 7, 8};
 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                cellList.add(new String[]{
-                        cursor.getString(10),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getString(7),
-                        cursor.getString(8)
-                });
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return cellList;
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
     }
 
     /** Returns all cells stored in database table as a list of string arrays
      * @return List of String arrays representing database rows
      */
     public List<String[]> getAllCellsCsv() {
-        List<String[]> cellList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_CELLS;
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        int[] indices = {10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12};
 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                cellList.add(new String[]{
-                        cursor.getString(10),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getString(7),
-                        cursor.getString(8),
-                        cursor.getString(9),
-                        cursor.getString(11),
-                        cursor.getString(12)
-                });
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return cellList;
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
     }
 
     public List<String[]> getCellsFiltered(String standard, String provider, int mcc, int mnc, int tac, int lac) {
-        List<String[]> cellList = new ArrayList<>();
         String selectQuery = "SELECT * FROM " + TABLE_CELLS + " WHERE " +
                 KEY_STANDARD + " LIKE '" + standard + "' AND " +
                 KEY_PROVIDER + " LIKE '" + provider + "' AND " +
@@ -204,19 +160,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         selectQuery = selectQuery + ";";
 
-        Log.d("DatabaseHandler", selectQuery);
+        int[] indices = {10, 11, 12};
 
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+    }
+
+    public Cursor createCursorFromQuery(String query) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        return db.rawQuery(query, null);
+    }
+
+    /** Returns all cells from cursor with given columns
+     * @param cursor Database cursor to fetch cells from
+     * @param indices Array of indices of columns to return
+     * @return list of cells as String arrays
+     */
+    public List<String[]> getCellsFromCursor(Cursor cursor, int[] indices) {
+        List<String[]> cellList = new ArrayList<>();
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                cellList.add(new String[]{
-                        cursor.getString(10),
-                        cursor.getString(11),
-                        cursor.getString(12)
-                });
+                List<String> row = new ArrayList<>();
+                for (int i : indices) {
+                    row.add(cursor.getString(i));
+                }
+                String[] rowArray = new String[indices.length];
+                rowArray = row.toArray(rowArray);
+                cellList.add(rowArray);
             } while (cursor.moveToNext());
         }
         cursor.close();
