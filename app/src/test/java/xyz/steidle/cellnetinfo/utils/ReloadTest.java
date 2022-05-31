@@ -1,9 +1,3 @@
-/*
- * Created by Robin Steidle on 30.05.22, 14:19
- * Copyright (c) 2022 . All rights reserved.
- * Last modified 30.05.22, 14:19
- */
-
 package xyz.steidle.cellnetinfo.utils;
 
 import static org.junit.Assert.*;

@@ -34,12 +34,12 @@ import xyz.steidle.cellnetinfo.utils.Reload;
 import xyz.steidle.cellnetinfo.view.CellInfoAdapter;
 
 public class MainActivity extends AppCompatActivity {
-  private ListView cellInfoListView;
-  private TextView noCellsTextView;
-  private TextView statusTextView;
-  private BroadcastReceiver receiver;
-  private CellInfoHandler cellInfoHandler;
-  private DatabaseHandler databaseHandler;
+  ListView cellInfoListView;
+  TextView noCellsTextView;
+  TextView statusTextView;
+  BroadcastReceiver receiver;
+  CellInfoHandler cellInfoHandler;
+  DatabaseHandler databaseHandler;
 
   private int locationRefreshTime = 15000; // 15 seconds to update
   private int locationRefreshDistance = 500; // 500 meters to update
@@ -160,13 +160,13 @@ public class MainActivity extends AppCompatActivity {
   /** Sets status in status bar from given resource id.
    * @param strId Status String ID
    */
-  private void setStatus(int strId) {
+  protected void setStatus(int strId) {
     Log.d("MainActivity", getResources().getString(strId));
     statusTextView.setText(getResources().getString(strId));
   }
 
   /** Sets status text to empty */
-  private void resetStatus() {
+  protected void resetStatus() {
     statusTextView.setText("");
   }
 

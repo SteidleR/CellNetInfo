@@ -39,6 +39,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_LATITUDE = "latitude";
     private static final String KEY_LONGITUDE = "longitude";
 
+    private static final int[] columnsGroupedQuery = {10, 1, 2, 3, 4, 5, 6, 7, 8};
+    private static final int[] columnsCsvQuery = {10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12};
+    private static final int[] columnsFilteredQuery = {10, 11, 12};;
+
     DataHolder dataHolder;
 
     public DatabaseHandler(Context context) {
@@ -131,10 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public List<String[]> getAllCellsGrouped() {
         String selectQuery = "SELECT * FROM " + TABLE_CELLS + " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_LAC + "," + KEY_TAC + ";";
-
-        int[] indices = {10, 1, 2, 3, 4, 5, 6, 7, 8};
-
-        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), columnsGroupedQuery);
     }
 
     /** Returns all cells stored in database table as a list of string arrays
@@ -142,10 +143,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public List<String[]> getAllCellsCsv() {
         String selectQuery = "SELECT  * FROM " + TABLE_CELLS;
-
-        int[] indices = {10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12};
-
-        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), columnsCsvQuery);
     }
 
     public List<String[]> getCellsFiltered(String standard, String provider, int mcc, int mnc, int tac, int lac) {
@@ -153,16 +151,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 KEY_STANDARD + " LIKE '" + standard + "' AND " +
                 KEY_PROVIDER + " LIKE '" + provider + "' AND " +
                 KEY_MCC + " = " + mcc + " AND " +
-                KEY_MNC + " = " + mnc;
+                KEY_MNC + " = " + mnc +
+                (lac != -1 ? " AND " + KEY_LAC + " = " + lac : "") +
+                (tac != -1 ? " AND " + KEY_TAC + " = " + tac : "") + ";";
 
-        selectQuery = selectQuery + (lac != -1 ? " AND " + KEY_LAC + " = " + lac : "");
-        selectQuery = selectQuery + (tac != -1 ? " AND " + KEY_TAC + " = " + tac : "");
-
-        selectQuery = selectQuery + ";";
-
-        int[] indices = {10, 11, 12};
-
-        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), columnsFilteredQuery);
     }
 
     public Cursor createCursorFromQuery(String query) {

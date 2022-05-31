@@ -6,9 +6,13 @@
 
 package xyz.steidle.cellnetinfo;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+
+import android.os.Bundle;
+import android.widget.TextView;
 
 import org.junit.Test;
 
