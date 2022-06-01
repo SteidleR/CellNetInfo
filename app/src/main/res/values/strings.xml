@@ -46,4 +46,10 @@
     <string name="history_cleared">History cleared!</string>
     <string name="history_exported">History exported!</string>
     <string name="folder_paths_title">Folder where history wil be exported to</string>
+    <string name="cell_nrarfcn">NrARFCN</string>
+    <string name="cell_bandwidth">Bandwidth</string>
+    <string name="cell_arfcn">ARFCN</string>
+    <string name="cell_bsic">BSIC</string>
+    <string name="cell_uarfcn">UARFCN</string>
+    <string name="cell_psc">PSC</string>
 </resources>

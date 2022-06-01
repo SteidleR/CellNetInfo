@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -12,28 +11,34 @@
     android:padding="6dp">
 
     <LinearLayout
-        android:id="@+id/mainHeader"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/cell_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/cell_header"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="18sp" />
+        <TextView
+            android:id="@+id/cell_strength_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="viewEnd" />
+    </LinearLayout>
 
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -85,7 +90,13 @@
                     android:id="@+id/cell_lactac"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1.5" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/textView4"
@@ -99,6 +110,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/cell_pci_descr"
@@ -115,19 +132,38 @@
 
             </TableRow>
 
-        </TableLayout>
-    </LinearLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/cell_history_list"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:fadeScrollbars="false"
-        android:fastScrollAlwaysVisible="false"
-        android:fastScrollEnabled="false"
-        android:scrollbarSize="6dp"
-        android:visibility="gone"
-        tools:visibility="visible" />
+                <TextView
+                    android:id="@+id/cell_bandwidth_descr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/cell_bandwidth"
+                    android:textColor="#9E9E9E" />
+
+                <TextView
+                    android:id="@+id/cell_bandwidth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <ImageView
+            android:id="@+id/img_signal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:contentDescription="@string/cell_strength_description"
+            android:minWidth="70dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_signal_3" />
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrength;
 import android.text.TextUtils;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.util.Pair;
 
 import xyz.steidle.cellnetinfo.R;
@@ -347,5 +348,45 @@ public class CellParser {
     public static int getCdmaSystemId(CellInfoCdma cellInfoCdma) {
         CellIdentityCdma cellIdentity = cellInfoCdma.getCellIdentity();
         return cellIdentity.getSystemId();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public static int getNrarfcn(CellInfoNr cellInfoNr) {
+        CellIdentityNr cellIdentity = (CellIdentityNr) cellInfoNr.getCellIdentity();
+        return cellIdentity.getNrarfcn();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    public static int getBandwidth(CellInfoLte cellInfoLte) {
+        CellIdentityLte cellIdentity = cellInfoLte.getCellIdentity();
+        return cellIdentity.getBandwidth();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static int getArfcn(CellInfo cellInfo) {
+        int arfcn = CellInfo.UNAVAILABLE;
+        if (cellInfo instanceof CellInfoGsm) {
+            CellIdentityGsm cellIdentityGsm = ((CellInfoGsm) cellInfo).getCellIdentity();
+            arfcn = cellIdentityGsm.getArfcn();
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+            CellIdentityTdscdma cellIdentityTdscdma = ((CellInfoTdscdma) cellInfo).getCellIdentity();
+            arfcn = cellIdentityTdscdma.getUarfcn();
+        } else if (cellInfo instanceof CellInfoWcdma) {
+            CellIdentityWcdma cellIdentityWcdma = ((CellInfoWcdma) cellInfo).getCellIdentity();
+            arfcn = cellIdentityWcdma.getUarfcn();
+        }
+
+        return arfcn;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static int getBsic(CellInfoGsm cellInfo) {
+        CellIdentityGsm cellIdentity = cellInfo.getCellIdentity();
+        return cellIdentity.getBsic();
+    }
+
+    public static int getPsc(CellInfoWcdma cellInfo) {
+        CellIdentityWcdma cellIdentityWcdma = cellInfo.getCellIdentity();
+        return cellIdentityWcdma.getPsc();
     }
 }
