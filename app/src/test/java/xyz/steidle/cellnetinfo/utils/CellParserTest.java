@@ -89,7 +89,7 @@ public class CellParserTest {
         // Testing too low version sdk number
         CellParser.VERSION_SDK_INT = 23;
         CellInfoLte cellInfoLte = mock(CellInfoLte.class);
-        assertEquals("Unknown", CellParser.getProvider(cellInfoLte));
+        assertEquals("?", CellParser.getProvider(cellInfoLte));
 
         CellIdentity cellIdentity = mock(CellIdentity.class);
         when(cellIdentity.getOperatorAlphaShort()).thenReturn("Mocked Operator");
@@ -101,7 +101,7 @@ public class CellParserTest {
         CellParser.VERSION_SDK_INT = 30;
         assertEquals("Mocked Operator", CellParser.getProvider(cellInfoNR));
         CellParser.VERSION_SDK_INT = 28;
-        assertEquals("Unknown", CellParser.getProvider(cellInfoNR));
+        assertEquals("?", CellParser.getProvider(cellInfoNR));
 
         // Test LTE
         CellIdentityLte cellIdentityLte = mock(CellIdentityLte.class);
@@ -132,7 +132,7 @@ public class CellParserTest {
 
         // null operator
         when(cellInfoCdma.getCellIdentity()).thenReturn(null);
-        assertEquals("Unknown", CellParser.getProvider(cellInfoCdma));
+        assertEquals("?", CellParser.getProvider(cellInfoCdma));
     }
 
 

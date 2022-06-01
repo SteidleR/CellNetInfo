@@ -226,18 +226,25 @@ public class CellInfoAdapter extends BaseAdapter {
     mccText.setText(mcc);
 
     String mnc = CellParser.getMnc(cellInfo);
-    if (mcc.equals(""))
+    if (mnc.equals(""))
       mnc = context.getString(R.string.unknown);
     mncText.setText(mnc);
 
     Pair<Integer, Integer> lacPair = CellParser.getLacTac(cellInfo);
     lacDescrText.setText(lacPair.first);
-    lacText.setText(String.valueOf(lacPair.second));
+    if (lacPair.second == CellInfo.UNAVAILABLE)
+      lacText.setText("?");
+    else
+      lacText.setText(String.valueOf(lacPair.second));
 
-    cidText.setText(String.valueOf(CellParser.getCellId(cellInfo)));
+    long cid = CellParser.getCellId(cellInfo);
+    if (cid == CellInfo.UNAVAILABLE_LONG || cid == CellInfo.UNAVAILABLE)
+      cidText.setText("?");
+    else
+      cidText.setText(String.valueOf(cid));
 
     int pci = CellParser.getPci(cellInfo);
-    if (pci == -1) {
+    if (pci == -1 || pci == CellInfo.UNAVAILABLE) {
       vi.findViewById(R.id.cell_pci_descr).setVisibility(View.GONE);
       pciText.setVisibility(View.GONE);
     } else {

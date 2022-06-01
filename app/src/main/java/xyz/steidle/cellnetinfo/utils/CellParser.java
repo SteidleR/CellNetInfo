@@ -64,7 +64,7 @@ public class CellParser {
      */
     public static String getProvider(CellInfo cellInfo) {
         CellIdentity cellIdentity = null;
-        String provider = "Unknown";
+        String provider = "?";
 
         if (VERSION_SDK_INT >= Build.VERSION_CODES.P) {
             if (VERSION_SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
@@ -176,6 +176,9 @@ public class CellParser {
                 mnc = Integer.toString(cellIdentity.getMnc());
             }
         }
+
+        if (mnc == null)
+            mnc = "";
 
         return mnc;
     }
