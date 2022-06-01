@@ -52,4 +52,5 @@
     <string name="cell_bsic">BSIC</string>
     <string name="cell_uarfcn">UARFCN</string>
     <string name="cell_psc">PSC</string>
+    <string name="bandwidth_format">%dkHz</string>
 </resources>

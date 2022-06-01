@@ -371,7 +371,7 @@ public class CellParser {
         if (cellInfo instanceof CellInfoGsm) {
             CellIdentityGsm cellIdentityGsm = ((CellInfoGsm) cellInfo).getCellIdentity();
             arfcn = cellIdentityGsm.getArfcn();
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+        } else if (VERSIONSDKINT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
             CellIdentityTdscdma cellIdentityTdscdma = ((CellInfoTdscdma) cellInfo).getCellIdentity();
             arfcn = cellIdentityTdscdma.getUarfcn();
         } else if (cellInfo instanceof CellInfoWcdma) {

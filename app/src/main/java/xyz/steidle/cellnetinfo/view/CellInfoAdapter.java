@@ -127,7 +127,7 @@ public class CellInfoAdapter extends BaseAdapter {
       if (bandwidth == CellInfo.UNAVAILABLE)
         ((TableRow) bandwidthText.getParent()).setVisibility(View.GONE);
       else
-        bandwidthText.setText(bandwidth + "kHz");
+        bandwidthText.setText(String.format(context.getString(R.string.bandwidth_format), bandwidth));
     } else {
       ((TableRow) bandwidthText.getParent()).setVisibility(View.GONE);
     }
