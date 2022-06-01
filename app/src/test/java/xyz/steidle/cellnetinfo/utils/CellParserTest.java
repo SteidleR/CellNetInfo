@@ -29,8 +29,6 @@ import android.telephony.CellInfoWcdma;
 import androidx.core.util.Pair;
 
 import org.junit.Test;
-import org.junit.function.ThrowingRunnable;
-import org.junit.runner.RunWith;
 
 public class CellParserTest {
 
@@ -45,14 +43,14 @@ public class CellParserTest {
         // Testing version specific cell information
 
         // set version code to 30 (minimum Build version for NR/5G)
-        CellParser.VERSION_SDK_INT = 30;
+        CellParser.VERSIONSDKINT = 30;
 
         // Test NR
         CellInfoNr cellInfoNr = mock(CellInfoNr.class);
         assertEquals("NR", CellParser.getGeneration(cellInfoNr));
 
         // set version code to 29 (minimum Build version for TDSCDMA)
-        CellParser.VERSION_SDK_INT = 29;
+        CellParser.VERSIONSDKINT = 29;
 
         // Test TDSCMA
         CellInfoTdscdma cellInfoTdscdma = mock(CellInfoTdscdma.class);
@@ -61,7 +59,7 @@ public class CellParserTest {
         // ----------------------------------------------------------------
         // Testing none version specific cell information
 
-        CellParser.VERSION_SDK_INT = 23;
+        CellParser.VERSIONSDKINT = 23;
 
         // Testing to low build version
         assertEquals("Unknown", CellParser.getGeneration(cellInfoNr));
@@ -87,7 +85,7 @@ public class CellParserTest {
     @Test
     public void getProvider() {
         // Testing too low version sdk number
-        CellParser.VERSION_SDK_INT = 23;
+        CellParser.VERSIONSDKINT = 23;
         CellInfoLte cellInfoLte = mock(CellInfoLte.class);
         assertEquals("?", CellParser.getProvider(cellInfoLte));
 
@@ -98,9 +96,9 @@ public class CellParserTest {
         CellInfoNr cellInfoNR = mock(CellInfoNr.class);
         when(cellInfoNR.getCellIdentity()).thenReturn(cellIdentity);
 
-        CellParser.VERSION_SDK_INT = 30;
+        CellParser.VERSIONSDKINT = 30;
         assertEquals("Mocked Operator", CellParser.getProvider(cellInfoNR));
-        CellParser.VERSION_SDK_INT = 28;
+        CellParser.VERSIONSDKINT = 28;
         assertEquals("?", CellParser.getProvider(cellInfoNR));
 
         // Test LTE
@@ -140,7 +138,7 @@ public class CellParserTest {
     @Test
     public void getMcc() {
         // Version_Code > P
-        CellParser.VERSION_SDK_INT = 30;
+        CellParser.VERSIONSDKINT = 30;
 
         String mcc = "262";
 
@@ -151,7 +149,7 @@ public class CellParserTest {
         when(cellIdentityNr.getMccString()).thenReturn(mcc);
         assertEquals(mcc, CellParser.getMcc(cellInfoNr));
 
-        CellParser.VERSION_SDK_INT = 29;
+        CellParser.VERSIONSDKINT = 29;
         assertEquals("", CellParser.getMcc(cellInfoNr));
 
         // TDSCDMA cell
@@ -161,7 +159,7 @@ public class CellParserTest {
         when(cellIdentityTdscdma.getMccString()).thenReturn(mcc);
         assertEquals(mcc, CellParser.getMcc(cellInfoTdscdma));
 
-        CellParser.VERSION_SDK_INT = 28;
+        CellParser.VERSIONSDKINT = 28;
         assertEquals("", CellParser.getMcc(cellInfoTdscdma));
 
         // LTE cell
@@ -186,7 +184,7 @@ public class CellParserTest {
         assertEquals(mcc, CellParser.getMcc(cellInfoWcdma));
 
         // Version_Code < 28 --------------------------------------
-        CellParser.VERSION_SDK_INT = 27;
+        CellParser.VERSIONSDKINT = 27;
 
         // LTE
         int intMcc = 262;
@@ -205,7 +203,7 @@ public class CellParserTest {
     @Test
     public void getMnc() {
         // Version_Code > P
-        CellParser.VERSION_SDK_INT = 30;
+        CellParser.VERSIONSDKINT = 30;
 
         String mnc = "4";
 
@@ -216,7 +214,7 @@ public class CellParserTest {
         when(cellIdentityNr.getMncString()).thenReturn(mnc);
         assertEquals(mnc, CellParser.getMnc(cellInfoNr));
 
-        CellParser.VERSION_SDK_INT = 29;
+        CellParser.VERSIONSDKINT = 29;
         assertEquals("", CellParser.getMnc(cellInfoNr));
 
         // TDSCDMA cell
@@ -226,7 +224,7 @@ public class CellParserTest {
         when(cellIdentityTdscdma.getMncString()).thenReturn(mnc);
         assertEquals(mnc, CellParser.getMnc(cellInfoTdscdma));
 
-        CellParser.VERSION_SDK_INT = 28;
+        CellParser.VERSIONSDKINT = 28;
         assertEquals("", CellParser.getMnc(cellInfoTdscdma));
 
         // LTE cell
@@ -251,7 +249,7 @@ public class CellParserTest {
         assertEquals(mnc, CellParser.getMnc(cellInfoWcdma));
 
         // Version_Code < 28 --------------------------------------
-        CellParser.VERSION_SDK_INT = 27;
+        CellParser.VERSIONSDKINT = 27;
 
         // LTE
         int intMcc = 4;
@@ -277,13 +275,13 @@ public class CellParserTest {
         assertEquals(0, result);
 
         // CellInfoNr
-        CellParser.VERSION_SDK_INT = 30;
+        CellParser.VERSIONSDKINT = 30;
         CellIdentityNr cellIdentityNr = mock(CellIdentityNr.class);
         when(cellIdentityNr.getTac()).thenReturn(123);
         CellInfoNr cellInfoNR = mock(CellInfoNr.class);
         when(cellInfoNR.getCellIdentity()).thenReturn(cellIdentityNr);
         assertEquals(123, (int)CellParser.getLacTac(cellInfoNR).second);
-        CellParser.VERSION_SDK_INT = 29;
+        CellParser.VERSIONSDKINT = 29;
         assertEquals(0, (int)CellParser.getLacTac(cellInfoNR).second);
 
         // CellInfoTdscdma
@@ -292,7 +290,7 @@ public class CellParserTest {
         CellInfoTdscdma cellInfoTdscdma = mock(CellInfoTdscdma.class);
         when(cellInfoTdscdma.getCellIdentity()).thenReturn(cellIdentityTdscdma);
         assertEquals(12345, (int)CellParser.getLacTac(cellInfoTdscdma).second);
-        CellParser.VERSION_SDK_INT = 23;
+        CellParser.VERSIONSDKINT = 23;
         assertEquals(0, (int)CellParser.getLacTac(cellInfoTdscdma).second);
 
         // CellInfoLte
@@ -325,9 +323,9 @@ public class CellParserTest {
         CellInfoNr cellInfoNR = mock(CellInfoNr.class);
         when(cellInfoNR.getCellIdentity()).thenReturn(cellIdentity);
 
-        CellParser.VERSION_SDK_INT = 30;
+        CellParser.VERSIONSDKINT = 30;
         assertEquals(1234L, CellParser.getCellId(cellInfoNR));
-        CellParser.VERSION_SDK_INT = 28;
+        CellParser.VERSIONSDKINT = 28;
         assertEquals(0, CellParser.getCellId(cellInfoNR));
 
         // CellInfoTdscdma
@@ -336,9 +334,9 @@ public class CellParserTest {
         CellInfoTdscdma cellInfoTdscdma = mock(CellInfoTdscdma.class);
         when(cellInfoTdscdma.getCellIdentity()).thenReturn(cellIdentityTdscdma);
 
-        CellParser.VERSION_SDK_INT = 29;
+        CellParser.VERSIONSDKINT = 29;
         assertEquals(12345L, CellParser.getCellId(cellInfoTdscdma));
-        CellParser.VERSION_SDK_INT = 28;
+        CellParser.VERSIONSDKINT = 28;
         assertEquals(0, CellParser.getCellId(cellInfoTdscdma));
 
         // Test LTE
@@ -372,7 +370,7 @@ public class CellParserTest {
         when(cellInfoNr.getCellIdentity()).thenReturn(cellIdentityNr);
 
         assertEquals(-1, CellParser.getPci(cellInfoNr));
-        CellParser.VERSION_SDK_INT = 30;
+        CellParser.VERSIONSDKINT = 30;
         assertEquals(2, CellParser.getPci(cellInfoNr));
 
         CellInfoLte cellInfoLte = mock(CellInfoLte.class);

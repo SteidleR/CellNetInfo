@@ -41,7 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int[] columnsGroupedQuery = {10, 1, 2, 3, 4, 5, 6, 7, 8};
     private static final int[] columnsCsvQuery = {10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12};
-    private static final int[] columnsFilteredQuery = {10, 11, 12};;
+    private static final int[] columnsFilteredQuery = {10, 11, 12};
 
     DataHolder dataHolder;
 

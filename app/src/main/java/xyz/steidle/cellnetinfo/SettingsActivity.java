@@ -20,6 +20,7 @@ import com.opencsv.CSVWriter;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
@@ -142,7 +143,7 @@ public class SettingsActivity extends AppCompatActivity {
                 writer.writeAll(data); // data is adding to csv
                 writer.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(LOGTAG, Log.getStackTraceString(e));
             }
         }
 

@@ -66,22 +66,4 @@ public class CellInfoAdapterTest {
     public void getItemId() {
         assertEquals(1, cellInfoAdapter.getItemId(1));
     }
-
-    @Test
-    public void getView() {
-        View view = mock(View.class);
-
-    }
-/*
-    @Test
-    public void getViewCdma() {
-        View view = mock(View.class);
-        CellInfoCdma cellInfoCdma = mock(CellInfoCdma.class);
-
-        cellInfoAdapter.mLayoutInflater = mock(LayoutInflater.class);
-        when(cellInfoAdapter.mLayoutInflater.inflate(1300058, null)).thenReturn(view);
-
-        assertEquals(view, cellInfoAdapter.getViewCdma(view, cellInfoCdma));
-    }
-    */
 }

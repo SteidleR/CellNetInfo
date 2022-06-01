@@ -28,7 +28,7 @@ import xyz.steidle.cellnetinfo.R;
  */
 public class CellParser {
 
-    static int VERSION_SDK_INT = Build.VERSION.SDK_INT;
+    static int VERSIONSDKINT = Build.VERSION.SDK_INT;
 
     /** CellParser constructor, throws IllegalStateException because class is not intended to use as non-static class  */
     CellParser() throws IllegalStateException {
@@ -41,9 +41,9 @@ public class CellParser {
      */
     public static String getGeneration(CellInfo cellInfo) {
         String generation = "Unknown";
-        if (VERSION_SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
             generation = "NR";
-        } else if (VERSION_SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+        } else if (VERSIONSDKINT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
             generation = "TDSCDMA";
         } else if (cellInfo instanceof CellInfoLte) {
             generation = "LTE";
@@ -66,8 +66,8 @@ public class CellParser {
         CellIdentity cellIdentity = null;
         String provider = "?";
 
-        if (VERSION_SDK_INT >= Build.VERSION_CODES.P) {
-            if (VERSION_SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.P) {
+            if (VERSIONSDKINT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
                 // Build version >= 30 and 5G network
                 cellIdentity = cellInfo.getCellIdentity();
             } else if (cellInfo instanceof CellInfoLte) {
@@ -94,13 +94,13 @@ public class CellParser {
     public static String getMcc(CellInfo cellInfo) {
         String mcc = "";
 
-        if (VERSION_SDK_INT >= Build.VERSION_CODES.P) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.P) {
             // Build version >= 28
-            if (VERSION_SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+            if (VERSIONSDKINT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
                 // Build version >= 30 and 5G network
                 CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
                 mcc = cellIdentity.getMccString();
-            } else if (VERSION_SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+            } else if (VERSIONSDKINT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
                 // Build version >= 29 and TDSCDMA network
                 CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();
                 mcc = cellIdentity.getMccString();
@@ -144,13 +144,13 @@ public class CellParser {
     public static String getMnc(CellInfo cellInfo) {
         String mnc = "";
 
-        if (VERSION_SDK_INT >= Build.VERSION_CODES.P) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.P) {
             // Build version >= 28
-            if (VERSION_SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+            if (VERSIONSDKINT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
                 // Build version >= 30 and 5G network
                 CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
                 mnc = cellIdentity.getMncString();
-            } else if (VERSION_SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+            } else if (VERSIONSDKINT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
                 // Build version >= 29 and TDSCDMA network
                 CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();
                 mnc = cellIdentity.getMncString();
@@ -191,12 +191,12 @@ public class CellParser {
         int code = 0;
         int displayName = R.string.cell_lac;
 
-        if (VERSION_SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
             // Build version >= 30 and 5G network
             CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
             code = cellIdentity.getTac();
             displayName = R.string.cell_tac;
-        } else if (VERSION_SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+        } else if (VERSIONSDKINT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
             // Build version >= 29 and TDSCDMA network
             CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();
             code = cellIdentity.getLac();
@@ -222,11 +222,11 @@ public class CellParser {
     public static long getCellId(CellInfo cellInfo) {
         long cid = 0;
 
-        if (VERSION_SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
             // Build version >= 30 and 5G network
             CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
             cid = cellIdentity.getNci();
-        } else if (VERSION_SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+        } else if (VERSIONSDKINT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
             // Build version >= 29 and TDSCDMA network
             CellIdentityTdscdma cellIdentity = ((CellInfoTdscdma) cellInfo).getCellIdentity();
             cid = cellIdentity.getCid();
@@ -251,7 +251,7 @@ public class CellParser {
     public static int getPci(CellInfo cellInfo) {
         int pci = -1;
 
-        if (VERSION_SDK_INT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
             // Build version >= 30 and 5G network
             CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
             pci = (int) cellIdentity.getPci();
@@ -298,10 +298,10 @@ public class CellParser {
      * @return CellSignalStrength object
      */
     public static CellSignalStrength getCellSignalStrength(CellInfo cellInfo) {
-        if (VERSION_SDK_INT >= Build.VERSION_CODES.R) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.R) {
             // Build version >= 30 and 5G network
             return cellInfo.getCellSignalStrength();
-        } else if (VERSION_SDK_INT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
+        } else if (VERSIONSDKINT >= Build.VERSION_CODES.Q && cellInfo instanceof CellInfoTdscdma) {
             // Build version >= 29 and TDSCDMA network
             return ((CellInfoTdscdma) cellInfo).getCellSignalStrength();
         } else if (cellInfo instanceof CellInfoLte) {
