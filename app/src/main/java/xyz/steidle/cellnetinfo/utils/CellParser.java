@@ -16,6 +16,9 @@ import android.telephony.CellInfoNr;
 import android.telephony.CellInfoTdscdma;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrength;
+import android.telephony.CellSignalStrengthGsm;
+import android.telephony.CellSignalStrengthTdscdma;
+import android.telephony.CellSignalStrengthWcdma;
 import android.text.TextUtils;
 
 import androidx.annotation.RequiresApi;
@@ -391,5 +394,29 @@ public class CellParser {
     public static int getPsc(CellInfoWcdma cellInfo) {
         CellIdentityWcdma cellIdentityWcdma = cellInfo.getCellIdentity();
         return cellIdentityWcdma.getPsc();
+    }
+
+    public static int getEcNo(CellInfoWcdma cellInfo) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.R) {
+            CellSignalStrengthWcdma cellSignalStrengthWcdma = cellInfo.getCellSignalStrength();
+            return cellSignalStrengthWcdma.getEcNo();
+        } else {
+            return CellInfo.UNAVAILABLE;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    public static int getRscp(CellInfoTdscdma cellInfo) {
+        CellSignalStrengthTdscdma cellSignalStrength = cellInfo.getCellSignalStrength();
+        return cellSignalStrength.getRscp();
+    }
+
+    public static int getBitErrorRate(CellInfoGsm cellInfo) {
+        if (VERSIONSDKINT >= Build.VERSION_CODES.Q) {
+            CellSignalStrengthGsm cellSignalStrength = cellInfo.getCellSignalStrength();
+            return cellSignalStrength.getBitErrorRate();
+        } else {
+            return Integer.MAX_VALUE;
+        }
     }
 }

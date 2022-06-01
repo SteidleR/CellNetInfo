@@ -8,13 +8,17 @@ package xyz.steidle.cellnetinfo.view;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
+import android.telephony.CellInfoLte;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import org.junit.Before;
 import org.junit.Test;

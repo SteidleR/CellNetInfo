@@ -172,6 +172,26 @@
 
             </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/cell_biterrorrate_descr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="@string/cell_biterrorrate"
+                    android:textColor="#9E9E9E" />
+
+                <TextView
+                    android:id="@+id/cell_biterrorrate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </TableRow>
+
         </TableLayout>
 
         <ImageView

@@ -34,4 +34,7 @@
     <string name="cell_bsic">BSIC</string>
     <string name="cell_uarfcn">UARFCN</string>
     <string name="cell_psc">PSC</string>
+    <string name="cell_ecno">EcNo</string>
+    <string name="cell_rscp">RSCP</string>
+    <string name="cell_biterrorrate">Bit Error Rate</string>
 </resources>
