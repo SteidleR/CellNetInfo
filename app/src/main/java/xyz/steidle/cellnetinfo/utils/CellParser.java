@@ -17,6 +17,7 @@ import android.telephony.CellInfoTdscdma;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrength;
 import android.telephony.CellSignalStrengthGsm;
+import android.telephony.CellSignalStrengthLte;
 import android.telephony.CellSignalStrengthTdscdma;
 import android.telephony.CellSignalStrengthWcdma;
 import android.text.TextUtils;
@@ -418,5 +419,36 @@ public class CellParser {
         } else {
             return Integer.MAX_VALUE;
         }
+    }
+
+    public static int getRssi(CellInfo cellInfo) {
+        if (cellInfo instanceof CellInfoGsm) {
+            CellSignalStrengthGsm cellSignalStrength = ((CellInfoGsm) cellInfo).getCellSignalStrength();
+            return cellSignalStrength.getRssi();
+        } else if (cellInfo instanceof CellInfoLte) {
+            CellSignalStrengthLte cellSignalStrength = ((CellInfoLte) cellInfo).getCellSignalStrength();
+            return cellSignalStrength.getRssi();
+        }
+        return Integer.MAX_VALUE;
+    }
+
+    public static int getRsrp(CellInfoLte cellInfo) {
+        CellSignalStrengthLte cellSignalStrength = cellInfo.getCellSignalStrength();
+        return cellSignalStrength.getRsrp();
+    }
+
+    public static int getRsrq(CellInfoLte cellInfo) {
+        CellSignalStrengthLte cellSignalStrength = cellInfo.getCellSignalStrength();
+        return cellSignalStrength.getRsrq();
+    }
+
+    public static int getRssnr(CellInfoLte cellInfo) {
+        CellSignalStrengthLte cellSignalStrength = cellInfo.getCellSignalStrength();
+        return cellSignalStrength.getRssnr();
+    }
+
+    public static int getCqi(CellInfoLte cellInfo) {
+        CellSignalStrengthLte cellSignalStrength = cellInfo.getCellSignalStrength();
+        return cellSignalStrength.getCqi();
     }
 }

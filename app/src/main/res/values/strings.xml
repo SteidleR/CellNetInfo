@@ -56,4 +56,15 @@
     <string name="cell_ecno">EcNo</string>
     <string name="cell_rscp">RSCP</string>
     <string name="cell_biterrorrate">Bit Error Rate</string>
+    <string name="cell_rssi">RSSI</string>
+    <string name="cell_rsrp">RSRP</string>
+    <string name="cell_rsrq">RSRQ</string>
+    <string name="cell_rssnr">RSSNR</string>
+    <string name="cell_cqi">Channel Quality Indicator</string>
+    <string name="cell_csirsrp">CSIrsrp</string>
+    <string name="cell_csirsrq">CSIrsrq</string>
+    <string name="cell_csisinr">CSIsinr</string>
+    <string name="cell_ssrsrp">SsRsrp</string>
+    <string name="cell_ssrsrq">SsRsrq</string>
+    <string name="cell_sssinr">SsSinr</string>
 </resources>

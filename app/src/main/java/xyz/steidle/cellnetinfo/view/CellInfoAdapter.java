@@ -9,6 +9,8 @@ import android.telephony.CellInfoLte;
 import android.telephony.CellInfoNr;
 import android.telephony.CellInfoTdscdma;
 import android.telephony.CellInfoWcdma;
+import android.telephony.CellSignalStrength;
+import android.telephony.CellSignalStrengthNr;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +55,6 @@ public class CellInfoAdapter extends BaseAdapter {
         return i;
     }
 
-    // @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         CellInfo cellInfo = cellInfoList.get(i);
@@ -112,6 +113,26 @@ public class CellInfoAdapter extends BaseAdapter {
         TextView nrarfcnText = vi.findViewById(R.id.cell_nrarfcn);
         setViewWhenValueDefined(nrarfcnText, (Callable<Integer>) () -> CellParser.getNrarfcn((CellInfoNr) cellInfo), Build.VERSION_CODES.Q);
 
+        CellSignalStrengthNr cellSignalStrength = (CellSignalStrengthNr) ((CellInfoNr) cellInfo).getCellSignalStrength();
+
+        TextView csirsrpText = vi.findViewById(R.id.cell_csirsrp);
+        setViewWhenValueDefined(csirsrpText, (Callable<Integer>) cellSignalStrength::getCsiRsrp, Build.VERSION_CODES.Q);
+
+        TextView csirsrqText = vi.findViewById(R.id.cell_csirsrq);
+        setViewWhenValueDefined(csirsrqText, (Callable<Integer>) cellSignalStrength::getCsiRsrq, Build.VERSION_CODES.Q);
+
+        TextView csisinrText = vi.findViewById(R.id.cell_csisinr);
+        setViewWhenValueDefined(csisinrText, (Callable<Integer>) cellSignalStrength::getCsiSinr, Build.VERSION_CODES.Q);
+
+        TextView ssrsrpText = vi.findViewById(R.id.cell_ssrsrp);
+        setViewWhenValueDefined(ssrsrpText, (Callable<Integer>) cellSignalStrength::getSsRsrp, Build.VERSION_CODES.Q);
+
+        TextView ssrsrqText = vi.findViewById(R.id.cell_ssrsrq);
+        setViewWhenValueDefined(ssrsrqText, (Callable<Integer>) cellSignalStrength::getSsRsrq, Build.VERSION_CODES.Q);
+
+        TextView sssinrText = vi.findViewById(R.id.cell_sssinr);
+        setViewWhenValueDefined(sssinrText, (Callable<Integer>) cellSignalStrength::getSsSinr, Build.VERSION_CODES.Q);
+
         return vi;
     }
 
@@ -128,6 +149,21 @@ public class CellInfoAdapter extends BaseAdapter {
         if (bandwidthText.getText() != null) {
             bandwidthText.setText(String.format("%s kHz", bandwidthText.getText()));
         }
+
+        TextView rsrpText = (TextView) vi.findViewById(R.id.cell_rsrp);
+        setViewWhenValueDefined(rsrpText, (Callable<Integer>) () -> CellParser.getRsrp((CellInfoLte) cellInfo), Build.VERSION_CODES.O);
+
+        TextView rsrqText = (TextView) vi.findViewById(R.id.cell_rsrq);
+        setViewWhenValueDefined(rsrqText, (Callable<Integer>) () -> CellParser.getRsrq((CellInfoLte) cellInfo), Build.VERSION_CODES.O);
+
+        TextView rssiText = (TextView) vi.findViewById(R.id.cell_rssi);
+        setViewWhenValueDefined(rssiText, (Callable<Integer>) () -> CellParser.getRssi((CellInfoLte) cellInfo), Build.VERSION_CODES.Q);
+
+        TextView rssnrText = (TextView) vi.findViewById(R.id.cell_rssnr);
+        setViewWhenValueDefined(rssnrText, (Callable<Integer>) () -> CellParser.getRssnr((CellInfoLte) cellInfo), Build.VERSION_CODES.O);
+
+        TextView cqiText = (TextView) vi.findViewById(R.id.cell_cqi);
+        setViewWhenValueDefined(cqiText, (Callable<Integer>) () -> CellParser.getCqi((CellInfoLte) cellInfo), Build.VERSION_CODES.O);
 
         return vi;
     }
@@ -148,6 +184,9 @@ public class CellInfoAdapter extends BaseAdapter {
 
         TextView bitErrorText = vi.findViewById(R.id.cell_biterrorrate);
         setViewWhenValueDefined(bitErrorText, (Callable<Integer>) () -> CellParser.getBitErrorRate((CellInfoGsm) cellInfo), Build.VERSION_CODES.M);
+
+        TextView rssiText = vi.findViewById(R.id.cell_rssi);
+        setViewWhenValueDefined(rssiText, (Callable<Integer>) () -> CellParser.getRssi((CellInfoGsm) cellInfo), Build.VERSION_CODES.M);
 
         return vi;
     }
