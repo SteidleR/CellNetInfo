@@ -33,6 +33,8 @@ import xyz.steidle.cellnetinfo.R;
 public class CellParser {
 
     static int VERSIONSDKINT = Build.VERSION.SDK_INT;
+    static final int UNAVAILABLE = Integer.MAX_VALUE;
+    static final long UNAVAILABLE_LONG = Long.MAX_VALUE;
 
     /** CellParser constructor, throws IllegalStateException because class is not intended to use as non-static class  */
     CellParser() throws IllegalStateException {
@@ -422,31 +424,35 @@ public class CellParser {
     }
 
     public static int getRssi(CellInfo cellInfo) {
-        if (cellInfo instanceof CellInfoGsm) {
+        if (cellInfo instanceof CellInfoGsm && VERSIONSDKINT >= Build.VERSION_CODES.R) {
             CellSignalStrengthGsm cellSignalStrength = ((CellInfoGsm) cellInfo).getCellSignalStrength();
             return cellSignalStrength.getRssi();
-        } else if (cellInfo instanceof CellInfoLte) {
+        } else if (cellInfo instanceof CellInfoLte && VERSIONSDKINT >= Build.VERSION_CODES.R) {
             CellSignalStrengthLte cellSignalStrength = ((CellInfoLte) cellInfo).getCellSignalStrength();
             return cellSignalStrength.getRssi();
         }
         return Integer.MAX_VALUE;
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     public static int getRsrp(CellInfoLte cellInfo) {
         CellSignalStrengthLte cellSignalStrength = cellInfo.getCellSignalStrength();
         return cellSignalStrength.getRsrp();
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     public static int getRsrq(CellInfoLte cellInfo) {
         CellSignalStrengthLte cellSignalStrength = cellInfo.getCellSignalStrength();
         return cellSignalStrength.getRsrq();
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     public static int getRssnr(CellInfoLte cellInfo) {
         CellSignalStrengthLte cellSignalStrength = cellInfo.getCellSignalStrength();
         return cellSignalStrength.getRssnr();
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     public static int getCqi(CellInfoLte cellInfo) {
         CellSignalStrengthLte cellSignalStrength = cellInfo.getCellSignalStrength();
         return cellSignalStrength.getCqi();
