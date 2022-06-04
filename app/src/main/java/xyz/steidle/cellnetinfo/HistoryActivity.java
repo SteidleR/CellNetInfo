@@ -35,7 +35,7 @@ public class HistoryActivity extends AppCompatActivity {
     private void loadCellHistory() {
         ListView listView = (ListView) findViewById(R.id.list);
 
-        listView.setAdapter(new CellHistoryAdapter(this, dbHandler.getAllCellsGrouped(), dbHandler));
+        listView.setAdapter(new CellHistoryAdapter(this, dbHandler));
         dbHandler.close();
     }
 

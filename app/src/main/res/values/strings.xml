@@ -67,4 +67,7 @@
     <string name="cell_ssrsrp">SsRsrp</string>
     <string name="cell_ssrsrq">SsRsrq</string>
     <string name="cell_sssinr">SsSinr</string>
+    <string name="cell_cdma_rssi">CDMA RSSI</string>
+    <string name="cell_evdo_rssi">EVDO RSSI</string>
+    <string name="cell_evdo_snr">EVDO SNR</string>
 </resources>

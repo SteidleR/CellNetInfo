@@ -33,7 +33,7 @@ public class CellHistoryAdapterTest {
         cellInfoList.add(stringArray1);
         cellInfoList.add(stringArray2);
 
-        cellHistoryAdapter = new CellHistoryAdapter(context, cellInfoList, databaseHandler);
+        cellHistoryAdapter = new CellHistoryAdapter(context, databaseHandler);
     }
 
     @Test
@@ -45,16 +45,6 @@ public class CellHistoryAdapterTest {
         stringList = new String[]{};
         joinedString = CellHistoryAdapter.joinElements(stringList, ":");
         assertEquals("", joinedString);
-    }
-
-    @Test
-    public void getCount() {
-        assertEquals(2, cellHistoryAdapter.getCount());
-    }
-
-    @Test
-    public void getItem() {
-        assertEquals(stringArray2, cellHistoryAdapter.getItem(1));
     }
 
     @Test

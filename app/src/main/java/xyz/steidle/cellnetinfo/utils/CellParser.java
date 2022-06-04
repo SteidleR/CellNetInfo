@@ -33,8 +33,8 @@ import xyz.steidle.cellnetinfo.R;
 public class CellParser {
 
     static int VERSIONSDKINT = Build.VERSION.SDK_INT;
-    static final int UNAVAILABLE = Integer.MAX_VALUE;
-    static final long UNAVAILABLE_LONG = Long.MAX_VALUE;
+    public static final int UNAVAILABLE = Integer.MAX_VALUE;
+    public static final long UNAVAILABLE_LONG = Long.MAX_VALUE;
 
     /** CellParser constructor, throws IllegalStateException because class is not intended to use as non-static class  */
     CellParser() throws IllegalStateException {
@@ -373,7 +373,7 @@ public class CellParser {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static int getArfcn(CellInfo cellInfo) {
-        int arfcn = CellInfo.UNAVAILABLE;
+        int arfcn = CellParser.UNAVAILABLE;
         if (cellInfo instanceof CellInfoGsm) {
             CellIdentityGsm cellIdentityGsm = ((CellInfoGsm) cellInfo).getCellIdentity();
             arfcn = cellIdentityGsm.getArfcn();
@@ -404,7 +404,7 @@ public class CellParser {
             CellSignalStrengthWcdma cellSignalStrengthWcdma = cellInfo.getCellSignalStrength();
             return cellSignalStrengthWcdma.getEcNo();
         } else {
-            return CellInfo.UNAVAILABLE;
+            return UNAVAILABLE;
         }
     }
 
@@ -419,7 +419,7 @@ public class CellParser {
             CellSignalStrengthGsm cellSignalStrength = cellInfo.getCellSignalStrength();
             return cellSignalStrength.getBitErrorRate();
         } else {
-            return Integer.MAX_VALUE;
+            return UNAVAILABLE;
         }
     }
 
@@ -431,7 +431,7 @@ public class CellParser {
             CellSignalStrengthLte cellSignalStrength = ((CellInfoLte) cellInfo).getCellSignalStrength();
             return cellSignalStrength.getRssi();
         }
-        return Integer.MAX_VALUE;
+        return UNAVAILABLE;
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

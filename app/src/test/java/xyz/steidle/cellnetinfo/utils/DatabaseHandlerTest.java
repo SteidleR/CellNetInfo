@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -73,19 +74,11 @@ public class DatabaseHandlerTest {
     }
 
     @Test
-    public void onCreate() {
-        SQLiteDatabase sqLiteDatabase = mock(SQLiteDatabase.class);
-
-        databaseHandler.onCreate(sqLiteDatabase);
-        verify(sqLiteDatabase, times(1)).execSQL(onCreateSql);
-    }
-
-    @Test
     public void onUpgrade() {
         SQLiteDatabase sqLiteDatabase = mock(SQLiteDatabase.class);
 
         databaseHandler.onUpgrade(sqLiteDatabase, 0, 1);
-        verify(sqLiteDatabase, times(1)).execSQL(onCreateSql);
+        verify(sqLiteDatabase, times(7)).execSQL(Mockito.anyString());
     }
 
     @Test
@@ -96,15 +89,6 @@ public class DatabaseHandlerTest {
         when(databaseHandler.dataHolder.getLocation()).thenReturn(null);
         databaseHandler.addCell(null);
         verifyNoInteractions(cellInfo);
-    }
-
-    @Test
-    public void insertCell() {
-        SQLiteDatabase sqLiteDatabase = mock(SQLiteDatabase.class);
-
-        databaseHandler.insertCell(sqLiteDatabase, mock(CellInfo.class), mock(Location.class));
-
-        verify(sqLiteDatabase, times(1)).insert(Mockito.anyString(), Mockito.isNull(), Mockito.any(ContentValues.class));
     }
 
     @Test

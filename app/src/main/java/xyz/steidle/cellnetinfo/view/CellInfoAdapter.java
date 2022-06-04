@@ -10,6 +10,7 @@ import android.telephony.CellInfoNr;
 import android.telephony.CellInfoTdscdma;
 import android.telephony.CellInfoWcdma;
 import android.telephony.CellSignalStrength;
+import android.telephony.CellSignalStrengthCdma;
 import android.telephony.CellSignalStrengthNr;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -101,6 +102,23 @@ public class CellInfoAdapter extends BaseAdapter {
         Pair<Integer, Integer> latLongPair = CellParser.getCdmaLocation(cellInfoCdma);
         latText.setText(latLongPair.first);
         longText.setText(latLongPair.second);
+
+        CellSignalStrengthCdma cellSignalStrengthCdma = cellInfoCdma.getCellSignalStrength();
+
+        TextView rssiText = vi.findViewById(R.id.cell_rssi);
+        boolean isSet = setViewWhenValueDefined(rssiText, cellSignalStrengthCdma::getCdmaDbm, Build.VERSION_CODES.JELLY_BEAN_MR1);
+
+        if (isSet)
+            rssiText.setText(String.format("%sdBm", rssiText.getText()));
+
+        TextView evdoText = vi.findViewById(R.id.cell_evdo_rssi);
+        isSet = setViewWhenValueDefined(evdoText, cellSignalStrengthCdma::getEvdoDbm, Build.VERSION_CODES.JELLY_BEAN_MR1);
+
+        if (isSet)
+            evdoText.setText(String.format("%sdBm", evdoText.getText()));
+
+        TextView snrText = vi.findViewById(R.id.cell_evdo_snr);
+        setViewWhenValueDefined(snrText, cellSignalStrengthCdma::getEvdoSnr, Build.VERSION_CODES.JELLY_BEAN_MR1);
 
         return vi;
     }
@@ -260,19 +278,19 @@ public class CellInfoAdapter extends BaseAdapter {
 
         Pair<Integer, Integer> lacPair = CellParser.getLacTac(cellInfo);
         lacDescrText.setText(lacPair.first);
-        if (lacPair.second == CellInfo.UNAVAILABLE)
+        if (lacPair.second == CellParser.UNAVAILABLE)
             lacText.setText("?");
         else
             lacText.setText(String.valueOf(lacPair.second));
 
         long cid = CellParser.getCellId(cellInfo);
-        if (cid == CellInfo.UNAVAILABLE_LONG || cid == CellInfo.UNAVAILABLE)
+        if (cid == CellParser.UNAVAILABLE_LONG || cid == CellParser.UNAVAILABLE)
             cidText.setText("?");
         else
             cidText.setText(String.valueOf(cid));
 
         int pci = CellParser.getPci(cellInfo);
-        if (pci == -1 || pci == CellInfo.UNAVAILABLE) {
+        if (pci == -1 || pci == CellParser.UNAVAILABLE) {
             vi.findViewById(R.id.cell_pci_descr).setVisibility(View.GONE);
             pciText.setVisibility(View.GONE);
         } else {
@@ -313,7 +331,7 @@ public class CellInfoAdapter extends BaseAdapter {
         return resId;
     }
 
-    public void setViewWhenValueDefined(TextView view, Callable<Integer> func, int minSdkVersion) {
+    public boolean setViewWhenValueDefined(TextView view, Callable<Integer> func, int minSdkVersion) {
         if (Build.VERSION.SDK_INT >= minSdkVersion) {
             int value;
             try {
@@ -321,15 +339,18 @@ public class CellInfoAdapter extends BaseAdapter {
             } catch (Exception e) {
                 Log.e("CellInfoAdapter", Log.getStackTraceString(e));
                 ((TableRow) view.getParent()).setVisibility(View.GONE);
-                return;
+                return false;
             }
             if (value == Integer.MAX_VALUE) {
                 ((TableRow) view.getParent()).setVisibility(View.GONE);
             } else {
                 view.setText(String.valueOf(value));
+                return true;
             }
         } else {
             ((TableRow) view.getParent()).setVisibility(View.GONE);
         }
+
+        return false;
     }
 }
