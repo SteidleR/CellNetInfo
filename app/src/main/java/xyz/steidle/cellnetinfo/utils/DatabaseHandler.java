@@ -260,14 +260,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     protected void insertNrCell(@NonNull SQLiteDatabase db, CellInfoNr cellInfo, @NonNull Location location) {
         ContentValues values = new ContentValues();
 
-        values.put(KEY_SIGNAL, CellParser.getSignalStrength(cellInfo));
-        values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
-        values.put(KEY_LATITUDE, location.getLatitude());
-        values.put(KEY_LONGITUDE, location.getLongitude());
-        values.put(KEY_STANDARD, CellParser.getGeneration(cellInfo));
-        values.put(KEY_PROVIDER, CellParser.getProvider(cellInfo));
-        values.put(KEY_MCC, CellParser.getMcc(cellInfo));
-        values.put(KEY_MNC, CellParser.getMnc(cellInfo));
+        addBaseValues(values, location, cellInfo);
 
         values.put(KEY_TAC, CellParser.getLacTac(cellInfo).second);
 
@@ -291,14 +284,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     protected void insertLteCell(@NonNull SQLiteDatabase db, CellInfoLte cellInfo, @NonNull Location location) {
         ContentValues values = new ContentValues();
 
-        values.put(KEY_SIGNAL, CellParser.getSignalStrength(cellInfo));
-        values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
-        values.put(KEY_LATITUDE, location.getLatitude());
-        values.put(KEY_LONGITUDE, location.getLongitude());
-        values.put(KEY_STANDARD, CellParser.getGeneration(cellInfo));
-        values.put(KEY_PROVIDER, CellParser.getProvider(cellInfo));
-        values.put(KEY_MCC, CellParser.getMcc(cellInfo));
-        values.put(KEY_MNC, CellParser.getMnc(cellInfo));
+        addBaseValues(values, location, cellInfo);
 
         values.put(KEY_LAC, CellParser.getLacTac(cellInfo).second);
         values.put(KEY_CID, CellParser.getCellId(cellInfo));
@@ -328,14 +314,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     protected void insertGsmCell(@NonNull SQLiteDatabase db, CellInfoGsm cellInfo, @NonNull Location location) {
         ContentValues values = new ContentValues();
 
-        values.put(KEY_SIGNAL, CellParser.getSignalStrength(cellInfo));
-        values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
-        values.put(KEY_LATITUDE, location.getLatitude());
-        values.put(KEY_LONGITUDE, location.getLongitude());
-        values.put(KEY_STANDARD, CellParser.getGeneration(cellInfo));
-        values.put(KEY_PROVIDER, CellParser.getProvider(cellInfo));
-        values.put(KEY_MCC, CellParser.getMcc(cellInfo));
-        values.put(KEY_MNC, CellParser.getMnc(cellInfo));
+        addBaseValues(values, location, cellInfo);
 
         values.put(KEY_LAC, CellParser.getLacTac(cellInfo).second);
         values.put(KEY_CID, CellParser.getCellId(cellInfo));
@@ -391,14 +370,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     protected void insertTdscdmaCell(@NonNull SQLiteDatabase db, CellInfoTdscdma cellInfo, @NonNull Location location) {
         ContentValues values = new ContentValues();
 
-        values.put(KEY_SIGNAL, CellParser.getSignalStrength(cellInfo));
-        values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
-        values.put(KEY_LATITUDE, location.getLatitude());
-        values.put(KEY_LONGITUDE, location.getLongitude());
-        values.put(KEY_STANDARD, CellParser.getGeneration(cellInfo));
-        values.put(KEY_PROVIDER, CellParser.getProvider(cellInfo));
-        values.put(KEY_MCC, CellParser.getMcc(cellInfo));
-        values.put(KEY_MNC, CellParser.getMnc(cellInfo));
+        addBaseValues(values, location, cellInfo);
 
         values.put(KEY_LAC, CellParser.getLacTac(cellInfo).second);
         values.put(KEY_CID, CellParser.getCellId(cellInfo));
@@ -417,14 +389,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     protected void insertWcdmaCell(@NonNull SQLiteDatabase db, CellInfoWcdma cellInfo, @NonNull Location location) {
         ContentValues values = new ContentValues();
 
-        values.put(KEY_SIGNAL, CellParser.getSignalStrength(cellInfo));
-        values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
-        values.put(KEY_LATITUDE, location.getLatitude());
-        values.put(KEY_LONGITUDE, location.getLongitude());
-        values.put(KEY_STANDARD, CellParser.getGeneration(cellInfo));
-        values.put(KEY_PROVIDER, CellParser.getProvider(cellInfo));
-        values.put(KEY_MCC, CellParser.getMcc(cellInfo));
-        values.put(KEY_MNC, CellParser.getMnc(cellInfo));
+        addBaseValues(values, location, cellInfo);
 
         values.put(KEY_LAC, CellParser.getLacTac(cellInfo).second);
         values.put(KEY_CID, CellParser.getCellId(cellInfo));
@@ -445,6 +410,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.insert(TABLE_TDSCDMA, null, values);
         db.close();
+    }
+
+    protected void addBaseValues(ContentValues values, Location location, CellInfo cellInfo) {
+        values.put(KEY_SIGNAL, CellParser.getSignalStrength(cellInfo));
+        values.put(KEY_TIMESTAMP, String.valueOf(System.currentTimeMillis() / 1000));
+        values.put(KEY_LATITUDE, location.getLatitude());
+        values.put(KEY_LONGITUDE, location.getLongitude());
+        values.put(KEY_STANDARD, CellParser.getGeneration(cellInfo));
+        values.put(KEY_PROVIDER, CellParser.getProvider(cellInfo));
+        values.put(KEY_MCC, CellParser.getMcc(cellInfo));
+        values.put(KEY_MNC, CellParser.getMnc(cellInfo));
     }
 
     public Cursor createCursorFromQuery(String query) {
@@ -514,7 +490,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT %s, %s, %s, %s" +
                 " FROM " + TABLE_LTE + " WHERE " + KEY_MCC + "==%s AND " + KEY_MNC + "==%s AND " + KEY_CID + "==%s;";
         selectQuery = String.format(selectQuery, KEY_TIMESTAMP, KEY_SIGNAL, KEY_LATITUDE, KEY_LONGITUDE, Integer.parseInt(mcc), Integer.parseInt(mnc), Integer.parseInt(cid));
-        Log.d(LOG_TAG, selectQuery);
         return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
     }
 
@@ -527,6 +502,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String[]> getAllGsmCellsGrouped() {
         int[] indices = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
         String selectQuery = "SELECT * FROM " + TABLE_GSM + " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_CID + "," + KEY_LAC + ";";
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+    }
+
+    public List<String[]> getAllGsmLocations(String mcc, String mnc, String cid) {
+        int[] indices = {0, 1, 2, 3};
+        String selectQuery = "SELECT %s, %s, %s, %s" +
+                " FROM " + TABLE_GSM + " WHERE " + KEY_MCC + "==%s AND " + KEY_MNC + "==%s AND " + KEY_CID + "==%s;";
+        selectQuery = String.format(selectQuery, KEY_TIMESTAMP, KEY_SIGNAL, KEY_LATITUDE, KEY_LONGITUDE, Integer.parseInt(mcc), Integer.parseInt(mnc), Integer.parseInt(cid));
         return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
     }
 
@@ -554,6 +537,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
     }
 
+    public List<String[]> getAllTdscdmaLocations(String mcc, String mnc, String cid) {
+        int[] indices = {0, 1, 2, 3};
+        String selectQuery = "SELECT %s, %s, %s, %s" +
+                " FROM " + TABLE_TDSCDMA + " WHERE " + KEY_MCC + "==%s AND " + KEY_MNC + "==%s AND " + KEY_CID + "==%s;";
+        selectQuery = String.format(selectQuery, KEY_TIMESTAMP, KEY_SIGNAL, KEY_LATITUDE, KEY_LONGITUDE, Integer.parseInt(mcc), Integer.parseInt(mnc), Integer.parseInt(cid));
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+    }
+
     public List<String[]> getAllWcdmaCells() {
         int[] indices = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
         String selectQuery = "SELECT * FROM " + TABLE_WCDMA;
@@ -563,6 +554,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String[]> getAllWcdmaCellsGrouped() {
         int[] indices = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
         String selectQuery = "SELECT * FROM " + TABLE_WCDMA + " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_CID + "," + KEY_LAC + ";";
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+    }
+
+    public List<String[]> getAllWcdmaLocations(String mcc, String mnc, String cid) {
+        int[] indices = {0, 1, 2, 3};
+        String selectQuery = "SELECT %s, %s, %s, %s" +
+                " FROM " + TABLE_WCDMA + " WHERE " + KEY_MCC + "==%s AND " + KEY_MNC + "==%s AND " + KEY_CID + "==%s;";
+        selectQuery = String.format(selectQuery, KEY_TIMESTAMP, KEY_SIGNAL, KEY_LATITUDE, KEY_LONGITUDE, Integer.parseInt(mcc), Integer.parseInt(mnc), Integer.parseInt(cid));
         return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
     }
 

@@ -105,6 +105,9 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_ssrsrq)).setText(cellInfo[17]);
         ((TextView) vi.findViewById(R.id.cell_sssinr)).setText(cellInfo[18]);
 
+        List<String[]> locations = databaseHandler.getAllNrLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        createMapView(locations, vi.findViewById(R.id.root));
+
         return vi;
     }
 
@@ -119,24 +122,8 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_rssi)).setText(cellInfo[15]);
         ((TextView) vi.findViewById(R.id.cell_cqi)).setText(cellInfo[16]);
 
-        vi.findViewById(R.id.root).setOnClickListener(view -> {
-            mFrameLayout.setVisibility(View.VISIBLE);
-
-            List<String[]> locations = databaseHandler.getAllLteLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
-
-            Log.d("HistoryActivity", String.valueOf(locations));
-
-            for (String[] location : locations) {
-                Marker marker = new Marker(map);
-                marker.setPosition(new GeoPoint(Float.parseFloat(location[2]), Float.parseFloat(location[3])));
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-
-                map.getOverlays().add(marker);
-            }
-
-            GeoPoint location = new GeoPoint(Float.parseFloat(locations.get(0)[2]), Float.parseFloat(locations.get(0)[3]));
-            map.getController().setCenter(location);
-        });
+        List<String[]> locations = databaseHandler.getAllLteLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        createMapView(locations, vi.findViewById(R.id.root));
 
         return vi;
     }
@@ -151,6 +138,9 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_biterrorrate)).setText(cellInfo[14]);
         ((TextView) vi.findViewById(R.id.cell_rssi)).setText(cellInfo[15]);
 
+        List<String[]> locations = databaseHandler.getAllGsmLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        createMapView(locations, vi.findViewById(R.id.root));
+
         return vi;
     }
 
@@ -161,6 +151,9 @@ public class CellHistoryAdapter extends BaseAdapter {
 
         ((TextView) vi.findViewById(R.id.cell_uarfcn)).setText(cellInfo[12]);
         ((TextView) vi.findViewById(R.id.cell_rscp)).setText(cellInfo[13]);
+
+        List<String[]> locations = databaseHandler.getAllTdscdmaLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        createMapView(locations, vi.findViewById(R.id.root));
 
         return vi;
     }
@@ -173,6 +166,9 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_uarfcn)).setText(cellInfo[12]);
         ((TextView) vi.findViewById(R.id.cell_psc)).setText(cellInfo[13]);
         ((TextView) vi.findViewById(R.id.cell_ecno)).setText(cellInfo[14]);
+
+        List<String[]> locations = databaseHandler.getAllWcdmaLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        createMapView(locations, vi.findViewById(R.id.root));
 
         return vi;
     }
@@ -203,6 +199,25 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_cid)).setText(cellInfo[10]);
 
         vi.findViewById(R.id.img_signal).setVisibility(View.INVISIBLE);
+    }
+
+    protected void createMapView(List<String[]> locations, View root) {
+        root.setOnClickListener(view -> {
+            mFrameLayout.setVisibility(View.VISIBLE);
+
+            Log.d("HistoryActivity", String.valueOf(locations));
+
+            for (String[] location : locations) {
+                Marker marker = new Marker(map);
+                marker.setPosition(new GeoPoint(Float.parseFloat(location[2]), Float.parseFloat(location[3])));
+                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+
+                map.getOverlays().add(marker);
+            }
+
+            GeoPoint location = new GeoPoint(Float.parseFloat(locations.get(0)[2]), Float.parseFloat(locations.get(0)[3]));
+            map.getController().setCenter(location);
+        });
     }
 
     // method to join string elements

@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        CoordinatorLayout snackbarLayout = (CoordinatorLayout) findViewById(R.id.myCoordinatorLayout);
+        CoordinatorLayout snackbarLayout = findViewById(R.id.myCoordinatorLayout);
         Snackbar snackbarClear = Snackbar.make(snackbarLayout, R.string.history_cleared, BaseTransientBottomBar.LENGTH_SHORT);
         Snackbar snackbarExport = Snackbar.make(snackbarLayout, R.string.history_exported, BaseTransientBottomBar.LENGTH_SHORT);
 

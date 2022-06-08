@@ -84,7 +84,7 @@ public class HistoryActivity extends AppCompatActivity {
      * Loads cell information to user interface
      */
     private void loadCellHistory() {
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = findViewById(R.id.list);
 
         listView.setAdapter(new CellHistoryAdapter(this, dbHandler, map));
         dbHandler.close();
@@ -98,10 +98,7 @@ public class HistoryActivity extends AppCompatActivity {
         map.setMultiTouchControls(true);
 
         IMapController mapController = map.getController();
-        mapController.setZoom(12.0);
-
-        GeoPoint location = new GeoPoint(dataHolder.getLocation().getLatitude(), dataHolder.getLocation().getLongitude());
-        mapController.setCenter(location);
+        mapController.setZoom(14.0);
     }
 
     @Override

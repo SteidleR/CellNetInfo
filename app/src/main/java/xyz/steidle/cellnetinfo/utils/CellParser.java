@@ -260,7 +260,7 @@ public class CellParser {
         if (VERSIONSDKINT >= Build.VERSION_CODES.R && cellInfo instanceof CellInfoNr) {
             // Build version >= 30 and 5G network
             CellIdentityNr cellIdentity = (CellIdentityNr) cellInfo.getCellIdentity();
-            pci = (int) cellIdentity.getPci();
+            pci = cellIdentity.getPci();
         } else if (cellInfo instanceof CellInfoLte) {
             CellIdentityLte cellIdentity = ((CellInfoLte) cellInfo).getCellIdentity();
             pci = cellIdentity.getPci();

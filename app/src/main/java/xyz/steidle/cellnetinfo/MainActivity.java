@@ -117,6 +117,14 @@ public class MainActivity extends AppCompatActivity {
     sharedPreferences.registerOnSharedPreferenceChangeListener((sharedPreferences1, s) -> {
       locationRefreshTime = Integer.parseInt(sharedPreferences1.getString("min_update_time", String.valueOf(locationRefreshTime)));
       locationRefreshDistance = Integer.parseInt(sharedPreferences1.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
+
+      LocationManager mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+      mLocationManager.removeUpdates(mLocationListener);
+
+      if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, locationRefreshTime, locationRefreshDistance, mLocationListener);
+      }
+
       Log.d("Preferences:UpdateString", s);
       Log.d("Preferences:Update", String.valueOf(locationRefreshTime));
       Log.d("Preferences:Update", String.valueOf(locationRefreshDistance));
