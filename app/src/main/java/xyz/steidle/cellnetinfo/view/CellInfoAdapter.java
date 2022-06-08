@@ -31,6 +31,7 @@ import xyz.steidle.cellnetinfo.R;
 import xyz.steidle.cellnetinfo.utils.CellParser;
 
 public class CellInfoAdapter extends BaseAdapter {
+    protected int VERSIONSDKINT = Build.VERSION.SDK_INT;
     Context context;
     List<CellInfo> cellInfoList;
     protected LayoutInflater mLayoutInflater;
@@ -332,7 +333,7 @@ public class CellInfoAdapter extends BaseAdapter {
     }
 
     public boolean setViewWhenValueDefined(TextView view, Callable<Integer> func, int minSdkVersion) {
-        if (Build.VERSION.SDK_INT >= minSdkVersion) {
+        if (VERSIONSDKINT >= minSdkVersion) {
             int value;
             try {
                 value = func.call();

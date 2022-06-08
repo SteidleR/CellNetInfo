@@ -8,6 +8,7 @@ import android.content.Context;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.osmdroid.views.MapView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class CellHistoryAdapterTest {
         cellInfoList.add(stringArray1);
         cellInfoList.add(stringArray2);
 
-        cellHistoryAdapter = new CellHistoryAdapter(context, databaseHandler);
+        cellHistoryAdapter = new CellHistoryAdapter(context, databaseHandler, mock(MapView.class));
     }
 
     @Test

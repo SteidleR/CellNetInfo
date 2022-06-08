@@ -30,12 +30,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import xyz.steidle.cellnetinfo.R;
 
 /**
  * Class to handle database creation, insert, update
@@ -103,9 +100,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             + KEY_LATITUDE  + REAL_VALUE + ","
             + KEY_LONGITUDE + REAL_VALUE + ",";
 
-    private static final int[] columnsGroupedQuery = {10, 1, 2, 3, 4, 5, 6, 7, 8};
-    private static final int[] columnsCsvQuery = {10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12};
-    private static final int[] columnsFilteredQuery = {10, 11, 12};
     private static final String KEY_NET_ID = "netId";
     private static final String KEY_BASE_ID = "baseId";
     private static final String KEY_BASE_LAT = "latitudeBase";
@@ -453,34 +447,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    /** Returns all unique cells stored in database table as a list of string arrays
-     * @return List of String arrays representing database rows
-     */
-    public List<String[]> getAllCellsGrouped() {
-        String selectQuery = "SELECT * FROM " + TABLE_CELLS + " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_LAC + "," + KEY_TAC + ";";
-        return getCellsFromCursor(createCursorFromQuery(selectQuery), columnsGroupedQuery);
-    }
-
-    /** Returns all cells stored in database table as a list of string arrays
-     * @return List of String arrays representing database rows
-     */
-    public List<String[]> getAllCellsCsv() {
-        String selectQuery = "SELECT  * FROM " + TABLE_CELLS;
-        return getCellsFromCursor(createCursorFromQuery(selectQuery), columnsCsvQuery);
-    }
-
-    public List<String[]> getCellsFiltered(String standard, String provider, int mcc, int mnc, int tac, int lac) {
-        String selectQuery = "SELECT * FROM " + TABLE_CELLS + " WHERE " +
-                KEY_STANDARD + " LIKE '" + standard + "' AND " +
-                KEY_PROVIDER + " LIKE '" + provider + "' AND " +
-                KEY_MCC + " = " + mcc + " AND " +
-                KEY_MNC + " = " + mnc +
-                (lac != -1 ? " AND " + KEY_LAC + " = " + lac : "") +
-                (tac != -1 ? " AND " + KEY_TAC + " = " + tac : "") + ";";
-
-        return getCellsFromCursor(createCursorFromQuery(selectQuery), columnsFilteredQuery);
-    }
-
     public Cursor createCursorFromQuery(String query) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.rawQuery(query, null);
@@ -523,6 +489,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
     }
 
+    public List<String[]> getAllNrLocations(String mcc, String mnc, String cid) {
+        int[] indices = {0, 1, 2, 3};
+        String selectQuery = "SELECT %s, %s, %s, %s" +
+                " FROM " + TABLE_NR + " WHERE " + KEY_MCC + "=%s AND " + KEY_MNC + "=%s AND " + KEY_CID + "=%s;";
+        selectQuery = String.format(selectQuery, KEY_TIMESTAMP, KEY_SIGNAL, KEY_LATITUDE, KEY_LONGITUDE, Integer.parseInt(mcc), Integer.parseInt(mnc), Integer.parseInt(cid));
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+    }
+
     public List<String[]> getAllLteCells() {
         int[] indices = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
         String selectQuery = "SELECT * FROM " + TABLE_LTE;
@@ -532,6 +506,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public List<String[]> getAllLteCellsGrouped() {
         int[] indices = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
         String selectQuery = "SELECT * FROM " + TABLE_LTE + " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_CID + "," + KEY_LAC + ";";
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
+    }
+
+    public List<String[]> getAllLteLocations(String mcc, String mnc, String cid) {
+        int[] indices = {0, 1, 2, 3};
+        String selectQuery = "SELECT %s, %s, %s, %s" +
+                " FROM " + TABLE_LTE + " WHERE " + KEY_MCC + "==%s AND " + KEY_MNC + "==%s AND " + KEY_CID + "==%s;";
+        selectQuery = String.format(selectQuery, KEY_TIMESTAMP, KEY_SIGNAL, KEY_LATITUDE, KEY_LONGITUDE, Integer.parseInt(mcc), Integer.parseInt(mnc), Integer.parseInt(cid));
+        Log.d(LOG_TAG, selectQuery);
         return getCellsFromCursor(createCursorFromQuery(selectQuery), indices);
     }
 

@@ -1,27 +1,23 @@
 package xyz.steidle.cellnetinfo.view;
 
 import android.content.Context;
-import android.os.Build;
-import android.telephony.CellInfo;
-import android.telephony.CellInfoNr;
-import android.telephony.CellSignalStrengthNr;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
 import java.util.Arrays;
 import java.util.List;
 
 import xyz.steidle.cellnetinfo.R;
-import xyz.steidle.cellnetinfo.utils.CellParser;
 import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
 
 public class CellHistoryAdapter extends BaseAdapter {
@@ -29,13 +25,17 @@ public class CellHistoryAdapter extends BaseAdapter {
     private final Context context;
     private final LayoutInflater mLayoutInflater;
     private final DatabaseHandler databaseHandler;
+    private final MapView map;
+    private final FrameLayout mFrameLayout;
 
     private final List<String[]>  cellList;
 
-    public CellHistoryAdapter(Context context, DatabaseHandler databaseHandler) {
+    public CellHistoryAdapter(Context context, DatabaseHandler databaseHandler, MapView map) {
         this.context = context;
         this.databaseHandler = databaseHandler;
+        this.map = map;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mFrameLayout = (FrameLayout) map.getParent();
 
         cellList = databaseHandler.getAllNrCellsGrouped();
         cellList.addAll(databaseHandler.getAllLteCellsGrouped());
@@ -119,6 +119,25 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_rssi)).setText(cellInfo[15]);
         ((TextView) vi.findViewById(R.id.cell_cqi)).setText(cellInfo[16]);
 
+        vi.findViewById(R.id.root).setOnClickListener(view -> {
+            mFrameLayout.setVisibility(View.VISIBLE);
+
+            List<String[]> locations = databaseHandler.getAllLteLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+
+            Log.d("HistoryActivity", String.valueOf(locations));
+
+            for (String[] location : locations) {
+                Marker marker = new Marker(map);
+                marker.setPosition(new GeoPoint(Float.parseFloat(location[2]), Float.parseFloat(location[3])));
+                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+
+                map.getOverlays().add(marker);
+            }
+
+            GeoPoint location = new GeoPoint(Float.parseFloat(locations.get(0)[2]), Float.parseFloat(locations.get(0)[3]));
+            map.getController().setCenter(location);
+        });
+
         return vi;
     }
 
@@ -180,8 +199,8 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_mcc)).setText(cellInfo[4]);
         ((TextView) vi.findViewById(R.id.cell_mnc)).setText(cellInfo[5]);
         ((TextView) vi.findViewById(R.id.cell_lactac)).setText(cellInfo[9]);
-        ((TextView) vi.findViewById(R.id.cell_pci)).setText(cellInfo[10]);
-        ((TextView) vi.findViewById(R.id.cell_cid)).setText(cellInfo[11]);
+        ((TextView) vi.findViewById(R.id.cell_pci)).setText(cellInfo[11]);
+        ((TextView) vi.findViewById(R.id.cell_cid)).setText(cellInfo[10]);
 
         vi.findViewById(R.id.img_signal).setVisibility(View.INVISIBLE);
     }

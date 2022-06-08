@@ -18,9 +18,11 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.opencsv.CSVWriter;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
@@ -129,19 +131,34 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
+        protected void writeDataToFile(String fileName, List<String[]> data) throws IOException {
+            CSVWriter writer = new CSVWriter(new FileWriter(fileName));
+            writer.writeAll(data);
+            writer.close();
+        }
+
         /** function to export the history as csv file */
         private void exportHistory() {
-            String csv = createStoragePath("history.csv");
+            String exportFolderPath = createStoragePath(String.format("cellnetinfo_history_%s", Calendar.getInstance().getTimeInMillis()));
 
-            Log.i(LOGTAG, "Exporting history to csv (" + csv + ")");
-            CSVWriter writer;
+            File folder = new File(exportFolderPath);
+            boolean success = folder.mkdir();
+            if (!success) {
+                Log.e(LOGTAG, "Failed to create folder: " + folder.getAbsolutePath());
+                return;
+            }
+
+            Log.i(LOGTAG, "Exporting history to folder (" + exportFolderPath + ")");
+
+            String csvFilePath = exportFolderPath + File.separator + "history_%s.csv";
             try {
-                writer = new CSVWriter(new FileWriter(csv));
+                writeDataToFile(String.format(csvFilePath, "nr"), databaseHandler.getAllNrCells());
+                writeDataToFile(String.format(csvFilePath, "lte"), databaseHandler.getAllLteCells());
+                writeDataToFile(String.format(csvFilePath, "gsm"), databaseHandler.getAllGsmCells());
+                writeDataToFile(String.format(csvFilePath, "cdma"), databaseHandler.getAllCdmaCells());
+                writeDataToFile(String.format(csvFilePath, "tdscdma"), databaseHandler.getAllTdscdmaCells());
+                writeDataToFile(String.format(csvFilePath, "wcdma"), databaseHandler.getAllWcdmaCells());
 
-                List<String[]> data = databaseHandler.getAllCellsCsv();
-
-                writer.writeAll(data); // data is adding to csv
-                writer.close();
             } catch (IOException e) {
                 Log.e(LOGTAG, Log.getStackTraceString(e));
             }
@@ -163,7 +180,7 @@ public class SettingsActivity extends AppCompatActivity {
                 storageDirectoryPath = Environment.getExternalStorageDirectory().getAbsolutePath();
             }
 
-            return storageDirectoryPath + "/Download/" + fileName;
+            return storageDirectoryPath + File.separator +  "Download" + File.separator + fileName;
         }
     }
 }

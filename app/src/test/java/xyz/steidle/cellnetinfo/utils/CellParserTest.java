@@ -25,6 +25,11 @@ import android.telephony.CellInfoLte;
 import android.telephony.CellInfoNr;
 import android.telephony.CellInfoTdscdma;
 import android.telephony.CellInfoWcdma;
+import android.telephony.CellSignalStrength;
+import android.telephony.CellSignalStrengthGsm;
+import android.telephony.CellSignalStrengthLte;
+import android.telephony.CellSignalStrengthTdscdma;
+import android.telephony.CellSignalStrengthWcdma;
 
 import androidx.core.util.Pair;
 
@@ -520,5 +525,101 @@ public class CellParserTest {
         when(cellInfoWcdma.getCellIdentity()).thenReturn(cellIdentityWcdma);
 
         assertEquals(result, CellParser.getPsc(cellInfoWcdma));
+    }
+
+    @Test
+    public void getEcNo() {
+        CellInfoWcdma cellInfoWcdma = mock(CellInfoWcdma.class);
+        CellSignalStrengthWcdma cellSignalStrength = mock(CellSignalStrengthWcdma.class);
+        when(cellInfoWcdma.getCellSignalStrength()).thenReturn(cellSignalStrength);
+        when(cellSignalStrength.getEcNo()).thenReturn(1);
+
+        CellParser.VERSIONSDKINT = 29;
+        assertEquals(CellParser.UNAVAILABLE, CellParser.getEcNo(cellInfoWcdma));
+        CellParser.VERSIONSDKINT = 30;
+        assertEquals(1, CellParser.getEcNo(cellInfoWcdma));
+    }
+
+    @Test
+    public void getRscp() {
+        CellInfoTdscdma cellInfo = mock(CellInfoTdscdma.class);
+        CellSignalStrengthTdscdma cellSignalStrength = mock(CellSignalStrengthTdscdma.class);
+        when(cellInfo.getCellSignalStrength()).thenReturn(cellSignalStrength);
+        when(cellSignalStrength.getRscp()).thenReturn(1);
+
+        assertEquals(1, CellParser.getRscp(cellInfo));
+    }
+
+    @Test
+    public void getBitErrorRate() {
+        CellInfoGsm cellInfoGsm = mock(CellInfoGsm.class);
+        CellSignalStrengthGsm cellSignalStrength = mock(CellSignalStrengthGsm.class);
+        when(cellSignalStrength.getBitErrorRate()).thenReturn(123);
+        when(cellInfoGsm.getCellSignalStrength()).thenReturn(cellSignalStrength);
+
+        CellParser.VERSIONSDKINT = 28;
+        assertEquals(CellParser.UNAVAILABLE, CellParser.getBitErrorRate(cellInfoGsm));
+
+        CellParser.VERSIONSDKINT = 29;
+        assertEquals(123, CellParser.getBitErrorRate(cellInfoGsm));
+    }
+
+    @Test
+    public void getRssi() {
+        CellInfoGsm cellInfoGsm = mock(CellInfoGsm.class);
+        CellSignalStrengthGsm cellSignalStrength = mock(CellSignalStrengthGsm.class);
+        when(cellSignalStrength.getRssi()).thenReturn(123);
+        when(cellInfoGsm.getCellSignalStrength()).thenReturn(cellSignalStrength);
+
+        assertEquals(123, CellParser.getRssi(cellInfoGsm));
+
+        CellInfoLte cellInfoLte = mock(CellInfoLte.class);
+        CellSignalStrengthLte cellSignalStrengthLte = mock(CellSignalStrengthLte.class);
+        when(cellSignalStrengthLte.getRssi()).thenReturn(1234);
+        when(cellInfoLte.getCellSignalStrength()).thenReturn(cellSignalStrengthLte);
+
+        assertEquals(1234, CellParser.getRssi(cellInfoLte));
+
+        assertEquals(CellParser.UNAVAILABLE, CellParser.getRssi(mock(CellInfo.class)));
+    }
+
+    @Test
+    public void getRsrp() {
+        CellInfoLte cellInfoLte = mock(CellInfoLte.class);
+        CellSignalStrengthLte cellSignalStrengthLte = mock(CellSignalStrengthLte.class);
+        when(cellSignalStrengthLte.getRsrp()).thenReturn(1);
+        when(cellInfoLte.getCellSignalStrength()).thenReturn(cellSignalStrengthLte);
+
+        assertEquals(1, CellParser.getRsrp(cellInfoLte));
+    }
+
+    @Test
+    public void getRsrq() {
+        CellInfoLte cellInfoLte = mock(CellInfoLte.class);
+        CellSignalStrengthLte cellSignalStrengthLte = mock(CellSignalStrengthLte.class);
+        when(cellSignalStrengthLte.getRsrq()).thenReturn(1);
+        when(cellInfoLte.getCellSignalStrength()).thenReturn(cellSignalStrengthLte);
+
+        assertEquals(1, CellParser.getRsrq(cellInfoLte));
+    }
+
+    @Test
+    public void getRssnr() {
+        CellInfoLte cellInfoLte = mock(CellInfoLte.class);
+        CellSignalStrengthLte cellSignalStrengthLte = mock(CellSignalStrengthLte.class);
+        when(cellSignalStrengthLte.getRssnr()).thenReturn(1);
+        when(cellInfoLte.getCellSignalStrength()).thenReturn(cellSignalStrengthLte);
+
+        assertEquals(1, CellParser.getRssnr(cellInfoLte));
+    }
+
+    @Test
+    public void getCqi() {
+        CellInfoLte cellInfoLte = mock(CellInfoLte.class);
+        CellSignalStrengthLte cellSignalStrengthLte = mock(CellSignalStrengthLte.class);
+        when(cellSignalStrengthLte.getCqi()).thenReturn(1);
+        when(cellInfoLte.getCellSignalStrength()).thenReturn(cellSignalStrengthLte);
+
+        assertEquals(1, CellParser.getCqi(cellInfoLte));
     }
 }
