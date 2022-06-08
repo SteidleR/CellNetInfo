@@ -45,4 +45,16 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/theme_pref_header" >
+
+        <ListPreference
+            app:defaultValue="Follow System"
+            app:entries="@array/theme_modes"
+            app:entryValues="@array/theme_modes"
+            app:key="theme_mode"
+            app:title="@string/theme_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

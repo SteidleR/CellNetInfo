@@ -14,6 +14,8 @@ import static org.mockito.Mockito.verify;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import org.junit.Test;
 
 public class MainActivityTest {

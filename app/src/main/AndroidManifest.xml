@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CellularNetworkMapper"
+        android:theme="@style/Theme.CellNetInfo"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
 
@@ -44,7 +44,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="xyz.steidle.cellnetinfo.utils.Reload" />
+        <service android:name="xyz.steidle.cellnetinfo.Reload" />
     </application>
 
 </manifest>

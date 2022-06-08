@@ -1,4 +1,10 @@
-package xyz.steidle.cellnetinfo.utils;
+/*
+ * Created by Robin Steidle on 08.06.22, 21:47
+ * Copyright (c) 2022 . All rights reserved.
+ * Last modified 01.06.22, 09:48
+ */
+
+package xyz.steidle.cellnetinfo;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -20,6 +26,8 @@ import java.util.List;
 
 import xyz.steidle.cellnetinfo.MainActivity;
 import xyz.steidle.cellnetinfo.R;
+import xyz.steidle.cellnetinfo.utils.CellInfoHandler;
+import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
 
 public class Reload extends Service {
 

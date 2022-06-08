@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
@@ -30,7 +31,7 @@ import java.util.List;
 import xyz.steidle.cellnetinfo.utils.CellInfoHandler;
 import xyz.steidle.cellnetinfo.utils.DataHolder;
 import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
-import xyz.steidle.cellnetinfo.utils.Reload;
+import xyz.steidle.cellnetinfo.utils.Helper;
 import xyz.steidle.cellnetinfo.view.CellInfoAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
   private int locationRefreshTime = 15000; // 15 seconds to update
   private int locationRefreshDistance = 500; // 500 meters to update
+  private final String themeMode = "Follow System";  // 0: follow system, 1: always light, 2: always night
 
   private static final int LOCATION_REQUEST_CODE = 12;
   private boolean arePermissionsSet = false;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.activity_main);
 
     cellInfoHandler = new CellInfoHandler(this);
@@ -114,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
     locationRefreshTime = Integer.parseInt(sharedPreferences.getString("min_update_time", String.valueOf(locationRefreshTime)));
     locationRefreshDistance = Integer.parseInt(sharedPreferences.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
 
+    AppCompatDelegate.setDefaultNightMode(Helper.getThemeFromPref(sharedPreferences.getString("theme_mode", themeMode)));
+
     sharedPreferences.registerOnSharedPreferenceChangeListener((sharedPreferences1, s) -> {
       locationRefreshTime = Integer.parseInt(sharedPreferences1.getString("min_update_time", String.valueOf(locationRefreshTime)));
       locationRefreshDistance = Integer.parseInt(sharedPreferences1.getString("min_update_loc", String.valueOf(locationRefreshDistance)));
@@ -128,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
       Log.d("Preferences:UpdateString", s);
       Log.d("Preferences:Update", String.valueOf(locationRefreshTime));
       Log.d("Preferences:Update", String.valueOf(locationRefreshDistance));
+      Log.d("Preferences:Update", themeMode);
     });
   }
 
@@ -184,6 +190,14 @@ public class MainActivity extends AppCompatActivity {
   private void openNewActivity(Class<?> cls)  {
     Intent intent = new Intent(this, cls);
     startActivity(intent);
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    if (arePermissionsSet) {
+      handlePreferences();
+    }
   }
 
   @Override

@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/row_mcc"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_mcc"
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/row_mnc"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_mnc"
@@ -85,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_lac"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_lactac"
@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cell_cid"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_cid"
@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cell_pci"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_pci"
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_bandwidth"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_bandwidth"
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_rsrp"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_rsrp"
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_rsrq"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_rsrq"
@@ -203,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_rssi"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_rssi"
@@ -223,7 +223,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_rssnr"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_rssnr"
@@ -243,7 +243,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_cqi"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_cqi"

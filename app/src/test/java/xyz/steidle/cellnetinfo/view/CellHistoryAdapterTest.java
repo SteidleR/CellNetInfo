@@ -38,17 +38,6 @@ public class CellHistoryAdapterTest {
     }
 
     @Test
-    public void joinElements() {
-        String[] stringList = {"1", "2", "3"};
-        String joinedString = CellHistoryAdapter.joinElements(stringList, ":");
-        assertEquals("1:2:3", joinedString);
-
-        stringList = new String[]{};
-        joinedString = CellHistoryAdapter.joinElements(stringList, ":");
-        assertEquals("", joinedString);
-    }
-
-    @Test
     public void getItemId() {
         assertEquals(1L, cellHistoryAdapter.getItemId(1));
     }

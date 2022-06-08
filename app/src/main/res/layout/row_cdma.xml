@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -50,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_sysid"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_sys"
@@ -69,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cell_netid"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_netid"
@@ -88,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cell_baseid"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_bsid"
@@ -108,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_lat"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_lat"
@@ -122,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:text="@string/cell_long"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_long"
@@ -141,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cell_cdma_rssi"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_rssi"
@@ -160,7 +161,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cell_evdo_rssi"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_evdo_rssi"
@@ -179,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/cell_evdo_snr"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?colorOnSecondary" />
 
                 <TextView
                     android:id="@+id/cell_evdo_snr"

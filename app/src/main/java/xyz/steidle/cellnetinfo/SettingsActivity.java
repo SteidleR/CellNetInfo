@@ -1,5 +1,7 @@
 package xyz.steidle.cellnetinfo;
 
+import static xyz.steidle.cellnetinfo.utils.Helper.writeDataToFile;
+
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -98,7 +100,6 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
             setClearHistoryOnClick();
             setExportHistoryOnClick();
-
         }
 
         /** Creates new Click Listener to clear History on preference click */
@@ -129,12 +130,6 @@ public class SettingsActivity extends AppCompatActivity {
             } else {
                 Log.d(LOGTAG, "Empty Preference 'clear_hist'");
             }
-        }
-
-        protected void writeDataToFile(String fileName, List<String[]> data) throws IOException {
-            CSVWriter writer = new CSVWriter(new FileWriter(fileName));
-            writer.writeAll(data);
-            writer.close();
         }
 
         /** function to export the history as csv file */

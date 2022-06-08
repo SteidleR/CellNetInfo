@@ -51,4 +51,6 @@
     <string name="cell_cdma_rssi">CDMA RSSI</string>
     <string name="cell_evdo_rssi">EVDO RSSI</string>
     <string name="cell_evdo_snr">EVDO SNR</string>
+    <string name="theme_pref_header">Theme</string>
+    <string name="theme_title">Theme</string>
 </resources>

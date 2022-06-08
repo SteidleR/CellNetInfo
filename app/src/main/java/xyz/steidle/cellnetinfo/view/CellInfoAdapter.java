@@ -1,5 +1,7 @@
 package xyz.steidle.cellnetinfo.view;
 
+import static xyz.steidle.cellnetinfo.utils.Helper.getIconForSignal;
+
 import android.content.Context;
 import android.os.Build;
 import android.telephony.CellInfo;
@@ -303,33 +305,6 @@ public class CellInfoAdapter extends BaseAdapter {
         signalImage.setImageResource(getIconForSignal(CellParser.getSignalStrength(cellInfo)));
 
         dbmText.setText(context.getString(R.string.cell_signal, CellParser.getSignalDbm(cellInfo)));
-    }
-
-    /** Returns id of icon for signal strength
-     * @param strength cell signal strength range 0-4
-     * @return resource id of icon
-     */
-    protected int getIconForSignal(int strength) {
-        int resId;
-
-        switch (strength) {
-            case 1:
-                resId = R.drawable.ic_signal_0;
-                break;
-            case 2:
-                resId = R.drawable.ic_signal_1;
-                break;
-            case 3:
-                resId = R.drawable.ic_signal_2;
-                break;
-            case 4:
-                resId = R.drawable.ic_signal_3;
-                break;
-            default:
-                resId = R.drawable.ic_signal_none;
-        }
-
-        return resId;
     }
 
     public boolean setViewWhenValueDefined(TextView view, Callable<Integer> func, int minSdkVersion) {

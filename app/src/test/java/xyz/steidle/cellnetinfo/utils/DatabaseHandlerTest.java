@@ -3,6 +3,8 @@ package xyz.steidle.cellnetinfo.utils;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -18,6 +20,9 @@ import android.telephony.CellInfo;
 import android.telephony.CellInfoLte;
 import android.telephony.CellInfoNr;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +33,10 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 
 @RunWith(PowerMockRunner.class)
@@ -132,5 +140,18 @@ public class DatabaseHandlerTest {
         for (int i=0; i<a1.size(); i++) {
             assertArrayEquals(a1.get(i), a2.get(i));
         }
+    }
+
+    @Test
+    public void addBaseValues() {
+        CellInfo cellInfo = mock(CellInfo.class);
+
+        Location location = mock(Location.class);
+        when(location.getLatitude()).thenReturn(12.34);
+        when(location.getLongitude()).thenReturn(12.34);
+
+        ContentValues values = databaseHandler.addBaseValues(location, cellInfo);
+
+        assertNotNull(values);
     }
 }

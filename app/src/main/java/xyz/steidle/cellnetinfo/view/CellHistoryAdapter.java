@@ -105,7 +105,7 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_ssrsrq)).setText(cellInfo[17]);
         ((TextView) vi.findViewById(R.id.cell_sssinr)).setText(cellInfo[18]);
 
-        List<String[]> locations = databaseHandler.getAllNrLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        List<String[]> locations = databaseHandler.getAllCellLocationsFromTable(DatabaseHandler.TABLE_NR, cellInfo[4], cellInfo[5], cellInfo[10]);
         createMapView(locations, vi.findViewById(R.id.root));
 
         return vi;
@@ -122,7 +122,7 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_rssi)).setText(cellInfo[15]);
         ((TextView) vi.findViewById(R.id.cell_cqi)).setText(cellInfo[16]);
 
-        List<String[]> locations = databaseHandler.getAllLteLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        List<String[]> locations = databaseHandler.getAllCellLocationsFromTable(DatabaseHandler.TABLE_LTE, cellInfo[4], cellInfo[5], cellInfo[10]);
         createMapView(locations, vi.findViewById(R.id.root));
 
         return vi;
@@ -138,7 +138,7 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_biterrorrate)).setText(cellInfo[14]);
         ((TextView) vi.findViewById(R.id.cell_rssi)).setText(cellInfo[15]);
 
-        List<String[]> locations = databaseHandler.getAllGsmLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        List<String[]> locations = databaseHandler.getAllCellLocationsFromTable(DatabaseHandler.TABLE_GSM, cellInfo[4], cellInfo[5], cellInfo[10]);
         createMapView(locations, vi.findViewById(R.id.root));
 
         return vi;
@@ -152,7 +152,7 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_uarfcn)).setText(cellInfo[12]);
         ((TextView) vi.findViewById(R.id.cell_rscp)).setText(cellInfo[13]);
 
-        List<String[]> locations = databaseHandler.getAllTdscdmaLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        List<String[]> locations = databaseHandler.getAllCellLocationsFromTable(DatabaseHandler.TABLE_TDSCDMA, cellInfo[4], cellInfo[5], cellInfo[10]);
         createMapView(locations, vi.findViewById(R.id.root));
 
         return vi;
@@ -167,7 +167,7 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_psc)).setText(cellInfo[13]);
         ((TextView) vi.findViewById(R.id.cell_ecno)).setText(cellInfo[14]);
 
-        List<String[]> locations = databaseHandler.getAllWcdmaLocations(cellInfo[4], cellInfo[5], cellInfo[10]);
+        List<String[]> locations = databaseHandler.getAllCellLocationsFromTable(DatabaseHandler.TABLE_WCDMA, cellInfo[4], cellInfo[5], cellInfo[10]);
         createMapView(locations, vi.findViewById(R.id.root));
 
         return vi;
@@ -218,17 +218,5 @@ public class CellHistoryAdapter extends BaseAdapter {
             GeoPoint location = new GeoPoint(Float.parseFloat(locations.get(0)[2]), Float.parseFloat(locations.get(0)[3]));
             map.getController().setCenter(location);
         });
-    }
-
-    // method to join string elements
-    static String joinElements(String[] strArray, String delimiter) {
-        if (strArray.length == 0)
-            return "";
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String s : strArray)
-            stringBuilder.append(s).append(delimiter);
-        String joinedString = stringBuilder.toString();
-        return joinedString.substring(0, joinedString.length() - 1);
     }
 }

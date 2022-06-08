@@ -52,18 +52,6 @@ public class CellInfoAdapterTest {
     }
 
     @Test
-    public void getIconForSignal() {
-        assertEquals(R.drawable.ic_signal_0, cellInfoAdapter.getIconForSignal(1));
-        assertEquals(R.drawable.ic_signal_1, cellInfoAdapter.getIconForSignal(2));
-        assertEquals(R.drawable.ic_signal_2, cellInfoAdapter.getIconForSignal(3));
-        assertEquals(R.drawable.ic_signal_3, cellInfoAdapter.getIconForSignal(4));
-
-        // 0 or invalid
-        assertEquals(R.drawable.ic_signal_none, cellInfoAdapter.getIconForSignal(0));
-        assertEquals(R.drawable.ic_signal_none, cellInfoAdapter.getIconForSignal(123));
-    }
-
-    @Test
     public void getItem() {
         assertEquals(cellInfoList.get(0), cellInfoAdapter.getItem(0));
     }
