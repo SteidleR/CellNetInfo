@@ -187,6 +187,24 @@ public class CellHistoryAdapter extends BaseAdapter {
         ((TextView) vi.findViewById(R.id.cell_evdo_rssi)).setText(cellInfo[13]);
         ((TextView) vi.findViewById(R.id.cell_evdo_snr)).setText(cellInfo[14]);
 
+        List<String[]> locations = databaseHandler.getAllCdmaCellsGrouped();
+        vi.findViewById(R.id.root).setOnClickListener(view -> {
+            mFrameLayout.setVisibility(View.VISIBLE);
+
+            Log.d("HistoryActivity", String.valueOf(locations));
+
+            for (String[] location : locations) {
+                Marker marker = new Marker(map);
+                marker.setPosition(new GeoPoint(Float.parseFloat(location[10]), Float.parseFloat(location[11])));
+                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+
+                map.getOverlays().add(marker);
+            }
+
+            GeoPoint location = new GeoPoint(Float.parseFloat(locations.get(0)[10]), Float.parseFloat(locations.get(0)[11]));
+            map.getController().setCenter(location);
+        });
+
         return vi;
     }
 

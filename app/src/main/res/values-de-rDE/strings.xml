@@ -41,7 +41,7 @@
     <string name="help_sinr_info">Signal-Interference-Rausch-Verhältnis</string>
     <string name="help_rscp_info">Stärke des Eingangssignal</string>
     <string name="help_ecno_info">Energy per chip over the noise spectral density</string>
-    <string name="help_history_label">Historie</string>
+    <string name="help_history_label">Anleitung: Historieseite</string>
     <string name="help_image_open">Lila klicken für Karte</string>
     <string name="help_image_close">Gelb klicken um Karte zu schließen</string>
     <string name="summary_about">Diese App wurde im Rahmen eines Studienprojekts erstellt</string>

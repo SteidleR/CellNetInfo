@@ -97,7 +97,7 @@
     <string name="help_rscp_info">Received signal code power</string>
     <string name="help_ecno" translatable="false">Ec/No</string>
     <string name="help_ecno_info">Energy per chip over the noise spectral density</string>
-    <string name="help_history_label">History</string>
+    <string name="help_history_label">Instructions: History Page</string>
     <string name="help_image_open">Click purple to open map</string>
     <string name="help_image_close">Click yellow to close map</string>
     <string name="pref_header_about" translatable="false">About</string>
