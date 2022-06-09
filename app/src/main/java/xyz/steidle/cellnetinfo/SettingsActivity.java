@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 import xyz.steidle.cellnetinfo.utils.DatabaseHandler;
 
@@ -175,7 +177,7 @@ public class SettingsActivity extends AppCompatActivity {
                 storageDirectoryPath = Environment.getExternalStorageDirectory().getAbsolutePath();
             }
 
-            return storageDirectoryPath + File.separator +  "Download" + File.separator + fileName;
+            return storageDirectoryPath + File.separator + ((ListPreference) Objects.requireNonNull(findPreference("export_folder_path"))).getValue() + File.separator + fileName;
         }
     }
 }

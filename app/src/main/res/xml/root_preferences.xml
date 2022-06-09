@@ -5,7 +5,7 @@
         app:summary="@string/update_header_summary">
 
         <ListPreference
-            app:defaultValue="30000"
+            app:defaultValue="20s"
             app:entries="@array/min_update_time_entries"
             app:entryValues="@array/min_update_time_values"
             app:key="min_update_time"
@@ -55,6 +55,27 @@
             app:title="@string/theme_title"
             app:useSimpleSummaryProvider="true" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_header_about">
+
+        <Preference
+            android:selectable="false"
+            android:summary="@string/summary_about" />
+
+        <!-- preference opens url in browser -->
+        <Preference
+            android:summary="@string/summary_repo"
+            android:title="@string/title_repo">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_repo" />
+        </Preference>
+
+        <Preference
+            android:selectable="false"
+            android:title="@string/title_author"
+            android:summary="@string/summary_author" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -19,6 +19,6 @@
     <string name="help_lac_info">Location Area Code</string>
     <string name="help_cid_info">Cell ID</string>
     <string name="help_cid" translatable="false">CID</string>
-    <string name="help_dbm">dBm</string>
+    <string name="help_dbm" translatable="false">dBm</string>
     <string name="help_dbm_info">decibel-milliwatts, power level</string>
 </resources>

@@ -46,30 +46,65 @@
     <string name="history_cleared">History cleared!</string>
     <string name="history_exported">History exported!</string>
     <string name="folder_paths_title">Folder where history wil be exported to</string>
-    <string name="cell_nrarfcn">NrARFCN</string>
-    <string name="cell_bandwidth">Bandwidth</string>
-    <string name="cell_arfcn">ARFCN</string>
-    <string name="cell_bsic">BSIC</string>
-    <string name="cell_uarfcn">UARFCN</string>
-    <string name="cell_psc">PSC</string>
+    <string name="cell_nrarfcn" translatable="false">NrARFCN</string>
+    <string name="cell_bandwidth" translatable="false">Bandwidth</string>
+    <string name="cell_arfcn" translatable="false">ARFCN</string>
+    <string name="cell_bsic" translatable="false">BSIC</string>
+    <string name="cell_uarfcn" translatable="false">UARFCN</string>
+    <string name="cell_psc" translatable="false">PSC</string>
     <string name="bandwidth_format" translatable="false">%dkHz</string>
-    <string name="cell_ecno">EcNo</string>
-    <string name="cell_rscp">RSCP</string>
-    <string name="cell_biterrorrate">Bit Error Rate</string>
-    <string name="cell_rssi">RSSI</string>
-    <string name="cell_rsrp">RSRP</string>
-    <string name="cell_rsrq">RSRQ</string>
-    <string name="cell_rssnr">RSSNR</string>
-    <string name="cell_cqi">Channel Quality Indicator</string>
-    <string name="cell_csirsrp">CSIrsrp</string>
-    <string name="cell_csirsrq">CSIrsrq</string>
-    <string name="cell_csisinr">CSIsinr</string>
-    <string name="cell_ssrsrp">SsRsrp</string>
-    <string name="cell_ssrsrq">SsRsrq</string>
-    <string name="cell_sssinr">SsSinr</string>
-    <string name="cell_cdma_rssi">CDMA RSSI</string>
-    <string name="cell_evdo_rssi">EVDO RSSI</string>
-    <string name="cell_evdo_snr">EVDO SNR</string>
+    <string name="cell_ecno" translatable="false">EcNo</string>
+    <string name="cell_rscp" translatable="false">RSCP</string>
+    <string name="cell_biterrorrate" translatable="false">Bit Error Rate</string>
+    <string name="cell_rssi" translatable="false">RSSI</string>
+    <string name="cell_rsrp" translatable="false">RSRP</string>
+    <string name="cell_rsrq" translatable="false">RSRQ</string>
+    <string name="cell_rssnr" translatable="false">RSSNR</string>
+    <string name="cell_cqi" translatable="false">Channel Quality Indicator</string>
+    <string name="cell_csirsrp" translatable="false">CSIrsrp</string>
+    <string name="cell_csirsrq" translatable="false">CSIrsrq</string>
+    <string name="cell_csisinr" translatable="false">CSIsinr</string>
+    <string name="cell_ssrsrp" translatable="false">SsRsrp</string>
+    <string name="cell_ssrsrq" translatable="false">SsRsrq</string>
+    <string name="cell_sssinr" translatable="false">SsSinr</string>
+    <string name="cell_cdma_rssi" translatable="false">CDMA RSSI</string>
+    <string name="cell_evdo_rssi" translatable="false">EVDO RSSI</string>
+    <string name="cell_evdo_snr" translatable="false">EVDO SNR</string>
     <string name="theme_pref_header">Theme</string>
     <string name="theme_title">Theme</string>
+    <string name="help_sysid">System ID</string>
+    <string name="help_rssi" translatable="false">RSSI</string>
+    <string name="help_rssi_info">Received Signal Strength Indication</string>
+    <string name="help_snr" translatable="false">SNR</string>
+    <string name="help_snr_info">Signal-to-noise ratio</string>
+    <string name="help_pci" translatable="false">PCI</string>
+    <string name="help_pci_info">Physical Cell ID</string>
+    <string name="help_arfcn" translatable="false">ARFCN</string>
+    <string name="help_arfcn_info" translatable="false">Absolute radio-frequency channel number</string>
+    <string name="help_bsic" translatable="false">BSIC</string>
+    <string name="help_bsic_info">Base station identity code</string>
+    <string name="help_rsrp" translatable="false">RSRP</string>
+    <string name="help_rsrp_info">Reference signal received power</string>
+    <string name="help_rsrq" translatable="false">RSRQ</string>
+    <string name="help_rsrq_info" translatable="false">Reference signal received quality</string>
+    <string name="help_rssnr" translatable="false">RSSNR</string>
+    <string name="help_rssnr_info">Reference signal SNR</string>
+    <string name="help_csi" translatable="false">CSI*</string>
+    <string name="help_csi_info">Channel state information</string>
+    <string name="help_sinr" translatable="false">SINR</string>
+    <string name="help_sinr_info">Signal-to-interference plus noise ratio</string>
+    <string name="help_rscp" translatable="false">RSCP</string>
+    <string name="help_rscp_info">Received signal code power</string>
+    <string name="help_ecno" translatable="false">Ec/No</string>
+    <string name="help_ecno_info">Energy per chip over the noise spectral density</string>
+    <string name="help_history_label">History</string>
+    <string name="help_image_open">Click purple to open map</string>
+    <string name="help_image_close">Click yellow to close map</string>
+    <string name="pref_header_about" translatable="false">About</string>
+    <string name="summary_about">This app was created as a part of a student research project at university.</string>
+    <string name="summary_repo">Want to check the code?</string>
+    <string name="title_repo" translatable="false">Repository</string>
+    <string name="url_repo" translatable="false">https://github.com/SteidleR/CellNetInfo</string>
+    <string name="title_author">Author</string>
+    <string name="summary_author" translatable="false">Robin Steidle</string>
 </resources>

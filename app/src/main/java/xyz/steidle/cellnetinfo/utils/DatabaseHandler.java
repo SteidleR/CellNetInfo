@@ -466,7 +466,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public List<String[]> getAllGsmCellsGrouped() {
         String selectQuery = String.format(selectFrom, TABLE_GSM) + " GROUP BY " + KEY_MCC + "," + KEY_MNC + "," + KEY_CID + "," + KEY_LAC + ";";
-        return getCellsFromCursor(createCursorFromQuery(selectQuery), indices18);
+        return getCellsFromCursor(createCursorFromQuery(selectQuery), new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
     }
 
     public List<String[]> getAllCdmaCells() {
