@@ -5,7 +5,7 @@
         app:summary="@string/update_header_summary">
 
         <ListPreference
-            app:defaultValue="20s"
+            app:defaultValue="20000"
             app:entries="@array/min_update_time_entries"
             app:entryValues="@array/min_update_time_values"
             app:key="min_update_time"
